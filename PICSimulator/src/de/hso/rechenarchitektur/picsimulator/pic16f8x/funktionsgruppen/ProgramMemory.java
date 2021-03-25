@@ -1,9 +1,9 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x.funktionsgruppen;
 
 public class ProgramMemory {
-    private int[]memory;
+    private int[] memory;
 
-    public ProgramMemory(){
+    public ProgramMemory() {
         memory = new int[1024];
     }
 }

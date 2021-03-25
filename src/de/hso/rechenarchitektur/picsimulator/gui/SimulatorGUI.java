@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator;
+package de.hso.rechenarchitektur.picsimulator.gui;
 
 import javax.swing.*;
 

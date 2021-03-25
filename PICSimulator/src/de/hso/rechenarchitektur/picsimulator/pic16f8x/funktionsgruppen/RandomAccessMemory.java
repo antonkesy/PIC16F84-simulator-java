@@ -1,6 +1,11 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x.funktionsgruppen;
 
-
+/**
+ * Der Datenspeicher ist in zwei Bänke aufgeteilt. Die SFR
+ * sind Register die die Funktionsweise des µCs
+ * beeinflussen. In den GPR legt der Programmierer seine
+ * Variablen ab.
+ */
 public class RandomAccessMemory {
     /**
      * Bank0 = [0-127][0] --- Bank1 = [0-127][1]

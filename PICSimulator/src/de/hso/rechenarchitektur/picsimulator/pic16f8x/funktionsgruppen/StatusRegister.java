@@ -1,5 +1,12 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x.funktionsgruppen;
 
+/**
+ * Ist das Ergebnis einer Verknüpfung Null, wird das Zero-Flag
+ * gesetzt. Das Carry- und Digitcarry-Flag zeigen einen
+ * Bereichsüberlauf an. Der Zahlenbereich bei 8-Bits umfasst die
+ * Werte 0 bis 255.
+ * Vorsicht: Carry bei ADD, Carry (=Borrow) bei SUB
+ */
 public class StatusRegister {
     private boolean carryFlag, digitCarryFlag, zeroFlag;
 

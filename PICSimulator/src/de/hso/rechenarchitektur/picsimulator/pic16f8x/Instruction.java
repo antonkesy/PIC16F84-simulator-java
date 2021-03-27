@@ -1,7 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
 public class Instruction {
-    private InstructionType instructionType;
+    private final InstructionType instructionType;
     private int fK;
     private int bD;
 

@@ -30,4 +30,13 @@ public class Instruction {
     public int getBD() {
         return bD;
     }
+
+    @Override
+    public String toString() {
+        return "Instruction{" +
+                "instructionType=" + instructionType +
+                ", fK=" + fK +
+                ", bD=" + bD +
+                '}';
+    }
 }

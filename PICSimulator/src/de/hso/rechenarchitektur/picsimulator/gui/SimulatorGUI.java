@@ -57,8 +57,10 @@ public class SimulatorGUI {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
                 chooser.setFileFilter(filter);
                 chooser.showOpenDialog(null);
-                if (chooser.getSelectedFile() != null)
-                    new FileReader(chooser.getSelectedFile());
+                if (chooser.getSelectedFile() != null) {
+                    FileReader fileReader = new FileReader(chooser.getSelectedFile());
+                    list1.setListData(fileReader.getLineList().toArray());
+                }
             }
         });
     }

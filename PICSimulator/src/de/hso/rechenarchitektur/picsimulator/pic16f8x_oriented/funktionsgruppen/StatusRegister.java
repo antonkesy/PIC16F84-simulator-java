@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x.funktionsgruppen;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.funktionsgruppen;
 
 /**
  * Ist das Ergebnis einer Verknüpfung Null, wird das Zero-Flag

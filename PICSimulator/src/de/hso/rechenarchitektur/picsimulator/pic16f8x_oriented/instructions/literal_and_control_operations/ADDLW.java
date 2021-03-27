@@ -1,6 +1,6 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.literal_and_control_operations;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions.literal_and_control_operations;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions.Instruction;
 
 public class ADDLW extends Instruction {
 

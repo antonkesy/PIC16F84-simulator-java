@@ -1,6 +1,6 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.register_operations.bit_oriented;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions.register_operations.bit_oriented;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions.Instruction;
 
 public class BCF extends Instruction {
     public BCF(int f, int b) {

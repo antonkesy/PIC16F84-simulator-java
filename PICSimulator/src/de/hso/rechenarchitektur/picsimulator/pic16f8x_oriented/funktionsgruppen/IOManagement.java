@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x.funktionsgruppen;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.funktionsgruppen;
 
 /**
  * Ein 4-Bit Port RA und ein 8-Bit Port RB stellen die

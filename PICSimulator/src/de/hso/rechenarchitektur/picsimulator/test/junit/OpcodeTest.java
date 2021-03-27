@@ -1,11 +1,10 @@
 package de.hso.rechenarchitektur.picsimulator.test.junit;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.literal_and_control_operations.ADDLW;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.register_operations.bit_oriented.BCF;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions.literal_and_control_operations.ADDLW;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions.register_operations.bit_oriented.BCF;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class OpcodeTest {
 

@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x.funktionsgruppen;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.funktionsgruppen;
 
 /**
  * Die ALU verknüpft zwei Argumente. Die Verknüpfungsarten

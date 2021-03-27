@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x_oriented.instructions;
 
 /**
  * p56 PIC16F8X Doku

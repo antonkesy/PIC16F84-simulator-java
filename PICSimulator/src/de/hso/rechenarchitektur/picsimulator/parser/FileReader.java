@@ -16,7 +16,7 @@ public class FileReader {
     Map<String, Integer> ownSymbols;
     Map<String, Integer> jumpMap;
 
-    int currentProgramMemoryPosition = 0;
+    int nextProgramMemoryPosition = 0;
 
     public FileReader(File filePath) {
         this.file = filePath;
@@ -52,89 +52,56 @@ public class FileReader {
     }
 
     private void interpretLine(String line) {
-        //Goto
-        if (line.charAt(27) != (' ')) {
-            jumpMap.put(line.substring(27, 35).replaceAll("\\s+", ""), currentProgramMemoryPosition + 1);
-            return;
+        String lineString = line;
+        if (line.contains(";")) {
+            lineString = line.substring(0, line.indexOf(";"));
         }
+        //Line splitten und Leerzeichen entfernen
+        String[] lineSplit = Arrays.stream(lineString.split(" ")).filter(t -> t.length() > 0).toArray(String[]::new);
 
-        //Spezial LST
-        if (line.startsWith(" ")) {
-            if (line.length() > 36 && line.charAt(36) != ';' && line.charAt(36) != ' ') {
-                //Eigene Symbole
-                if (line.length() <= 39) return;
-                if (line.substring(36).contains("equ")) {
-                    //Ab hier werden Symbole definiert
-                    String eqlLine = line.substring(36);
-                    //Value von Symbol
-                    String value = eqlLine.substring(eqlLine.indexOf("equ") + 3).replaceAll("\\s+", "");
-                    //Hex Indikator entfernen
-                    if (value.endsWith("h")) {
-                        value = value.substring(0, value.length() - 1);
-                    }
-                    ownSymbols.put(eqlLine.substring(0, eqlLine.indexOf(' ')), Integer.decode("0x" + value));
-                } else if (line.substring(36).contains("device 16F84")) {
+        //Nach Anzahl der Splits entscheiden, was die Line bedeuten kann
+        switch (lineSplit.length) {
+            case 2:
+                //jump
+                jumpMap.put(lineSplit[1], nextProgramMemoryPosition);
+                break;
+            case 3:
+                //spezial
+                if (lineSplit[1].equals("device")) {
                     //SetDevice
-                } else if (line.substring(36).contains("list c=")) {
+                } else if (lineSplit[1].equals("list")) {
                     //Set lts Zeichenlaenge
-                } else if (line.substring(36).contains("org ")) {
+                } else if (lineSplit[1].equals("org")) {
                     //Set Programm start
                 } else {
                     System.out.println("todo Interpreter" + line.charAt(36));
                 }
-            }
-            return;
-        }
-
-        String lineWithOutComments = line;
-        if (line.contains(";")) {
-            lineWithOutComments = line.substring(0, line.indexOf(';'));
-        }
-
-        int memorySpot = Integer.decode("0x" + line.substring(0, 4));
-        int instructionHex = Integer.decode("0x" + line.substring(5, 9));
-
-        String instructionString = lineWithOutComments.substring(36);
-        String instructionValue = "";
-        if (lineWithOutComments.length() > 36 && lineWithOutComments.contains(" ")) {
-            int firstSpaceAfterInstruction = lineWithOutComments.substring(36).indexOf(" ") + 36;
-            System.out.println(firstSpaceAfterInstruction);
-            instructionString = lineWithOutComments.substring(36, firstSpaceAfterInstruction);
-            if (lineWithOutComments.length() > firstSpaceAfterInstruction) {
-                instructionValue = lineWithOutComments.substring(firstSpaceAfterInstruction).replaceAll("\\s+", "");
-            }
-        }
-        /*
-        if (lineWithOutComments.length() > 42) {
-            instructionString = lineWithOutComments.substring(36, 42);
-            instructionValue = lineWithOutComments.substring(42);
-        }
-        */
-        if (instructionValue.length() > 0) {
-            //Check if two values
-            if(instructionValue.contains(";")){
-                
-            }
-            currentProgramMemoryPosition = Integer.decode("0x" + instructionValue);
-            //TODO only when number
-        }
-
-        Instruction instruction;
-        switch (instructionString.toLowerCase()) {
-            case "movelw":
-                instruction = new Instruction(InstructionType.MOVLW, Integer.decode("0x" + instructionString));
-            case "addlw":
-                instruction = new Instruction(InstructionType.ADDLW, Integer.decode("0x" + instructionString));
                 break;
-            case "sublw":
-                instruction = new Instruction(InstructionType.SUBLW, Integer.decode("0x" + instructionString));
+            case 4:
+                //Symbole
+                if (lineSplit[2].equalsIgnoreCase("equ")) {
+                    int value;
+                    //Hex Indikator entfernen
+                    if (lineSplit[3].toLowerCase().endsWith("h")) {
+                        value = Integer.decode("0x" + lineSplit[3].substring(0, lineSplit[3].length() - 1));
+                    } else if (lineSplit[3].toLowerCase().endsWith("b")) {
+                        value = Integer.parseInt(lineSplit[3].substring(0, lineSplit[3].length() - 1), 2);
+                    } else {
+                        //TODO Oct case
+                        value = Integer.parseInt(lineSplit[3]);
+                    }
+                    ownSymbols.put(lineSplit[1], value);
+                    break;
+                }
+                //non param Instruktions
+                System.out.println("Instruction\t" + lineSplit[0] + "\t" + lineSplit[1] + "\t");
+                //TODO Hex to Instruction
+                break;
+            case 5:
+                //Instruktions + param
+                System.out.println("Instruction\t" + lineSplit[0] + "\t" + lineSplit[1] + "\t");
                 break;
         }
-
-        System.out.println(memorySpot + "\t" + Integer.toHexString(instructionHex)
-                + "\t" + instructionString + "\t" + instructionValue + "\t");
-
-
     }
 
     public List<String> getLineList() {

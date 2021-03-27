@@ -16,6 +16,11 @@ public class RandomAccessMemory {
     public RandomAccessMemory() {
         memory = new int[128][2];
         isBank0 = true;
+        setStatus(0b0001_1000);
+        setTrisA(0b11_1111);
+        setTrisB(0b1111_1111);
+        setPCL(0b0000_0000);
+        setOption(0b1111_1111);
     }
 
     public int getDataFromAddress(int address) {

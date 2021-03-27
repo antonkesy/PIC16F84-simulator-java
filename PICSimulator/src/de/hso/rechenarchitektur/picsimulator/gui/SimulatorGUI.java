@@ -1,11 +1,12 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SimulatorGUI {
 
     private JPanel panelMain;
-    private JTable table1;
     private JButton resetButton;
     private JButton startButton;
     private JButton stepButton;
@@ -40,8 +41,20 @@ public class SimulatorGUI {
     private JCheckBox a5CheckBox2;
     private JCheckBox a6CheckBox2;
     private JCheckBox a7CheckBox2;
+    private JTable table2;
     private JList list1;
+    private JButton oeffneNeueDateiButton;
 
+
+    public SimulatorGUI() {
+        oeffneNeueDateiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                chooser.showOpenDialog(null);
+            }
+        });
+    }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("PIC Simulator");
@@ -51,7 +64,4 @@ public class SimulatorGUI {
         frame.setVisible(true);
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }

@@ -145,6 +145,9 @@ public class FileReader {
         }
         return InstructionType.NOP;
     }
+
+    //TODO("Bitmaske Hex umrechnung linke bits fuer Gruppen, naechster Byte fuer Typ"
+
 }
 
 

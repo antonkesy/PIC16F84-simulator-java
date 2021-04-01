@@ -139,4 +139,17 @@ public class RandomAccessMemory {
     public void setIntcon(int value) {
         setDataToAddress(11, value);
     }
+
+    public String[][] getDataString() {
+        String[][] result = new String[16][9];
+
+        for (int i = 0; i < result.length; ++i) {
+            result[i][0] = "" + i;
+            for (int j = 1; j < result[i].length; ++j) {
+                result[i][j] = "t"; //todo("get from memory")
+            }
+        }
+        System.out.println("get Data String Ram");
+        return result;
+    }
 }

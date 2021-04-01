@@ -1,6 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
 import de.hso.rechenarchitektur.picsimulator.parser.FileReader;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -47,22 +48,31 @@ public class SimulatorGUI {
     private JTable table2;
     private JList list1;
     private JButton oeffneNeueDateiButton;
+    //
+    private PIC16F8X pic;
 
 
     public SimulatorGUI() {
-        oeffneNeueDateiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
-                chooser.setFileFilter(filter);
-                chooser.showOpenDialog(null);
-                if (chooser.getSelectedFile() != null) {
-                    FileReader fileReader = new FileReader(chooser.getSelectedFile());
-                    list1.setListData(fileReader.getLineList().toArray());
-                }
+        //OnClickListener
+        oeffneNeueDateiButton.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
+            chooser.setFileFilter(filter);
+            chooser.showOpenDialog(null);
+            if (chooser.getSelectedFile() != null) {
+                FileReader fileReader = new FileReader(chooser.getSelectedFile());
+                list1.setListData(fileReader.getLineList().toArray());
+                pic = new PIC16F8X(fileReader.getInstructionLineList());
+                list1.setSelectedIndex(pic.getCurrentLine());
             }
         });
+        //OnClickListener
+        stepButton.addActionListener(e -> {
+                    if (pic != null)
+                        //Setzt den Selecter auf die aktuelle Instruktion
+                        list1.setSelectedIndex(pic.nextInstruction());
+                }
+        );
     }
 
     public static void main(String[] args) {

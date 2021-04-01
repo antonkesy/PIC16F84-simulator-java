@@ -1,7 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.parser;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.Instruction;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionDecoder;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,19 +10,19 @@ import java.util.*;
 public class FileReader {
     private final File file;
 
-    Map<Integer, Instruction> programMemoryMap;
+    private final ArrayList<InstructionLine> programMemoryMap;
 
-    ArrayList<String> lines;
+    private final ArrayList<String> lines;
 
     public FileReader(File filePath) {
         this.file = filePath;
         lines = new ArrayList<>();
-        programMemoryMap = new HashMap<>();
+        programMemoryMap = new ArrayList<>();
         readFile();
 
         System.out.println("\nInstructions:");
-        for (Map.Entry<Integer, Instruction> entry : programMemoryMap.entrySet()) {
-            System.out.println(entry.getKey() + "\t" + entry.getValue().toString());
+        for (InstructionLine entry : programMemoryMap) {
+            System.out.println(entry);
         }
     }
 
@@ -44,15 +44,24 @@ public class FileReader {
     private void interpretLine(String line) {
         //Wenn nicht mit einer Adresse
         if (line.startsWith(" ")) return;
-        
+
         //Line splitten und Leerzeichen entfernen
         String[] lineSplit = Arrays.stream(line.split(" ")).filter(t -> t.length() > 0).toArray(String[]::new);
 
-        programMemoryMap.put(Integer.decode("0x" + lineSplit[0]), InstructionDecoder.decodeInstruction(lineSplit[1]));
+        //Fuegt neue Instruktion mit allen noetigen Informationen in die Liste
+        programMemoryMap.add(new InstructionLine(
+                lines.size(),
+                Integer.decode("0x" + lineSplit[0]),
+                InstructionDecoder.decodeInstruction(lineSplit[1]))
+        );
     }
 
     public List<String> getLineList() {
         return lines;
+    }
+
+    public List<InstructionLine> getInstructionLineList() {
+        return programMemoryMap;
     }
 }
 

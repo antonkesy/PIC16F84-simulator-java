@@ -1,14 +1,18 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
-public class ProgramMemory {
-    private Instruction[] memory;
+import java.util.List;
 
-    public ProgramMemory() {
-        memory = new Instruction[1024];
-        //todo("read program")
+public class ProgramMemory {
+    private final InstructionLine[] memory;
+
+    public ProgramMemory(List<InstructionLine> instructionLineList) {
+        memory = new InstructionLine[1024];
+        for (int i = 0; i < instructionLineList.size(); ++i) {
+            memory[i] = instructionLineList.get(i);
+        }
     }
 
-    public Instruction getInstructionAt(int pc) {
+    public InstructionLine getInstructionAt(int pc) {
         return memory[pc];
     }
 }

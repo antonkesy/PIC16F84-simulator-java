@@ -9,7 +9,6 @@ public class PIC16F8X {
     private Stack stack;
     private ProgramMemory programMemory;
     private RandomAccessMemory ram;
-    // private int pc; //selbe wie PCL in RAM?
     private InstructionLine currentInstructionInRegister;
 
 

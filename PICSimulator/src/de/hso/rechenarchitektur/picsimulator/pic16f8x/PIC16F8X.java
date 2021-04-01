@@ -126,6 +126,10 @@ public class PIC16F8X {
         return stack;
     }
 
+    public RandomAccessMemory getRam() {
+        return ram;
+    }
+
     enum AluOperations {
         ADD, SUB, AND, OR, XOR
     }

@@ -1,7 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.parser;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.Instruction;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionType;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionDecoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,34 +10,19 @@ import java.util.*;
 public class FileReader {
     private final File file;
 
-    Map<Integer, Instruction> instructionMap;
+    Map<Integer, Instruction> programMemoryMap;
 
     ArrayList<String> lines;
     Map<String, Integer> ownSymbolsMap;
-    Map<String, Integer> jumpMap;
-
-    int nextProgramMemoryPosition = 0;
 
     public FileReader(File filePath) {
         this.file = filePath;
         lines = new ArrayList<>();
-        ownSymbolsMap = new HashMap<>();
-        jumpMap = new HashMap<>();
-        instructionMap = new HashMap<>();
+        programMemoryMap = new HashMap<>();
         readFile();
 
-        System.out.println("\nownSymbols:");
-        for (Map.Entry<String, Integer> entry : ownSymbolsMap.entrySet()) {
-            System.out.println(entry.getKey() + "\t" + entry.getValue());
-        }
-
-        System.out.println("\nJumper:");
-        for (Map.Entry<String, Integer> entry : jumpMap.entrySet()) {
-            System.out.println(entry.getKey() + "\t" + entry.getValue());
-        }
-
         System.out.println("\nInstructions:");
-        for (Map.Entry<Integer, Instruction> entry : instructionMap.entrySet()) {
+        for (Map.Entry<Integer, Instruction> entry : programMemoryMap.entrySet()) {
             System.out.println(entry.getKey() + "\t" + entry.getValue().toString());
         }
     }
@@ -58,61 +43,13 @@ public class FileReader {
     }
 
     private void interpretLine(String line) {
-        String lineString = line;
-        if (line.contains(";")) {
-            lineString = line.substring(0, line.indexOf(";"));
-        }
-        //Line splitten und Leerzeichen entfernen
-        String[] lineSplit = Arrays.stream(lineString.split(" ")).filter(t -> t.length() > 0).toArray(String[]::new);
+        //Wenn nicht mit einer Adresse
+        if (line.startsWith(" ")) return;
 
-        //Nach Anzahl der Splits entscheiden, was die Line bedeuten kann
-        switch (lineSplit.length) {
-            case 2:
-                //jump
-                jumpMap.put(lineSplit[1], nextProgramMemoryPosition);
-                break;
-            case 3:
-                //spezial
-                if (lineSplit[1].equals("device")) {
-                    //SetDevice
-                } else if (lineSplit[1].equals("list")) {
-                    //Set lts Zeichenlaenge
-                } else if (lineSplit[1].equals("org")) {
-                    //Set Programm start
-                } else {
-                    System.out.println("todo Interpreter" + line.charAt(36));
-                }
-                break;
-            case 4:
-                //Symbole
-                if (lineSplit[2].equalsIgnoreCase("equ")) {
-                    int value = getIntegerValueFromCode(lineSplit[3]);
-                    ownSymbolsMap.put(lineSplit[1], value);
-                    break;
-                }
-                //non param Instruktions
-                int programMemoryPosition = getIntegerValueFromCode(lineSplit[0]);
-                nextProgramMemoryPosition = programMemoryPosition + 1;
-                instructionMap.put(programMemoryPosition, new Instruction(getInstructionType(lineSplit[3])));
-                //TODO Hex to Instruction
-                break;
-            case 5:
-                //Instruktions + param
-                programMemoryPosition = Integer.decode("0x" + lineSplit[0]);
-                nextProgramMemoryPosition = programMemoryPosition + 1;
-                if (lineSplit[3].equalsIgnoreCase("goto")) {
-                    System.out.println("GoTo " + lineSplit[4]); //TODO
-                } else if (lineSplit[4].contains(",")) {
-                    String[] values = lineSplit[4].split(",");
-                    instructionMap.put(programMemoryPosition,
-                            new Instruction(getInstructionType(lineSplit[3]),
-                                    getIntegerValueFromCode(values[0]),
-                                    getIntegerValueFromCode(values[1])));
-                } else {
-                    instructionMap.put(programMemoryPosition, new Instruction(getInstructionType(lineSplit[3]), getIntegerValueFromCode(lineSplit[4])));
-                }
-                break;
-        }
+        //Line splitten und Leerzeichen entfernen
+        String[] lineSplit = Arrays.stream(line.split(" ")).filter(t -> t.length() > 0).toArray(String[]::new);
+
+        programMemoryMap.put(getIntegerValueFromCode(lineSplit[0]), InstructionDecoder.decodeInstruction(lineSplit[1]));
     }
 
     public List<String> getLineList() {
@@ -136,17 +73,6 @@ public class FileReader {
         }
         return Integer.parseInt(code);
     }
-
-    private InstructionType getInstructionType(String typeAsString) {
-        for (InstructionType instructionType : InstructionType.values()) {
-            if (instructionType.code.equals(typeAsString)) {
-                return instructionType;
-            }
-        }
-        return InstructionType.NOP;
-    }
-
-    //TODO("Bitmaske Hex umrechnung linke bits fuer Gruppen, naechster Byte fuer Typ"
 
 }
 

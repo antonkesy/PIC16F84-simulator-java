@@ -5,6 +5,9 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class SimulatorGUI {
 
@@ -43,7 +46,7 @@ public class SimulatorGUI {
     private JCheckBox a5CheckBox2;
     private JCheckBox a6CheckBox2;
     private JCheckBox a7CheckBox2;
-    private JTable table2;
+    private JTable fileRegisterTable;
     private JList list1;
     private JButton oeffneNeueDateiButton;
     private JLabel stackField0;
@@ -58,6 +61,10 @@ public class SimulatorGUI {
     //
     private PIC16F8X pic;
 
+    private String[][] fileRegisterData;
+
+    TableModel model;
+
 
     public SimulatorGUI() {
         //OnClickListener
@@ -70,14 +77,16 @@ public class SimulatorGUI {
                 FileReader fileReader = new FileReader(chooser.getSelectedFile());
                 list1.setListData(fileReader.getLineList().toArray());
                 pic = new PIC16F8X(fileReader.getInstructionLineList());
-                list1.setSelectedIndex(pic.getCurrentLine());
+                updateUIFromPIC();
             }
         });
         //OnClickListener
         stepButton.addActionListener(e -> {
-                    if (pic != null)
+                    if (pic != null) {
                         //Setzt den Selecter auf die aktuelle Instruktion
-                        list1.setSelectedIndex(pic.nextInstruction());
+                        pic.nextInstruction();
+                        updateUIFromPIC();
+                    }
                 }
         );
         //OnClickListener
@@ -85,6 +94,8 @@ public class SimulatorGUI {
             if (pic != null)
                 list1.setSelectedIndex(pic.resetCall());
         });
+
+        updateFileRegister();
     }
 
     public static void main(String[] args) {
@@ -93,11 +104,14 @@ public class SimulatorGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
     }
 
     private void updateUIFromPIC() {
+        if (pic == null) return;
         list1.setSelectedIndex(pic.getCurrentLine());
         updateStack();
+        updateFileRegister();
     }
 
     private void updateStack() {
@@ -107,4 +121,19 @@ public class SimulatorGUI {
         }
     }
 
+    private void updateFileRegister() {
+        System.out.println("update File Register");
+        fileRegisterData = pic == null ? new String[][]{{"s", "t", "i", "l", "l", "", "N", "U", "L"}} : pic.getRam().getDataString();
+        fileRegisterTable.repaint();
+        model.setValueAt("a", 0, 0);
+        //TODO("set Value for every row/col")
+    }
+
+    private void createUIComponents() {
+        //TODO fixed headers
+        String[] column = {"0x", "+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
+        fileRegisterData = pic == null ? new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}} : pic.getRam().getDataString();
+        model = new DefaultTableModel(fileRegisterData, column);
+        fileRegisterTable = new JTable(model);
+    }
 }

@@ -5,8 +5,6 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SimulatorGUI {
 
@@ -73,6 +71,11 @@ public class SimulatorGUI {
                         list1.setSelectedIndex(pic.nextInstruction());
                 }
         );
+        //OnClickListener
+        resetButton.addActionListener(e -> {
+            if (pic != null)
+                list1.setSelectedIndex(pic.resetCall());
+        });
     }
 
     public static void main(String[] args) {

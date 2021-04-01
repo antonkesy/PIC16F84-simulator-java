@@ -142,6 +142,11 @@ public class PIC16F8X {
         return currentInstructionInRegister.getPositionLineInFile();
     }
 
+    /**
+     * Resets PIC
+     *
+     * @return selected index todo
+     */
     public int resetCall() {
         reset();
         return 0;

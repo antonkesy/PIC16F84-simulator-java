@@ -13,7 +13,6 @@ public class FileReader {
     Map<Integer, Instruction> programMemoryMap;
 
     ArrayList<String> lines;
-    Map<String, Integer> ownSymbolsMap;
 
     public FileReader(File filePath) {
         this.file = filePath;
@@ -45,35 +44,16 @@ public class FileReader {
     private void interpretLine(String line) {
         //Wenn nicht mit einer Adresse
         if (line.startsWith(" ")) return;
-
+        
         //Line splitten und Leerzeichen entfernen
         String[] lineSplit = Arrays.stream(line.split(" ")).filter(t -> t.length() > 0).toArray(String[]::new);
 
-        programMemoryMap.put(getIntegerValueFromCode(lineSplit[0]), InstructionDecoder.decodeInstruction(lineSplit[1]));
+        programMemoryMap.put(Integer.decode("0x" + lineSplit[0]), InstructionDecoder.decodeInstruction(lineSplit[1]));
     }
 
     public List<String> getLineList() {
         return lines;
     }
-
-    private int getIntegerValueFromCode(String code) {
-        if (ownSymbolsMap.containsKey(code)) {
-            return ownSymbolsMap.get(code);
-        }
-        if (code.toLowerCase().endsWith("h")) {
-            return Integer.decode("0x" + code.substring(0, code.length() - 1));
-        } else if (code.toLowerCase().endsWith("b")) {
-            return Integer.parseInt(code.substring(0, code.length() - 1), 2);
-        } else if (code.equalsIgnoreCase("w")) {
-            //MOVF d Flag
-            return 0;
-        } else if (code.equalsIgnoreCase("f")) {
-            //MOVF d Flag
-            return 1;
-        }
-        return Integer.parseInt(code);
-    }
-
 }
 
 

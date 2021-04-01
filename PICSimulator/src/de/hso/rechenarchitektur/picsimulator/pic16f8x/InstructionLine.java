@@ -36,4 +36,13 @@ public class InstructionLine {
     public int getPositionInMemory() {
         return positionInMemory;
     }
+
+    @Override
+    public String toString() {
+        return "InstructionLine{" +
+                "positionLineInFile=" + positionLineInFile +
+                ", positionInMemory=" + positionInMemory +
+                ", instruction=" + instruction.toString() +
+                '}';
+    }
 }

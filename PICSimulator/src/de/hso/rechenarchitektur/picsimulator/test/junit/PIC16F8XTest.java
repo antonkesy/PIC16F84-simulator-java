@@ -7,7 +7,7 @@ public class PIC16F8XTest {
 
     @Test
     public void testIsEmpty() {
-        PIC16F8X testPic = new PIC16F8X();
+        //PIC16F8X testPic = new PIC16F8X();
         //TODO("create test for functionality")
     }
 

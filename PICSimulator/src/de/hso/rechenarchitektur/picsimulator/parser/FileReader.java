@@ -50,7 +50,7 @@ public class FileReader {
 
         //Fuegt neue Instruktion mit allen noetigen Informationen in die Liste
         programMemoryMap.add(new InstructionLine(
-                lines.size(),
+                lines.size() - 1,
                 Integer.decode("0x" + lineSplit[0]),
                 InstructionDecoder.decodeInstruction(lineSplit[1]))
         );

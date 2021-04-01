@@ -10,7 +10,7 @@ public class RandomAccessMemory {
     /**
      * Bank0 = [0-127][0] --- Bank1 = [0-127][1]
      */
-    private int[][] memory;
+    private final int[][] memory;
     private boolean isBank0;
 
     public RandomAccessMemory() {

@@ -86,7 +86,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="e274f" class="javax.swing.JLabel">
+                      <component id="e274f" class="javax.swing.JLabel" binding="stackField0">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -94,7 +94,7 @@
                           <text value="0001"/>
                         </properties>
                       </component>
-                      <component id="d27cc" class="javax.swing.JLabel">
+                      <component id="d27cc" class="javax.swing.JLabel" binding="stackField1">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -102,7 +102,7 @@
                           <text value="0002"/>
                         </properties>
                       </component>
-                      <component id="92d5" class="javax.swing.JLabel">
+                      <component id="92d5" class="javax.swing.JLabel" binding="stackField2">
                         <constraints>
                           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -110,7 +110,7 @@
                           <text value="0003"/>
                         </properties>
                       </component>
-                      <component id="e71f6" class="javax.swing.JLabel">
+                      <component id="e71f6" class="javax.swing.JLabel" binding="stackField3">
                         <constraints>
                           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -118,7 +118,7 @@
                           <text value="0004"/>
                         </properties>
                       </component>
-                      <component id="91bde" class="javax.swing.JLabel">
+                      <component id="91bde" class="javax.swing.JLabel" binding="stackField4">
                         <constraints>
                           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -126,7 +126,7 @@
                           <text value="0005"/>
                         </properties>
                       </component>
-                      <component id="b306" class="javax.swing.JLabel">
+                      <component id="b306" class="javax.swing.JLabel" binding="stackField5">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -134,7 +134,7 @@
                           <text value="0006"/>
                         </properties>
                       </component>
-                      <component id="9b50d" class="javax.swing.JLabel">
+                      <component id="9b50d" class="javax.swing.JLabel" binding="stackField6">
                         <constraints>
                           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -142,7 +142,7 @@
                           <text value="0007"/>
                         </properties>
                       </component>
-                      <component id="85328" class="javax.swing.JLabel">
+                      <component id="85328" class="javax.swing.JLabel" binding="stackField7">
                         <constraints>
                           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>

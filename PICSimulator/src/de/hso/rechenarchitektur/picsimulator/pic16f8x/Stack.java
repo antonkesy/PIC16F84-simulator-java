@@ -21,4 +21,8 @@ public class Stack {
         stackArray[index] = newAddress;
     }
 
+    public int[] getStackArray() {
+        return stackArray;
+    }
+
 }

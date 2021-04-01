@@ -122,6 +122,10 @@ public class PIC16F8X {
         return currentInstructionInRegister.getPositionLineInFile();
     }
 
+    public Stack getStack() {
+        return stack;
+    }
+
     enum AluOperations {
         ADD, SUB, AND, OR, XOR
     }

@@ -46,6 +46,15 @@ public class SimulatorGUI {
     private JTable table2;
     private JList list1;
     private JButton oeffneNeueDateiButton;
+    private JLabel stackField0;
+    private JLabel stackField1;
+    private JLabel stackField2;
+    private JLabel stackField3;
+    private JLabel stackField4;
+    private JLabel stackField5;
+    private JLabel stackField6;
+    private JLabel stackField7;
+    private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     //
     private PIC16F8X pic;
 
@@ -84,6 +93,18 @@ public class SimulatorGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void updateUIFromPIC() {
+        list1.setSelectedIndex(pic.getCurrentLine());
+        updateStack();
+    }
+
+    private void updateStack() {
+        int[] stackArray = pic.getStack().getStackArray();
+        for (int i = 0; i < stackArray.length; ++i) {
+            stackFields[i].setText("" + stackArray[i]);
+        }
     }
 
 }

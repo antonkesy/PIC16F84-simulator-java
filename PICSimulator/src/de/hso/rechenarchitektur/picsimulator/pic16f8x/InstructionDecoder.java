@@ -110,6 +110,7 @@ public class InstructionDecoder {
                 break;
             case 0b0010:
                 //SUBWF
+                resultInstruction = new Instruction(InstructionType.SUBWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b1110:
                 //SWAPF

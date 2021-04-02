@@ -62,6 +62,7 @@ public class InstructionDecoder {
                 break;
             case 0b1001:
                 //COMF
+                resultInstruction = new Instruction(InstructionType.COMF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b11:
                 //DECF

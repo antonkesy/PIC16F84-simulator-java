@@ -1,5 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+
 public enum InstructionType {
     //x == 0
     ADDWF("addwf", 0b0111), ANDWF("andwf", 0b0101), CLRF("clrf", 0b0001),
@@ -20,11 +22,12 @@ public enum InstructionType {
     /**
      * 3rd Byte from right opcode
      */
-    public int mask;
+    public final int mask;
 
     private InstructionType(String code, int mask) {
         this.code = code;
         this.mask = mask;
     }
+
 
 }

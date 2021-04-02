@@ -113,6 +113,26 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeDECFSZ() {
+        //d Test
+        assertEquals(new Instruction(InstructionType.DECFSZ, 0, 0), InstructionDecoder.decodeInstruction(0b00_1011_0000_0000));
+        assertEquals(new Instruction(InstructionType.DECFSZ, 0, 1), InstructionDecoder.decodeInstruction(0b00_1011_1000_0000));
+        //f
+        assertEquals(new Instruction(InstructionType.DECFSZ, 0b010_0101, 0), InstructionDecoder.decodeInstruction(0b00_1011_0010_0101));
+        assertEquals(new Instruction(InstructionType.DECFSZ, 0b111_1111, 0), InstructionDecoder.decodeInstruction(0b00_1011_0111_1111));
+        assertEquals(new Instruction(InstructionType.DECFSZ, 0b110_0000, 1), InstructionDecoder.decodeInstruction(0b00_1011_1110_0000));
+        assertEquals(new Instruction(InstructionType.DECFSZ, 0b001_0001, 1), InstructionDecoder.decodeInstruction(0b00_1011_1001_0001));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.DECFSZ, 0b00, i, 0b0, 7));
+        }
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.DECFSZ, 0b00, i, 0b1, 7));
+        }
+    }
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *

@@ -65,11 +65,12 @@ public class InstructionDecoder {
                 resultInstruction = new Instruction(InstructionType.COMF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b11:
-                resultInstruction = new Instruction(InstructionType.DECF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 //DECF
+                resultInstruction = new Instruction(InstructionType.DECF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b1011:
                 //DECFSZ
+                resultInstruction = new Instruction(InstructionType.DECFSZ, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b1010:
                 //INCF

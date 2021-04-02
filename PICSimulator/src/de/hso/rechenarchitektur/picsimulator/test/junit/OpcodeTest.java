@@ -64,6 +64,16 @@ public class OpcodeTest {
         return new Instruction(type, fk, bd).equals(InstructionDecoder.decodeInstruction(generateOpcode(type, categoryBits, fk, bd, bDStartBitIndex)));
     }
 
+    /**
+     * NOT SAFE TO USE!
+     *
+     * @param type
+     * @param categoryBits
+     * @param fk
+     * @param bd
+     * @param bDStartBitIndex
+     * @return
+     */
     private int generateOpcode(InstructionType type, int categoryBits, int fk, int bd, int bDStartBitIndex) {
         int opcode = categoryBits;
         opcode <<= 4;

@@ -50,13 +50,15 @@ public class InstructionDecoder {
         switch (instructionCode) {
             case 0b111:
                 //ADDWF
-                resultInstruction = new Instruction(InstructionType.ADDWF, opcode & 0b00_0000_0111_1111, is8BitOne(opcode) ? 1 : 0);
+                resultInstruction = new Instruction(InstructionType.ADDWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b101:
                 //ANDWF
+                resultInstruction = new Instruction(InstructionType.ANDWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b1:
                 //CLRF & CLRW
+                resultInstruction = new Instruction(is7thBitOne(opcode) ? InstructionType.CLRF : InstructionType.CLRW, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b1001:
                 //COMF
@@ -127,11 +129,42 @@ public class InstructionDecoder {
         return new Instruction(InstructionType.NOP);
     }
 
-    public static boolean is8BitOne(int code) {
-        code &= 0b1000_0000;
-        code >>>= 7;
-        return code == 1;
+    /**
+     * Gibt zurueck true, wenn das 7. Bit (von rechts) == 1
+     *
+     * @param code
+     * @return
+     */
+    private static boolean is7thBitOne(int code) {
+        return getNBit(code, 7) == 1;
     }
+
+    /**
+     * Gibt das 7. Bit (von rechts) zurueck
+     *
+     * @param code
+     * @return
+     */
+    private static int get7thBit(int code) {
+        return getNBit(code, 7);
+    }
+
+    /**
+     * Gibt Bit an Position N zurueck
+     * LSb == 0
+     *
+     * @param code
+     * @param n
+     * @return
+     */
+    private static int getNBit(int code, int n) {
+        int mask = 1;
+        mask <<= n;
+        code &= mask;
+        code >>>= n;
+        return code;
+    }
+
 
     /**
      * Gibt CONTROL-ORIENTED FILE REGISTER Instruktion dem opcode entsprechend zurueck

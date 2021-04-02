@@ -261,6 +261,26 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeRRF() {
+        //d
+        assertEquals(new Instruction(InstructionType.RRF, 0, 0), InstructionDecoder.decodeInstruction(0b00_1100_0000_0000));
+        assertEquals(new Instruction(InstructionType.RRF, 0, 1), InstructionDecoder.decodeInstruction(0b00_1100_1000_0000));
+        //f
+        assertEquals(new Instruction(InstructionType.RRF, 0b010_0101, 0), InstructionDecoder.decodeInstruction(0b00_1100_0010_0101));
+        assertEquals(new Instruction(InstructionType.RRF, 0b111_1111, 0), InstructionDecoder.decodeInstruction(0b00_1100_0111_1111));
+        assertEquals(new Instruction(InstructionType.RRF, 0b110_0000, 1), InstructionDecoder.decodeInstruction(0b00_1100_1110_0000));
+        assertEquals(new Instruction(InstructionType.RRF, 0b001_0001, 1), InstructionDecoder.decodeInstruction(0b00_1100_1001_0001));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.RRF, 0b00, i, 0b0, 7));
+        }
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.RRF, 0b00, i, 0b1, 7));
+        }
+    }
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *

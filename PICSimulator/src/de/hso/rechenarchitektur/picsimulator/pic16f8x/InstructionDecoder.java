@@ -106,6 +106,7 @@ public class InstructionDecoder {
                 break;
             case 0b1100:
                 //RRF
+                resultInstruction = new Instruction(InstructionType.RRF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b0010:
                 //SUBWF

@@ -78,6 +78,7 @@ public class InstructionDecoder {
                 break;
             case 0b1111:
                 //INCFSZ
+                resultInstruction = new Instruction(InstructionType.INCFSZ, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b0100:
                 //IORWF

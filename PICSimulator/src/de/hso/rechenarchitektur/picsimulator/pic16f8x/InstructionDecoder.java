@@ -93,6 +93,7 @@ public class InstructionDecoder {
                 int opcodeLSBs = opcode & 0b00_0000_1001_1111;
                 if (opcodeLSBs == 0) {
                     //NOP
+                    resultInstruction = new Instruction(InstructionType.NOP);
                 } else {
                     //MOVWF
                     resultInstruction = new Instruction(InstructionType.MOVWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));

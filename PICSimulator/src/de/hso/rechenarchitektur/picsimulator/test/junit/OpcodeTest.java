@@ -229,6 +229,18 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeNOP() {
+        //d always 0
+        assertEquals(new Instruction(InstructionType.NOP, 0, 0), InstructionDecoder.decodeInstruction(0b00_0000_0000_0000));
+        //x
+        assertEquals(new Instruction(InstructionType.NOP, 0, 0), InstructionDecoder.decodeInstruction(0b00_0000_0000_0000));
+        assertEquals(new Instruction(InstructionType.NOP, 0, 0), InstructionDecoder.decodeInstruction(0b00_0000_0010_0000));
+        assertEquals(new Instruction(InstructionType.NOP, 0, 0), InstructionDecoder.decodeInstruction(0b00_0000_0100_0000));
+        assertEquals(new Instruction(InstructionType.NOP, 0, 0), InstructionDecoder.decodeInstruction(0b00_0000_0110_0000));
+
+    }
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *

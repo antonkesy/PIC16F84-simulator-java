@@ -52,7 +52,7 @@ public class FileReader {
         programMemoryMap.add(new InstructionLine(
                 lines.size() - 1,
                 Integer.decode("0x" + lineSplit[0]),
-                InstructionDecoder.decodeInstruction(lineSplit[1]))
+                InstructionDecoder.decodeInstruction(Integer.decode("0x" + lineSplit[1])))
         );
     }
 

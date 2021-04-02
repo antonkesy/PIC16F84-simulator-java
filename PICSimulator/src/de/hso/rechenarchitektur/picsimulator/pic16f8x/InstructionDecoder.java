@@ -58,6 +58,7 @@ public class InstructionDecoder {
                 break;
             case 0b1:
                 //CLRF & CLRW
+                //TODO split and load only necessary
                 resultInstruction = new Instruction(is7thBitOne(opcode) ? InstructionType.CLRF : InstructionType.CLRW, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b1001:

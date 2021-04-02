@@ -1,5 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
+import java.util.Objects;
+
 public class Instruction {
     private final InstructionType instructionType;
     private int fK;
@@ -38,5 +40,18 @@ public class Instruction {
                 ", fK=" + fK +
                 ", bD=" + bD +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instruction that = (Instruction) o;
+        return fK == that.fK && bD == that.bD && instructionType == that.instructionType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(instructionType, fK, bD);
     }
 }

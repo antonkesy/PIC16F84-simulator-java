@@ -86,6 +86,7 @@ public class InstructionDecoder {
                 break;
             case 0b1000:
                 //MOVF
+                resultInstruction = new Instruction(InstructionType.MOVF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b0000:
                 //MOVWF & NOP

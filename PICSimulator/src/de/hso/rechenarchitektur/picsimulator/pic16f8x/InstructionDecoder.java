@@ -114,6 +114,7 @@ public class InstructionDecoder {
                 break;
             case 0b1110:
                 //SWAPF
+                resultInstruction = new Instruction(InstructionType.SWAPF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
             case 0b0110:
                 //XORWF

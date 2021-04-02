@@ -95,6 +95,7 @@ public class InstructionDecoder {
                     //NOP
                 } else {
                     //MOVWF
+                    resultInstruction = new Instruction(InstructionType.MOVWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 }
                 break;
             case 0b1101:

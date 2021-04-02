@@ -50,7 +50,6 @@ public class InstructionDecoder {
         switch (instructionCode) {
             case 0b111:
                 //ADDWF
-                System.out.println("ADDWF");
                 resultInstruction = new Instruction(InstructionType.ADDWF, opcode & 0b00_0000_0111_1111, is8BitOne(opcode) ? 1 : 0);
                 break;
             case 0b101:

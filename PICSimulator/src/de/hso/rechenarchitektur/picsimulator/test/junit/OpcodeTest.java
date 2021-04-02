@@ -61,6 +61,18 @@ public class OpcodeTest {
         assertEquals(new Instruction(InstructionType.CLRF, 0b001_0001, 1), InstructionDecoder.decodeInstruction(0b00_0001_1001_0001));
     }
 
+    @Test
+    public void testOpcodeCLRW() {
+        //d Test
+        assertEquals(new Instruction(InstructionType.CLRW, 0, 0), InstructionDecoder.decodeInstruction(0b00_0001_0000_0000));
+        assertEquals(new Instruction(InstructionType.CLRW, 0, 0), InstructionDecoder.decodeInstruction(0b00_0001_0000_0000));
+        //f
+        assertEquals(new Instruction(InstructionType.CLRW, 0b010_0101, 0), InstructionDecoder.decodeInstruction(0b00_0001_0010_0101));
+        assertEquals(new Instruction(InstructionType.CLRW, 0b111_1111, 0), InstructionDecoder.decodeInstruction(0b00_0001_0111_1111));
+        assertEquals(new Instruction(InstructionType.CLRW, 0b110_0000, 0), InstructionDecoder.decodeInstruction(0b00_0001_0110_0000));
+        assertEquals(new Instruction(InstructionType.CLRW, 0b001_0001, 0), InstructionDecoder.decodeInstruction(0b00_0001_0001_0001));
+    }
+
 
     /**
      * Generates opcode and Instruktion and checks if equals

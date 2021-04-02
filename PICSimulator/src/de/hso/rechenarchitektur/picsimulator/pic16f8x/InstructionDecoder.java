@@ -118,6 +118,7 @@ public class InstructionDecoder {
                 break;
             case 0b0110:
                 //XORWF
+                resultInstruction = new Instruction(InstructionType.XORWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
                 break;
         }
         return resultInstruction;

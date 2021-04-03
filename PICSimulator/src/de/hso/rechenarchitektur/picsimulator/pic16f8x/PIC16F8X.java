@@ -119,7 +119,7 @@ public class PIC16F8X {
     }
 
     public int getCurrentLine() {
-        return currentInstructionInRegister.getPositionLineInFile();
+        return currentInstructionInRegister.getPositionLineInFile() - 1;
     }
 
     public Stack getStack() {

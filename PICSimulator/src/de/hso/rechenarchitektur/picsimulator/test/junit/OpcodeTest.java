@@ -361,7 +361,35 @@ public class OpcodeTest {
         //Check all possibilities
         for (int i = 0; i < 0b111_1111; ++i) {
             for (int j = 0; j < 0b111; ++j) {
-                assertTrue(instructionEquals(InstructionType.BCF, 0b01, i, j, 7));
+                assertTrue(instructionEquals(InstructionType.BCF, 0b1, i, j, 7));
+            }
+        }
+    }
+
+    @Test
+    public void testOpcodeBSF() {
+        //b
+        assertEquals(new Instruction(InstructionType.BSF, 0, 0), InstructionDecoder.decodeInstruction(0b01_0100_0000_0000));
+        assertEquals(new Instruction(InstructionType.BSF, 0, 0b111), InstructionDecoder.decodeInstruction(0b01_0111_1000_0000));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            for (int j = 0; j < 0b111; ++j) {
+                assertTrue(instructionEquals(InstructionType.BSF, 0b1, i, j, 7));
+            }
+        }
+    }
+
+    @Test
+    public void testOpcodeBTFSC() {
+        //b
+        assertEquals(new Instruction(InstructionType.BTFSC, 0, 0), InstructionDecoder.decodeInstruction(0b01_1000_0000_0000));
+        assertEquals(new Instruction(InstructionType.BTFSC, 0, 0b111), InstructionDecoder.decodeInstruction(0b01_1011_1000_0000));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            for (int j = 0; j < 0b111; ++j) {
+                assertTrue(instructionEquals(InstructionType.BTFSC, 0b1, i, j, 7));
             }
         }
     }
@@ -390,11 +418,11 @@ public class OpcodeTest {
      * @param bDStartBitIndex
      * @return
      */
-    private int generateOpcode(InstructionType type, int categoryBits, int fk, int bd, int bDStartBitIndex) {
+    public int generateOpcode(InstructionType type, int categoryBits, int fk, int bd, int bDStartBitIndex) {
         int opcode = categoryBits;
-        opcode <<= 4;
+        opcode <<= type.maskLength;
         opcode |= type.mask;
-        opcode <<= 8 - bDStartBitIndex;
+        opcode <<= 8 - bDStartBitIndex + 4 - type.maskLength;
         opcode |= bd;
         opcode <<= bDStartBitIndex;
         opcode |= fk;

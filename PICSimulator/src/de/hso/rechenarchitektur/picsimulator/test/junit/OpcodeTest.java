@@ -456,6 +456,19 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeSUBLW() {
+        //b
+        assertEquals(new Instruction(InstructionType.SUBLW, 0), InstructionDecoder.decodeInstruction(0b11_1100_0000_0000));
+        assertEquals(new Instruction(InstructionType.SUBLW, 0b1111_1111), InstructionDecoder.decodeInstruction(0b11_1100_1111_1111));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.SUBLW, 0b11, i));
+        }
+    }
+
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *

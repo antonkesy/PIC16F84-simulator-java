@@ -12,6 +12,16 @@ public class OpcodeTest {
 
 
     @Test
+    public void testBitsInRange() {
+        assertEquals(0b10, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 0, 2));
+        assertEquals(0b1111, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 4, 7));
+        assertEquals(0b1, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 11, 12));
+        assertEquals(0b1000_1111_0010, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 0, 12));
+        assertEquals(0b1000, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 8, 12));
+        assertEquals(-1, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 12, 0));
+    }
+
+    @Test
     public void testInstructionEquals() {
         assertTrue(instructionEquals(InstructionType.ADDWF, 0b00, 0b0, 0b0, 7));
         assertTrue(instructionEquals(InstructionType.ADDWF, 0b00, 0b0, 0b1, 7));
@@ -338,6 +348,20 @@ public class OpcodeTest {
         }
         for (int i = 0; i < 0b111_1111; ++i) {
             assertTrue(instructionEquals(InstructionType.XORWF, 0b00, i, 0b1, 7));
+        }
+    }
+
+    @Test
+    public void testOpcodeBCF() {
+        //b
+        assertEquals(new Instruction(InstructionType.BCF, 0, 0), InstructionDecoder.decodeInstruction(0b01_0000_0000_0000));
+        assertEquals(new Instruction(InstructionType.BCF, 0, 0b111), InstructionDecoder.decodeInstruction(0b01_0011_1000_0000));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            for (int j = 0; j < 0b111; ++j) {
+                assertTrue(instructionEquals(InstructionType.XORWF, 0b01, i, j, 7));
+            }
         }
     }
 

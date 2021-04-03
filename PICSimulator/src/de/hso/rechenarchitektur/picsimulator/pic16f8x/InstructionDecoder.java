@@ -1,9 +1,10 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
 /**
+ * Utility KLasse
  * Wandelt den Opcode in Instruktions und Werte um
  */
-public class InstructionDecoder {
+public final class InstructionDecoder {
 
     /**
      * Gibt die gefuellte Instruktion dem opcode entsprechend zurueck
@@ -42,7 +43,7 @@ public class InstructionDecoder {
      * @param opcode
      * @return
      */
-    private static Instruction byteOrientedInstruction(int opcode) {
+    public static Instruction byteOrientedInstruction(int opcode) {
         //3rd Byte from right to decide which instruction opcode is
         int instructionCode = opcode & 0b00_1111_0000_0000;
         instructionCode >>>= 8;
@@ -50,44 +51,44 @@ public class InstructionDecoder {
         switch (instructionCode) {
             case 0b111:
                 //ADDWF
-                resultInstruction = new Instruction(InstructionType.ADDWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.ADDWF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b101:
                 //ANDWF
-                resultInstruction = new Instruction(InstructionType.ANDWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.ANDWF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1:
                 //CLRF & CLRW
                 //TODO split and load only necessary
-                resultInstruction = new Instruction(is7thBitOne(opcode) ? InstructionType.CLRF : InstructionType.CLRW, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(is7thBitOne(opcode) ? InstructionType.CLRF : InstructionType.CLRW, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1001:
                 //COMF
-                resultInstruction = new Instruction(InstructionType.COMF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.COMF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b11:
                 //DECF
-                resultInstruction = new Instruction(InstructionType.DECF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.DECF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1011:
                 //DECFSZ
-                resultInstruction = new Instruction(InstructionType.DECFSZ, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.DECFSZ, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1010:
                 //INCF
-                resultInstruction = new Instruction(InstructionType.INCF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.INCF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1111:
                 //INCFSZ
-                resultInstruction = new Instruction(InstructionType.INCFSZ, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.INCFSZ, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b0100:
                 //IORWF
-                resultInstruction = new Instruction(InstructionType.IORWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.IORWF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1000:
                 //MOVF
-                resultInstruction = new Instruction(InstructionType.MOVF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.MOVF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b0000:
                 //MOVWF & NOP
@@ -97,28 +98,28 @@ public class InstructionDecoder {
                     resultInstruction = new Instruction(InstructionType.NOP);
                 } else {
                     //MOVWF
-                    resultInstruction = new Instruction(InstructionType.MOVWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                    resultInstruction = new Instruction(InstructionType.MOVWF, getByteFs(opcode), get7thBit(opcode));
                 }
                 break;
             case 0b1101:
                 //RLF
-                resultInstruction = new Instruction(InstructionType.RLF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.RLF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1100:
                 //RRF
-                resultInstruction = new Instruction(InstructionType.RRF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.RRF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b0010:
                 //SUBWF
-                resultInstruction = new Instruction(InstructionType.SUBWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.SUBWF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1110:
                 //SWAPF
-                resultInstruction = new Instruction(InstructionType.SWAPF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.SWAPF, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b0110:
                 //XORWF
-                resultInstruction = new Instruction(InstructionType.XORWF, opcode & 0b00_0000_0111_1111, get7thBit(opcode));
+                resultInstruction = new Instruction(InstructionType.XORWF, getByteFs(opcode), get7thBit(opcode));
                 break;
         }
         return resultInstruction;
@@ -130,8 +131,30 @@ public class InstructionDecoder {
      * @param opcode
      * @return
      */
-    private static Instruction bitOrientedInstruction(int opcode) {
-        return new Instruction(InstructionType.NOP);
+    public static Instruction bitOrientedInstruction(int opcode) {
+        //3rd Byte from right to decide which instruction opcode is
+        int instructionCode = opcode & 0b00_1100_0000_0000;
+        instructionCode >>>= 8;
+        InstructionType instructionType = null;
+        switch (instructionCode) {
+            case 0b0:
+                instructionType = InstructionType.BCF;
+                break;
+            case 0b1:
+                instructionType = InstructionType.BSF;
+                break;
+            case 0b10:
+                instructionType = InstructionType.BTFSC;
+                break;
+            case 0b11:
+                instructionType = InstructionType.BTFSS;
+                break;
+            default:
+                System.out.println("Illegal opcode");
+                break;
+
+        }
+        return new Instruction(instructionType, opcode & 0b00_0000_0111_1111, opcode & 0b00_0011_1000_0000);
     }
 
     /**
@@ -140,7 +163,18 @@ public class InstructionDecoder {
      * @param opcode
      * @return
      */
-    private static Instruction literalOrientedInstruction(int opcode) {
+    public static Instruction literalOrientedInstruction(int opcode) {
+        return new Instruction(InstructionType.NOP);
+    }
+
+
+    /**
+     * Gibt CONTROL-ORIENTED FILE REGISTER Instruktion dem opcode entsprechend zurueck
+     *
+     * @param opcode
+     * @return
+     */
+    public static Instruction controlOrientedInstruction(int opcode) {
         return new Instruction(InstructionType.NOP);
     }
 
@@ -150,7 +184,7 @@ public class InstructionDecoder {
      * @param code
      * @return
      */
-    private static boolean is7thBitOne(int code) {
+    public static boolean is7thBitOne(int code) {
         return getNBit(code, 7) == 1;
     }
 
@@ -160,7 +194,7 @@ public class InstructionDecoder {
      * @param code
      * @return
      */
-    private static int get7thBit(int code) {
+    public static int get7thBit(int code) {
         return getNBit(code, 7);
     }
 
@@ -172,7 +206,7 @@ public class InstructionDecoder {
      * @param n
      * @return
      */
-    private static int getNBit(int code, int n) {
+    public static int getNBit(int code, int n) {
         int mask = 1;
         mask <<= n;
         code &= mask;
@@ -180,14 +214,38 @@ public class InstructionDecoder {
         return code;
     }
 
-
     /**
-     * Gibt CONTROL-ORIENTED FILE REGISTER Instruktion dem opcode entsprechend zurueck
+     * Gibt die Bits in der Range von start bis inclusive end zurueck
+     * von rechts (0) nach links
      *
-     * @param opcode
+     * @param code
+     * @param startIndex
+     * @param endIndex
      * @return
      */
-    private static Instruction controlOrientedInstruction(int opcode) {
-        return new Instruction(InstructionType.NOP);
+    public static int getCodeInRange(int code, int startIndex, int endIndex) {
+        if (startIndex >= endIndex) {
+            return -1;
+        }
+        //Maske fuer die gewuenschten Bits
+        int mask = 0;
+        mask = ~mask;
+        mask >>>= (32 - endIndex);
+        mask <<= startIndex;
+        //
+        code &= mask;
+        code >>>= startIndex;
+        return code;
+    }
+
+    /**
+     * Helper
+     * ByteOriented Instruktions Fs
+     *
+     * @param code
+     * @return
+     */
+    public static int getByteFs(int code) {
+        return getCodeInRange(code, 0, 7);
     }
 }

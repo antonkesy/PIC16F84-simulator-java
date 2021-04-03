@@ -134,8 +134,9 @@ public final class InstructionDecoder {
     public static Instruction bitOrientedInstruction(int opcode) {
         //3rd Byte from right to decide which instruction opcode is
         int instructionCode = opcode & 0b00_1100_0000_0000;
-        instructionCode >>>= 8;
+        instructionCode >>>= 10;
         InstructionType instructionType = null;
+        System.out.println(Integer.toBinaryString(instructionCode));
         switch (instructionCode) {
             case 0b0:
                 instructionType = InstructionType.BCF;

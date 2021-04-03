@@ -1,5 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
+import java.util.Objects;
+
 /**
  * Verkettung der Instruktion mit der zugehoerigen Line der LTS
  */
@@ -44,5 +46,18 @@ public class InstructionLine {
                 ", positionInMemory=" + positionInMemory +
                 ", instruction=" + instruction.toString() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InstructionLine that = (InstructionLine) o;
+        return positionLineInFile == that.positionLineInFile && positionInMemory == that.positionInMemory && Objects.equals(instruction, that.instruction);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(positionLineInFile, positionInMemory, instruction);
     }
 }

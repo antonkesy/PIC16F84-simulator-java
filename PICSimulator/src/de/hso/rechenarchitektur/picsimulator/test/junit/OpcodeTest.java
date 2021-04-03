@@ -502,6 +502,26 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeCLRWDT() {
+        assertEquals(new Instruction(InstructionType.CLRWDT), InstructionDecoder.decodeInstruction(0b00_0000_0110_0100));
+    }
+
+    @Test
+    public void testOpcodeRETFIE() {
+        assertEquals(new Instruction(InstructionType.RETFIE), InstructionDecoder.decodeInstruction(0b00_0000_0000_1001));
+    }
+
+    @Test
+    public void testOpcodeRETURN() {
+        assertEquals(new Instruction(InstructionType.RETURN), InstructionDecoder.decodeInstruction(0b00_0000_0000_1000));
+    }
+
+    @Test
+    public void testOpcodeSLEEP() {
+        assertEquals(new Instruction(InstructionType.SLEEP), InstructionDecoder.decodeInstruction(0b00_0000_0110_0011));
+    }
+
 
     /**
      * Generates opcode and Instruction and checks if equals

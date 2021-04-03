@@ -44,6 +44,17 @@ public final class InstructionDecoder {
      * @return
      */
     public static Instruction byteOrientedInstruction(int opcode) {
+        //Special
+        switch (opcode) {
+            case 0b0000_0110_0100:
+                return new Instruction(InstructionType.CLRWDT);
+            case 0b0000_0000_1001:
+                return new Instruction(InstructionType.RETFIE);
+            case 0b0000_0000_1000:
+                return new Instruction(InstructionType.RETURN);
+            case 0b0000_0110_0011:
+                return new Instruction(InstructionType.SLEEP);
+        }
         //3rd Byte from right to decide which instruction opcode is
         int instructionCode = opcode & 0b00_1111_0000_0000;
         instructionCode >>>= 8;

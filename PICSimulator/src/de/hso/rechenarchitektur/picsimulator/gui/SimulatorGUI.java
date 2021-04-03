@@ -62,7 +62,7 @@ public class SimulatorGUI {
 
     private String[][] fileRegisterData;
 
-    TableModel model;
+    DefaultTableModel model;
 
 
     public SimulatorGUI() {
@@ -121,18 +121,33 @@ public class SimulatorGUI {
     }
 
     private void updateFileRegister() {
-        System.out.println("update File Register");
-        fileRegisterData = pic == null ? new String[][]{{"s", "t", "i", "l", "l", "", "N", "U", "L"}} : pic.getRam().getDataString();
-        fileRegisterTable.repaint();
-        model.setValueAt("a", 0, 0);
-        //TODO("set Value for every row/col")
+        if (pic == null) return;
+        fillFRTable(pic.getRam().getDataString());
     }
 
     private void createUIComponents() {
-        //TODO fixed headers
+        //JTable + Model for FLR
         String[] column = {"0x", "+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
-        fileRegisterData = pic == null ? new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}} : pic.getRam().getDataString();
+        fileRegisterData = new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}};
         model = new DefaultTableModel(fileRegisterData, column);
         fileRegisterTable = new JTable(model);
+        //Creates empty rows for FLR
+        for (int i = 0; i < 16; ++i) {
+            model.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
+        }
+    }
+
+
+    /**
+     * Refills JTableModel with new values
+     *
+     * @param dataArray
+     */
+    private void fillFRTable(String[][] dataArray) {
+        for (int i = 0; i < dataArray.length; ++i) {
+            for (int j = 0; j < dataArray[i].length; ++j) {
+                model.setValueAt(dataArray[i][j], i, j);
+            }
+        }
     }
 }

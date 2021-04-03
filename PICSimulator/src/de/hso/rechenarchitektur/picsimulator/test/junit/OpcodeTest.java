@@ -14,11 +14,12 @@ public class OpcodeTest {
     @Test
     public void testBitsInRange() {
         assertEquals(0b10, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 0, 2));
-        assertEquals(0b1111, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 4, 7));
+        assertEquals(0b1111, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 4, 8));
         assertEquals(0b1, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 11, 12));
-        assertEquals(0b1000_1111_0010, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 0, 12));
-        assertEquals(0b1000, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 8, 12));
+        assertEquals(0b1000_1111_0010, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 0, 13));
+        assertEquals(0b1000, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 8, 13));
         assertEquals(-1, InstructionDecoder.getCodeInRange(0b1000_1111_0010, 12, 0));
+        assertEquals(0, InstructionDecoder.getCodeInRange(0b01_0000_0000_0000, 7, 9));
     }
 
     @Test

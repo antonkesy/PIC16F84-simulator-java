@@ -132,7 +132,7 @@ public class SimulatorGUI {
         model = new DefaultTableModel(fileRegisterData, column);
         fileRegisterTable = new JTable(model);
         //Creates empty rows for FLR
-        for (int i = 0; i < 16; ++i) {
+        for (int i = 0; i < 15; ++i) {
             model.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
         }
     }

@@ -149,7 +149,7 @@ public class RandomAccessMemory {
                 result[i][j] = "t"; //todo("get from memory")
             }
         }
-        System.out.println("get Data String Ram");
+
         return result;
     }
 }

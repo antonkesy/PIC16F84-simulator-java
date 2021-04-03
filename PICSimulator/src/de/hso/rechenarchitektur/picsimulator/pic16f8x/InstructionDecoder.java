@@ -161,7 +161,7 @@ public final class InstructionDecoder {
                 instructionType = InstructionType.BTFSS;
                 break;
             default:
-                System.out.println("Illegal opcode");
+                System.out.println("Illegal instruction code " + Integer.toBinaryString(instructionCode));
                 break;
 
         }

@@ -203,7 +203,11 @@ public final class InstructionDecoder {
      * @return
      */
     public static Instruction controlOrientedInstruction(int opcode) {
-        return new Instruction(InstructionType.NOP);
+        InstructionType instructionType = InstructionType.CALL;
+        if (getNBit(opcode, 11) == 1) { //
+            instructionType = InstructionType.GOTO;
+        }
+        return new Instruction(instructionType, getCodeInRange(opcode, 0, 11));
     }
 
     /**

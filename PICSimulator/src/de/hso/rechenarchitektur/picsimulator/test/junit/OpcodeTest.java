@@ -480,6 +480,28 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeCALL() {
+        //b
+        assertEquals(new Instruction(InstructionType.CALL, 0), InstructionDecoder.decodeInstruction(0b10_0000_0000_0000));
+        assertEquals(new Instruction(InstructionType.CALL, 0b110_1111_1111), InstructionDecoder.decodeInstruction(0b10_0110_1111_1111));
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.CALL, 0b10, i));
+        }
+    }
+
+    @Test
+    public void testOpcodeGOTO() {
+        //b
+        assertEquals(new Instruction(InstructionType.GOTO, 0), InstructionDecoder.decodeInstruction(0b10_1000_0000_0000));
+        assertEquals(new Instruction(InstructionType.GOTO, 0b110_1111_1111), InstructionDecoder.decodeInstruction(0b10_1110_1111_1111));
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.GOTO, 0b10, i));
+        }
+    }
+
 
     /**
      * Generates opcode and Instruction and checks if equals

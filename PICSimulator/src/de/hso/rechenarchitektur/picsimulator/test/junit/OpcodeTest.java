@@ -394,6 +394,20 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeBTFSS() {
+        //b
+        assertEquals(new Instruction(InstructionType.BTFSS, 0, 0), InstructionDecoder.decodeInstruction(0b01_1100_0000_0000));
+        assertEquals(new Instruction(InstructionType.BTFSS, 0, 0b111), InstructionDecoder.decodeInstruction(0b01_1111_1000_0000));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            for (int j = 0; j < 0b111; ++j) {
+                assertTrue(instructionEquals(InstructionType.BTFSS, 0b1, i, j, 7));
+            }
+        }
+    }
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *

@@ -136,7 +136,6 @@ public final class InstructionDecoder {
         int instructionCode = opcode & 0b00_1100_0000_0000;
         instructionCode >>>= 10;
         InstructionType instructionType = null;
-        System.out.println(Integer.toBinaryString(instructionCode));
         switch (instructionCode) {
             case 0b0:
                 instructionType = InstructionType.BCF;

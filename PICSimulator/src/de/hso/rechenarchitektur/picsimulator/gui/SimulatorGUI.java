@@ -1,11 +1,10 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
-import de.hso.rechenarchitektur.picsimulator.parser.FileReader;
+import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 

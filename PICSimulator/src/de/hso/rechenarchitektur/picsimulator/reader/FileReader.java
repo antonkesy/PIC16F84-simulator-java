@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.parser;
+package de.hso.rechenarchitektur.picsimulator.reader;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionDecoder;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
@@ -50,7 +50,7 @@ public class FileReader {
 
         //Fuegt neue Instruktion mit allen noetigen Informationen in die Liste
         programMemoryMap.add(new InstructionLine(
-                lines.size() - 1,
+                lines.size(),
                 Integer.decode("0x" + lineSplit[0]),
                 InstructionDecoder.decodeInstruction(Integer.decode("0x" + lineSplit[1])))
         );

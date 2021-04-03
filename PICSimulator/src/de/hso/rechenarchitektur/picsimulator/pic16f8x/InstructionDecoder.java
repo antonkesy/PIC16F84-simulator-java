@@ -164,7 +164,35 @@ public final class InstructionDecoder {
      * @return
      */
     public static Instruction literalOrientedInstruction(int opcode) {
-        return new Instruction(InstructionType.NOP);
+        //3rd Byte from right to decide which instruction opcode is
+        int instructionCode = opcode & 0b00_1111_0000_0000;
+        instructionCode >>>= 8;
+        InstructionType instructionType = null;
+        switch (instructionCode) {
+            case 0b1110:
+                instructionType = InstructionType.ADDLW;
+                break;
+            case 0b1001:
+                instructionType = InstructionType.ANDLW;
+                break;
+            case 0b1000:
+                instructionType = InstructionType.IORLW;
+                break;
+            case 0b0100:
+                instructionType = InstructionType.RETLW;
+                break;
+            case 0b1100:
+                instructionType = InstructionType.SUBLW;
+                break;
+            case 0b1010:
+                instructionType = InstructionType.XORLW;
+                break;
+            default:
+                System.out.println("Illegal instruction code " + Integer.toBinaryString(instructionCode));
+                break;
+
+        }
+        return new Instruction(instructionType, getCodeInRange(opcode, 0, 8));
     }
 
 
@@ -249,4 +277,6 @@ public final class InstructionDecoder {
     public static int getByteFs(int code) {
         return getCodeInRange(code, 0, 7);
     }
+
+    //TODO("x cases as fallthrougs in switches")
 }

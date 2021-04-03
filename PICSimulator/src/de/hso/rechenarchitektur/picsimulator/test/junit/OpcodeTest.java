@@ -420,6 +420,18 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeANDLW() {
+        //b
+        assertEquals(new Instruction(InstructionType.ANDLW, 0), InstructionDecoder.decodeInstruction(0b11_1001_0000_0000));
+        assertEquals(new Instruction(InstructionType.ANDLW, 0b1111_1111), InstructionDecoder.decodeInstruction(0b11_1001_1111_1111));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.ANDLW, 0b11, i));
+        }
+    }
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *

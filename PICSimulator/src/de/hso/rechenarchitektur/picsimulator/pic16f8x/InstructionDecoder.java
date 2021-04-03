@@ -154,7 +154,7 @@ public final class InstructionDecoder {
                 break;
 
         }
-        return new Instruction(instructionType, opcode & 0b00_0000_0111_1111, opcode & 0b00_0011_1000_0000);
+        return new Instruction(instructionType, getByteFs(opcode), getCodeInRange(opcode, 7, 9));
     }
 
     /**
@@ -216,21 +216,22 @@ public final class InstructionDecoder {
 
     /**
      * Gibt die Bits in der Range von start bis inclusive end zurueck
-     * von rechts (0) nach links
+     * von rechts nach links
+     * Erste ist 0
      *
      * @param code
      * @param startIndex
-     * @param endIndex
+     * @param endPosition
      * @return
      */
-    public static int getCodeInRange(int code, int startIndex, int endIndex) {
-        if (startIndex >= endIndex) {
+    public static int getCodeInRange(int code, int startIndex, int endPosition) {
+        if (startIndex >= endPosition) {
             return -1;
         }
         //Maske fuer die gewuenschten Bits
         int mask = 0;
         mask = ~mask;
-        mask >>>= (32 - endIndex);
+        mask >>>= (32 - endPosition + startIndex);
         mask <<= startIndex;
         //
         code &= mask;

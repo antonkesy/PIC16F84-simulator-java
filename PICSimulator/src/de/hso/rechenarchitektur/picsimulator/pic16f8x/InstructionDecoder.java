@@ -198,6 +198,9 @@ public final class InstructionDecoder {
             case 0b1010:
                 instructionType = InstructionType.XORLW;
                 break;
+            case 0b0000:
+                instructionType = InstructionType.MOVLW;
+                break;
             default:
                 System.out.println("Illegal instruction code " + Integer.toBinaryString(instructionCode));
                 break;

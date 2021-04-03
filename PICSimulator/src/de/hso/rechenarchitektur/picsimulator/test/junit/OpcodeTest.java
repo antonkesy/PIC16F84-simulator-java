@@ -408,6 +408,18 @@ public class OpcodeTest {
         }
     }
 
+    @Test
+    public void testOpcodeADDLW() {
+        //b
+        assertEquals(new Instruction(InstructionType.ADDLW, 0), InstructionDecoder.decodeInstruction(0b11_1110_0000_0000));
+        assertEquals(new Instruction(InstructionType.ADDLW, 0b1111_1111), InstructionDecoder.decodeInstruction(0b11_1110_1111_1111));
+
+        //Check all possibilities
+        for (int i = 0; i < 0b111_1111; ++i) {
+            assertTrue(instructionEquals(InstructionType.ADDLW, 0b11, i));
+        }
+    }
+
     /**
      * Generates opcode and Instruktion and checks if equals
      *
@@ -420,6 +432,20 @@ public class OpcodeTest {
      */
     private boolean instructionEquals(InstructionType type, int categoryBits, int fk, int bd, int bDStartBitIndex) {
         return new Instruction(type, fk, bd).equals(InstructionDecoder.decodeInstruction(generateOpcode(type, categoryBits, fk, bd, bDStartBitIndex)));
+    }
+
+    /**
+     * Generates opcode and Instruktion and checks if equals
+     *
+     * @param type
+     * @param categoryBits
+     * @param fk
+     * @param bd
+     * @param bDStartBitIndex
+     * @return
+     */
+    private boolean instructionEquals(InstructionType type, int categoryBits, int fk) {
+        return new Instruction(type, fk).equals(InstructionDecoder.decodeInstruction(generateOpcode(type, categoryBits, fk, 0, 12 - type.maskLength)));
     }
 
     /**

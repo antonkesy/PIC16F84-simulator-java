@@ -482,7 +482,7 @@ public class OpcodeTest {
 
 
     /**
-     * Generates opcode and Instruktion and checks if equals
+     * Generates opcode and Instruction and checks if equals
      *
      * @param type
      * @param categoryBits
@@ -496,13 +496,11 @@ public class OpcodeTest {
     }
 
     /**
-     * Generates opcode and Instruktion and checks if equals
+     * Generates opcode and Instruction and checks if equals
      *
      * @param type
      * @param categoryBits
      * @param fk
-     * @param bd
-     * @param bDStartBitIndex
      * @return
      */
     private boolean instructionEquals(InstructionType type, int categoryBits, int fk) {

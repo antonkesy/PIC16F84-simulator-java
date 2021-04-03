@@ -361,7 +361,7 @@ public class OpcodeTest {
         //Check all possibilities
         for (int i = 0; i < 0b111_1111; ++i) {
             for (int j = 0; j < 0b111; ++j) {
-                assertTrue(instructionEquals(InstructionType.XORWF, 0b01, i, j, 7));
+                assertTrue(instructionEquals(InstructionType.BCF, 0b01, i, j, 7));
             }
         }
     }

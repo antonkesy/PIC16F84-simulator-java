@@ -154,7 +154,7 @@ public final class InstructionDecoder {
                 break;
 
         }
-        return new Instruction(instructionType, getByteFs(opcode), getCodeInRange(opcode, 7, 9));
+        return new Instruction(instructionType, getByteFs(opcode), getCodeInRange(opcode, 7, 10));
     }
 
     /**

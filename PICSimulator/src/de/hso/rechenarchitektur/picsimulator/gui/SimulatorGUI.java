@@ -83,7 +83,7 @@ public class SimulatorGUI {
     DefaultTableModel modelIntconBits;
 
     private boolean isAutoRun;
-    private Thread autoRunThread;
+    private AutoRunThread autoRunThread;
 
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
@@ -102,14 +102,7 @@ public class SimulatorGUI {
             }
         });
         //Step OnClickListener
-        stepButton.addActionListener(e -> {
-                    if (pic != null) {
-                        //Setzt den Selecter auf die aktuelle Instruktion
-                        pic.nextInstruction();
-                        updateUIFromPIC();
-                    }
-                }
-        );
+        stepButton.addActionListener(e -> step());
         //Reset OnClickListener
         resetButton.addActionListener(e -> {
             if (pic != null) {
@@ -258,9 +251,17 @@ public class SimulatorGUI {
             autoRunThread = null;
         } else {
             //TODO create thread for autorun
-            autoRunThread = new Thread();
+            autoRunThread = new AutoRunThread(this);
         }
         isAutoRun = !isAutoRun;
         autorunButton.setText(isAutoRun ? "Stopp" : "Start");
+    }
+
+    public void step() {
+        if (pic != null) {
+            //Setzt den Selecter auf die aktuelle Instruktion
+            pic.nextInstruction();
+            updateUIFromPIC();
+        }
     }
 }

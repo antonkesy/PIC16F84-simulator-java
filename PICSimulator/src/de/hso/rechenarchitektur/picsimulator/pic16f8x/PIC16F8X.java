@@ -34,17 +34,30 @@ public class PIC16F8X {
         ram.setPCL(ram.getPCL() + 1);
     }
 
-    private void instructionDecoder() {
+    private void InstructionWithDestinationBit(Instruction instruction, AluOperations aluOperation) {
+        int result = alu(aluOperation, instruction.getFK());
+        if (instruction.getBD() == 1) {
+            wRegister = result;
+        } else {
+            ram.setDataToAddress(instruction.getFK(), result);
+        }
+    }
+
+    private void instructionHandler() {
+        int cycles = 0; //TODO
         Instruction currentInstruction = currentInstructionInRegister.getInstruction();
         switch (currentInstruction.getType()) {
             //TODO("alle implementieren")
             case ADDWF:
-                wRegister = alu(AluOperations.ADD, currentInstruction.getFK()); //was ist d?
+                cycles = 1;
+                InstructionWithDestinationBit(currentInstruction, AluOperations.ADD);
                 break;
             case ANDWF:
-                wRegister = alu(AluOperations.AND, currentInstruction.getFK()); //was ist d?
+                cycles = 1;
+                InstructionWithDestinationBit(currentInstruction, AluOperations.AND);
                 break;
             case CLRF:
+                ram.setDataToAddress(currentInstruction.getFK(), 0);
                 break;
             case CLRW:
                 wRegister = 0;
@@ -67,6 +80,7 @@ public class PIC16F8X {
                 ram.setDataToAddress(currentInstruction.getFK(), wRegister);
                 break;
             case NOP:
+                //No Operation
                 break;
             case RLF:
                 break;
@@ -87,9 +101,12 @@ public class PIC16F8X {
             case BTFSS:
                 break;
             case ADDLW:
-                wRegister = alu(AluOperations.AND, currentInstruction.getFK());
+                cycles = 1;
+                wRegister = alu(AluOperations.ADD, currentInstruction.getFK());
                 break;
             case ANDLW:
+                cycles = 1;
+                wRegister = alu(AluOperations.AND, currentInstruction.getFK());
                 break;
             case CALL:
                 break;

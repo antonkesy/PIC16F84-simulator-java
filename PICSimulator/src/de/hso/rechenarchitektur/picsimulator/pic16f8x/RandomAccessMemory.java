@@ -143,11 +143,21 @@ public class RandomAccessMemory {
     public String[][] getDataString() {
         String[][] result = new String[16][9];
 
-        for (int i = 0; i < result.length; ++i) {
-            result[i][0] = "" + i;
-            for (int j = 1; j < result[i].length; ++j) {
-                result[i][j] = "t"; //todo("get from memory")
+        int indexX = 1;
+        int indexY = 0;
+        for (int[] bank : memory) {
+            System.out.println(indexY + " " + indexX);
+
+            result[indexY][indexX] = "a" + bank[isBank0 ? 0 : 1];
+            if (++indexX >= result[indexY].length) {
+                indexX = 1;
+                ++indexY;
+
             }
+        }
+
+        for (int i = 0; i < result.length; ++i) {
+            result[i][0] = Integer.toHexString(i);
         }
 
         return result;

@@ -6,7 +6,6 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class SimulatorGUI {
 
@@ -56,13 +55,20 @@ public class SimulatorGUI {
     private JLabel stackField5;
     private JLabel stackField6;
     private JLabel stackField7;
+    private JTable statusBitTable;
+    private JTable intconBitTable;
+    private JTable optionBitTable;
+    private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     //
     private PIC16F8X pic;
 
     private String[][] fileRegisterData;
 
-    DefaultTableModel model;
+    DefaultTableModel modelFileRegister;
+    DefaultTableModel modelStatusBits;
+    DefaultTableModel modelOptionBits;
+    DefaultTableModel modelIntconBits;
 
 
     public SimulatorGUI() {
@@ -129,12 +135,24 @@ public class SimulatorGUI {
         //JTable + Model for FLR
         String[] column = {"0x", "+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
         fileRegisterData = new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}};
-        model = new DefaultTableModel(fileRegisterData, column);
-        fileRegisterTable = new JTable(model);
+        modelFileRegister = new DefaultTableModel(fileRegisterData, column);
+        fileRegisterTable = new JTable(modelFileRegister);
         //Creates empty rows for FLR
         for (int i = 0; i < 15; ++i) {
-            model.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
+            modelFileRegister.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
         }
+        //Status Bits
+        column = new String[]{"IRP", "RP1", "RP0", "TO", "PD", "Z", "DC", "C"};
+        modelStatusBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
+        statusBitTable = new JTable(modelStatusBits);
+        //Option
+        column = new String[]{"RPu", "IEg", "TCs", "TSe", "PSA", "PS2", "PS1", "PS0"};
+        modelOptionBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
+        optionBitTable = new JTable(modelOptionBits);
+        //Intcon
+        column = new String[]{"GIE", "EIE", "TIE", "IE", "RIE", "TIF", "IF", "RIF"};
+        modelIntconBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
+        intconBitTable = new JTable(modelIntconBits);
     }
 
 
@@ -146,7 +164,7 @@ public class SimulatorGUI {
     private void fillFRTable(String[][] dataArray) {
         for (int i = 0; i < dataArray.length; ++i) {
             for (int j = 0; j < dataArray[i].length; ++j) {
-                model.setValueAt(dataArray[i][j], i, j);
+                modelFileRegister.setValueAt(dataArray[i][j], i, j);
             }
         }
     }

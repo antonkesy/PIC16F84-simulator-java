@@ -16,7 +16,7 @@ public class SimulatorGUI {
     private JButton startButton;
     private JButton stepButton;
     private JButton stoppButton;
-    private JComboBox comboBox1;
+    private JComboBox<ComboBoxItem> quarzBox;
     private JCheckBox a4CheckBox;
     private JCheckBox a0CheckBox;
     private JCheckBox a3CheckBox1;
@@ -76,17 +76,16 @@ public class SimulatorGUI {
     //
     private PIC16F8X pic;
 
-    private String[][] fileRegisterData;
-
     DefaultTableModel modelFileRegister;
     DefaultTableModel modelStatusBits;
     DefaultTableModel modelOptionBits;
     DefaultTableModel modelIntconBits;
 
 
+    //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
 
-        //OnClickListener
+        //Oeffne neue Datei OnClickListener
         oeffneNeueDateiButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
@@ -99,7 +98,7 @@ public class SimulatorGUI {
                 updateUIFromPIC();
             }
         });
-        //OnClickListener
+        //Step OnClickListener
         stepButton.addActionListener(e -> {
                     if (pic != null) {
                         //Setzt den Selecter auf die aktuelle Instruktion
@@ -108,10 +107,17 @@ public class SimulatorGUI {
                     }
                 }
         );
-        //OnClickListener
+        //Reset OnClickListener
         resetButton.addActionListener(e -> {
             if (pic != null)
                 list1.setSelectedIndex(pic.resetCall());
+        });
+        //Quazbox Listener
+        quarzBox.addActionListener(e -> {
+            System.out.println("quarz changed " + quarzBox.getSelectedItem().toString());
+            if (pic != null) {
+                pic.setQuarzSpeed(((ComboBoxItem) quarzBox.getSelectedItem()).getValue());
+            }
         });
 
         updateFileRegister();
@@ -188,7 +194,7 @@ public class SimulatorGUI {
     private void createUIComponents() {
         //JTable + Model for FLR
         String[] column = {"0x", "+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
-        fileRegisterData = new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}};
+        String[][] fileRegisterData = new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}};
         modelFileRegister = new DefaultTableModel(fileRegisterData, column);
         fileRegisterTable = new JTable(modelFileRegister);
         //Creates empty rows for FLR
@@ -207,6 +213,21 @@ public class SimulatorGUI {
         column = new String[]{"GIE", "EIE", "TIE", "IE", "RIE", "TIF", "IF", "RIF"};
         modelIntconBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
         intconBitTable = new JTable(modelIntconBits);
+
+        //QuarzSpeedCombobox
+        quarzBox = new JComboBox<>();
+        //Value in Kilohertz
+        quarzBox.addItem(new ComboBoxItem("32 kHz", 32));
+        quarzBox.addItem(new ComboBoxItem("100 kHz", 100));
+        quarzBox.addItem(new ComboBoxItem("500 kHz", 500));
+        quarzBox.addItem(new ComboBoxItem("1 MHz", 1000));
+        quarzBox.addItem(new ComboBoxItem("2 MHz", 2000));
+        quarzBox.addItem(new ComboBoxItem("4 MHz", 4000));
+        quarzBox.addItem(new ComboBoxItem("8 MHz", 8000));
+        quarzBox.addItem(new ComboBoxItem("12 MHz", 12000));
+        quarzBox.addItem(new ComboBoxItem("16 MHz", 16000));
+        quarzBox.addItem(new ComboBoxItem("20 MHz", 20000));
+
     }
 
 

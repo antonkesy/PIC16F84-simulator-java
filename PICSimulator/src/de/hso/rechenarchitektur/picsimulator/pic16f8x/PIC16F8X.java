@@ -5,6 +5,7 @@ import java.util.List;
 
 public class PIC16F8X {
 
+    private int quarzSpeed = 32;
 
     private Stack stack;
     private ProgramMemory programMemory;
@@ -162,6 +163,14 @@ public class PIC16F8X {
 
     public int getWRegister() {
         return wRegister;
+    }
+
+    public int getQuarzSpeed() {
+        return quarzSpeed;
+    }
+
+    public void setQuarzSpeed(int quarzSpeed) {
+        this.quarzSpeed = quarzSpeed;
     }
 
     enum AluOperations {

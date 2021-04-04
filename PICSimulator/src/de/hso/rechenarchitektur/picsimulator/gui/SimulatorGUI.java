@@ -109,8 +109,10 @@ public class SimulatorGUI {
         );
         //Reset OnClickListener
         resetButton.addActionListener(e -> {
-            if (pic != null)
+            if (pic != null) {
                 list1.setSelectedIndex(pic.resetCall());
+                updateUIFromPIC();
+            }
         });
         //Quazbox Listener
         quarzBox.addActionListener(e -> {

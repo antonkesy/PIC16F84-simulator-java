@@ -61,6 +61,7 @@ public class PIC16F8X {
                 ram.setDataToAddress(currentInstruction.getFK(), 0);
                 break;
             case CLRW:
+                cycles = 1;
                 wRegister = 0;
                 break;
             case COMF:
@@ -117,6 +118,8 @@ public class PIC16F8X {
                 ram.setPCL(currentInstruction.getFK());
                 break;
             case IORLW:
+                cycles = 1;
+                wRegister = alu(AluOperations.OR, currentInstruction.getFK());
                 break;
             case MOVLW:
                 System.out.println("movelw " + currentInstruction.getFK());
@@ -131,8 +134,12 @@ public class PIC16F8X {
             case SLEEP:
                 break;
             case SUBLW:
+                cycles = 1;
+                wRegister = alu(AluOperations.SUB, currentInstruction.getFK());
                 break;
             case XORLW:
+                cycles = 1;
+                wRegister = alu(AluOperations.XOR, currentInstruction.getFK());
                 break;
         }
         getNextInstruction();

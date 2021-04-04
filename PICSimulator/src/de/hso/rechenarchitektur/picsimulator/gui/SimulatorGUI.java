@@ -143,16 +143,16 @@ public class SimulatorGUI {
     private void updateSFRBits() {
         if (pic == null) return;
         //status
-        fillModelRowWithData(modelStatusBits, pic.getStatusDataString());
+        fillModelRowWithData(modelStatusBits, pic.getStatusDataString(), 0);
         //status
-        fillModelRowWithData(modelOptionBits, pic.getOptionDataString());
+        fillModelRowWithData(modelOptionBits, pic.getOptionDataString(), 0);
         //Intcon
-        fillModelRowWithData(modelIntconBits, pic.getIntconDataString());
+        fillModelRowWithData(modelIntconBits, pic.getIntconDataString(), 0);
     }
 
-    private void fillModelRowWithData(DefaultTableModel model, String[] data) {
+    private void fillModelRowWithData(DefaultTableModel model, String[] data, int row) {
         for (int i = 0; i < data.length; ++i) {
-            model.setValueAt(data[i], 0, i);
+            model.setValueAt(data[i], row, i);
         }
     }
 
@@ -188,9 +188,7 @@ public class SimulatorGUI {
      */
     private void fillFRTable(String[][] dataArray) {
         for (int i = 0; i < dataArray.length; ++i) {
-            for (int j = 0; j < dataArray[i].length; ++j) {
-                modelFileRegister.setValueAt(dataArray[i][j], i, j);
-            }
+            fillModelRowWithData(modelFileRegister, dataArray[i], i);
         }
     }
 }

@@ -145,17 +145,16 @@ public class RandomAccessMemory {
 
         int indexX = 1;
         int indexY = 0;
+        //Value
         for (int[] bank : memory) {
-            System.out.println(indexY + " " + indexX);
-
-            result[indexY][indexX] = "a" + bank[isBank0 ? 0 : 1];
+            result[indexY][indexX] = Integer.toHexString(bank[isBank0 ? 0 : 1]);
             if (++indexX >= result[indexY].length) {
                 indexX = 1;
                 ++indexY;
 
             }
         }
-
+        //Header
         for (int i = 0; i < result.length; ++i) {
             result[i][0] = Integer.toHexString(i);
         }

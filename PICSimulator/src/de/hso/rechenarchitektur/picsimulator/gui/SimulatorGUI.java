@@ -1,5 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
@@ -61,6 +62,15 @@ public class SimulatorGUI {
     private JTable optionBitTable;
     private JCheckBox freigabeWatchdogCheckBox;
     private JLabel watchdogValueLabel;
+    private JLabel wValue;
+    private JLabel pclValue;
+    private JLabel pclathValue;
+    private JLabel pcIntern;
+    private JLabel statusValue;
+    private JLabel fsrValue;
+    private JLabel optionValue;
+    private JLabel vorteilerValue;
+    private JLabel timer0Value;
     private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     //
@@ -126,8 +136,12 @@ public class SimulatorGUI {
         updateStack();
         updateFileRegister();
         updateSFRBits();
+        updateSFRW();
     }
 
+    /**
+     * Updated Stack Labels
+     */
     private void updateStack() {
         int[] stackArray = pic.getStack().getStackArray();
         for (int i = 0; i < stackArray.length; ++i) {
@@ -148,6 +162,21 @@ public class SimulatorGUI {
         fillModelRowWithData(modelOptionBits, pic.getOptionDataString(), 0);
         //Intcon
         fillModelRowWithData(modelIntconBits, pic.getIntconDataString(), 0);
+    }
+
+    private void updateSFRW() {
+        if (pic == null) return;
+        RandomAccessMemory ram = pic.getRam();
+        wValue.setText("" + pic.getWRegister());
+        pclValue.setText("" + ram.getPCL());
+        pclathValue.setText("" + ram.getPCLath());
+        pcIntern.setText("?");
+        statusValue.setText("" + ram.getStatus());
+        fsrValue.setText("" + ram.getFSR());
+        optionValue.setText("" + ram.getOption());
+        vorteilerValue.setText("?");
+        timer0Value.setText("?");
+
     }
 
     private void fillModelRowWithData(DefaultTableModel model, String[] data, int row) {

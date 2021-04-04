@@ -160,6 +160,10 @@ public class PIC16F8X {
         return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
     }
 
+    public int getWRegister() {
+        return wRegister;
+    }
+
     enum AluOperations {
         ADD, SUB, AND, OR, XOR
     }

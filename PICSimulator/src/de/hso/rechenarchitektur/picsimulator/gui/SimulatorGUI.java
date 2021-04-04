@@ -8,14 +8,15 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SimulatorGUI {
 
     private JPanel panelMain;
     private JButton resetButton;
-    private JButton startButton;
+    private JButton autorunButton;
     private JButton stepButton;
-    private JButton stoppButton;
     private JComboBox<ComboBoxItem> quarzBox;
     private JCheckBox a4CheckBox;
     private JCheckBox a0CheckBox;
@@ -81,6 +82,8 @@ public class SimulatorGUI {
     DefaultTableModel modelOptionBits;
     DefaultTableModel modelIntconBits;
 
+    private boolean isAutoRun;
+    private Thread autoRunThread;
 
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
@@ -122,6 +125,9 @@ public class SimulatorGUI {
             }
         });
 
+        //AutoRun Switch Button
+        autorunButton.addActionListener(e -> switchAutoRunSimulator());
+
         updateFileRegister();
     }
 
@@ -136,6 +142,7 @@ public class SimulatorGUI {
         frame.setMaximumSize(DimMax);
 
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
     private void updateUIFromPIC() {
@@ -242,5 +249,18 @@ public class SimulatorGUI {
         for (int i = 0; i < dataArray.length; ++i) {
             fillModelRowWithData(modelFileRegister, dataArray[i], i);
         }
+    }
+
+    private void switchAutoRunSimulator() {
+        if (isAutoRun) {
+            //TODO
+            autoRunThread.stop();
+            autoRunThread = null;
+        } else {
+            //TODO create thread for autorun
+            autoRunThread = new Thread();
+        }
+        isAutoRun = !isAutoRun;
+        autorunButton.setText(isAutoRun ? "Stopp" : "Start");
     }
 }

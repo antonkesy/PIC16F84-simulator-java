@@ -151,7 +151,6 @@ public class RandomAccessMemory {
             if (++indexX >= result[indexY].length) {
                 indexX = 1;
                 ++indexY;
-
             }
         }
         //Header

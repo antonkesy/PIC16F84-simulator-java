@@ -180,10 +180,26 @@ public class PIC16F8X {
     }
 
     private int alu(AluOperations operation, int otherValue) {
-        //if null -> zeroflag = true
-        //cary und digitCarry bei Bereichueberlauf
-        //TODO
-        return 0;
+        //todo check for flags
+        int result = wRegister;
+        switch (operation) {
+            case ADD:
+                result += otherValue;
+                break;
+            case SUB:
+                result -= otherValue;
+                break;
+            case AND:
+                result &= otherValue;
+                break;
+            case OR:
+                result |= otherValue;
+                break;
+            case XOR:
+                result ^= otherValue;
+                break;
+        }
+        return result;
     }
 
     /**

@@ -175,13 +175,13 @@ public class SimulatorGUI {
     private void updateSFRW() {
         if (pic == null) return;
         RandomAccessMemory ram = pic.getRam();
-        wValue.setText("" + pic.getWRegister());
+        wValue.setText("0x" + Integer.toHexString(pic.getWRegister()));
         pclValue.setText("" + ram.getPCL());
-        pclathValue.setText("" + ram.getPCLath());
+        pclathValue.setText("0x" + Integer.toHexString(ram.getPCLath()));
         pcIntern.setText("?");
-        statusValue.setText("" + ram.getStatus());
-        fsrValue.setText("" + ram.getFSR());
-        optionValue.setText("" + ram.getOption());
+        statusValue.setText("0x" + Integer.toHexString(ram.getStatus()));
+        fsrValue.setText("0x" + Integer.toHexString(ram.getFSR()));
+        optionValue.setText("0x" + Integer.toHexString(ram.getOption()));
         vorteilerValue.setText("?");
         timer0Value.setText("?");
 

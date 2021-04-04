@@ -114,10 +114,12 @@ public class PIC16F8X {
             case CLRWDT:
                 break;
             case GOTO:
+                ram.setPCL(currentInstruction.getFK());
                 break;
             case IORLW:
                 break;
             case MOVLW:
+                System.out.println("movelw " + currentInstruction.getFK());
                 wRegister = currentInstruction.getFK();
                 break;
             case RETFIE:
@@ -188,7 +190,7 @@ public class PIC16F8X {
      * Debug Test fuer Instruktionen lesen und makieren in der GUI
      */
     public int nextInstruction() {
-        getNextInstruction();
+        instructionHandler();
         return currentInstructionInRegister.getPositionLineInFile();
     }
 

@@ -6,6 +6,7 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class SimulatorGUI {
 
@@ -58,6 +59,8 @@ public class SimulatorGUI {
     private JTable statusBitTable;
     private JTable intconBitTable;
     private JTable optionBitTable;
+    private JCheckBox freigabeWatchdogCheckBox;
+    private JLabel watchdogValueLabel;
     private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     //
@@ -72,6 +75,7 @@ public class SimulatorGUI {
 
 
     public SimulatorGUI() {
+
         //OnClickListener
         oeffneNeueDateiButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -110,6 +114,10 @@ public class SimulatorGUI {
         frame.pack();
         frame.setVisible(true);
 
+        Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setMaximumSize(DimMax);
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private void updateUIFromPIC() {
@@ -117,6 +125,7 @@ public class SimulatorGUI {
         list1.setSelectedIndex(pic.getCurrentLine());
         updateStack();
         updateFileRegister();
+        updateSFRBits();
     }
 
     private void updateStack() {
@@ -129,6 +138,22 @@ public class SimulatorGUI {
     private void updateFileRegister() {
         if (pic == null) return;
         fillFRTable(pic.getRam().getDataString());
+    }
+
+    private void updateSFRBits() {
+        if (pic == null) return;
+        //status
+        fillModelRowWithData(modelStatusBits, pic.getStatusDataString());
+        //status
+        fillModelRowWithData(modelOptionBits, pic.getOptionDataString());
+        //Intcon
+        fillModelRowWithData(modelIntconBits, pic.getIntconDataString());
+    }
+
+    private void fillModelRowWithData(DefaultTableModel model, String[] data) {
+        for (int i = 0; i < data.length; ++i) {
+            model.setValueAt(data[i], 0, i);
+        }
     }
 
     private void createUIComponents() {

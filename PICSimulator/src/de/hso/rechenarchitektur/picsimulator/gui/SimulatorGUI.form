@@ -897,7 +897,7 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="6e799" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="6e799" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -933,6 +933,30 @@
                         </constraints>
                         <properties>
                           <text value="0micro"/>
+                        </properties>
+                      </component>
+                      <component id="35475" class="javax.swing.JCheckBox" binding="freigabeWatchdogCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Freigabe Watchdog"/>
+                        </properties>
+                      </component>
+                      <component id="2135c" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Watchdog:"/>
+                        </properties>
+                      </component>
+                      <component id="39b62" class="javax.swing.JLabel" binding="watchdogValueLabel">
+                        <constraints>
+                          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="00"/>
                         </properties>
                       </component>
                     </children>

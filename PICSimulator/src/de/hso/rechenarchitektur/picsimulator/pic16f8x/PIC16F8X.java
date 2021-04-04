@@ -147,6 +147,19 @@ public class PIC16F8X {
         return ram;
     }
 
+    public String[] getStatusDataString() {
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+    }
+
+    public String[] getOptionDataString() {
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+    }
+
+    public String[] getIntconDataString() {
+        //TODO sollen das 9 sein?
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0", "0"};
+    }
+
     enum AluOperations {
         ADD, SUB, AND, OR, XOR
     }

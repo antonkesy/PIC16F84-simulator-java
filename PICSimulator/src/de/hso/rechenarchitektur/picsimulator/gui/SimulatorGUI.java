@@ -8,8 +8,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SimulatorGUI {
 
@@ -104,9 +102,12 @@ public class SimulatorGUI {
         //Step OnClickListener
         stepButton.addActionListener(e -> step());
         //Reset OnClickListener
+
         resetButton.addActionListener(e -> {
             if (pic != null) {
                 list1.setSelectedIndex(pic.resetCall());
+                if (isAutoRun)
+                    switchAutoRunSimulator();
                 updateUIFromPIC();
             }
         });

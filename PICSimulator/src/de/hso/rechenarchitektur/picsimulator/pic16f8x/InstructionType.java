@@ -1,7 +1,5 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-
 public enum InstructionType {
     //x == 0
     ADDWF("addwf", 0b0111, 4), ANDWF("andwf", 0b0101, 4), CLRF("clrf", 0b0001, 4),

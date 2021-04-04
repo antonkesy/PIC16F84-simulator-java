@@ -156,8 +156,8 @@ public class PIC16F8X {
     }
 
     public String[] getIntconDataString() {
-        //TODO sollen das 9 sein?
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0", "0"};
+        //TODO sollten das 9 sein?
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
     }
 
     enum AluOperations {

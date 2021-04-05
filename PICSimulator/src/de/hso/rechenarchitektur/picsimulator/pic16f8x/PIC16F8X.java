@@ -160,19 +160,6 @@ public class PIC16F8X {
         return ram;
     }
 
-    public String[] getStatusDataString() {
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
-    }
-
-    public String[] getOptionDataString() {
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
-    }
-
-    public String[] getIntconDataString() {
-        //TODO sollten das 9 sein?
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
-    }
-
     public int getWRegister() {
         return wRegister;
     }

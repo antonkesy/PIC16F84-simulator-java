@@ -72,6 +72,14 @@ public class PIC16F8X {
             case IORWF:
                 break;
             case MOVF:
+                int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());
+                ram.setZeroFlag(false);
+                //wenn d = 1 -> ueberpruefen auf null
+                if (currentInstruction.getBD() == 1 && valueOfAddress == 0) {
+                    ram.setZeroFlag(true);
+                } else {
+                    wRegister = valueOfAddress;
+                }
                 break;
             case MOVWF:
                 ram.setDataToAddress(currentInstruction.getFK(), wRegister);

@@ -132,6 +132,34 @@ public class RandomAccessMemory {
 
     }
 
+    public boolean isCarryFlag() {
+        return (getStatus() & 0b1) == 0b1;
+    }
+
+    public boolean isDigitCarryFlag() {
+        return (getStatus() & 0b10) == 0b10;
+    }
+
+    public boolean isZeroFlag() {
+        return (getStatus() & 0b100) == 0b100;
+    }
+
+    public boolean isPowerDownFlag() {
+        return (getStatus() & 0b1000) == 0b1000;
+    }
+
+    public boolean isTimeOutFlag() {
+        return (getStatus() & 0b1000) == 0b1000;
+    }
+
+    public boolean isRegisterBank0() {
+        return (getStatus() & 0b1000) == 0b1000;
+    }
+
+    public void setCarryFlag(boolean isCarry) {
+
+    }
+
     public int getFSR() {
         return getDataFromAddress(4);
     }

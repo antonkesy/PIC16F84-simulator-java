@@ -1,5 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.ArithmeticLogicUnit.AluOperations;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class PIC16F8X {
     }
 
     private void InstructionWithDestinationBit(Instruction instruction, AluOperations aluOperation) {
-        int result = alu(aluOperation, instruction.getFK());
+        int result = ArithmeticLogicUnit.operation(aluOperation, ram, wRegister, instruction.getFK());
         if (instruction.getBD() == 1) {
             wRegister = result;
         } else {
@@ -107,11 +108,11 @@ public class PIC16F8X {
                 break;
             case ADDLW:
                 cycles = 1;
-                wRegister = alu(AluOperations.ADD, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.operation(AluOperations.ADD, ram, wRegister, currentInstruction.getFK());
                 break;
             case ANDLW:
                 cycles = 1;
-                wRegister = alu(AluOperations.AND, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.operation(AluOperations.AND, ram, wRegister, currentInstruction.getFK());
                 break;
             case CALL:
                 break;
@@ -122,7 +123,7 @@ public class PIC16F8X {
                 break;
             case IORLW:
                 cycles = 1;
-                wRegister = alu(AluOperations.OR, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.operation(AluOperations.OR, ram, wRegister, currentInstruction.getFK());
                 break;
             case MOVLW:
                 System.out.println("movelw " + currentInstruction.getFK());
@@ -138,11 +139,11 @@ public class PIC16F8X {
                 break;
             case SUBLW:
                 cycles = 1;
-                wRegister = alu(AluOperations.SUB, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.operation(AluOperations.SUB, ram, wRegister, currentInstruction.getFK());
                 break;
             case XORLW:
                 cycles = 1;
-                wRegister = alu(AluOperations.XOR, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.operation(AluOperations.XOR, ram, wRegister, currentInstruction.getFK());
                 break;
         }
         getNextInstruction();
@@ -172,49 +173,6 @@ public class PIC16F8X {
         this.quarzSpeed = quarzSpeed;
     }
 
-    enum AluOperations {
-        ADD, SUB, AND, OR, XOR
-    }
-
-    private int alu(AluOperations operation, int otherValue) {
-        //todo check for flags
-        int result = wRegister;
-
-        //Zero flag always reset
-        ram.setZeroFlag(false);
-
-        switch (operation) {
-            case ADD:
-                //Reset affected flags
-                ram.setCarryFlag(false);
-                ram.setDigitCarryFlag(false);
-                //
-                //TODO set flags
-                result += otherValue;
-                break;
-            case SUB:
-                //Reset affected flags
-                ram.setCarryFlag(false);
-                ram.setDigitCarryFlag(false);
-                //
-                //Maskenfehler des PIC ->  Ist der Subtrahend kleiner oder gleich dem Minuend, wird das Carryflag gesetzt
-                if (otherValue <= wRegister) {
-                    ram.setCarryFlag(true);
-                }
-                result -= otherValue;
-                break;
-            case AND:
-                result &= otherValue;
-                break;
-            case OR:
-                result |= otherValue;
-                break;
-            case XOR:
-                result ^= otherValue;
-                break;
-        }
-        return result;
-    }
 
     /**
      * Debug Test fuer Instruktionen lesen und makieren in der GUI

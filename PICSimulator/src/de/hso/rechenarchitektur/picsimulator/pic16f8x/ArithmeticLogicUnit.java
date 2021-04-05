@@ -6,6 +6,26 @@ public final class ArithmeticLogicUnit {
         ADD, SUB, AND, OR, XOR
     }
 
+    public static int add(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+        return operation(AluOperations.ADD, ram, wRegisterValue, otherValue);
+    }
+
+    public static int sub(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+        return operation(AluOperations.SUB, ram, wRegisterValue, otherValue);
+    }
+
+    public static int and(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+        return operation(AluOperations.AND, ram, wRegisterValue, otherValue);
+    }
+
+    public static int or(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+        return operation(AluOperations.OR, ram, wRegisterValue, otherValue);
+    }
+
+    public static int xor(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+        return operation(AluOperations.XOR, ram, wRegisterValue, otherValue);
+    }
+
     public static int operation(AluOperations operation, RandomAccessMemory ram, int wRegisterValue, int otherValue) {
         //todo check for flags
         int result = wRegisterValue;

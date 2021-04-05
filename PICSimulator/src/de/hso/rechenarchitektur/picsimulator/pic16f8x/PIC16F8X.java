@@ -108,11 +108,11 @@ public class PIC16F8X {
                 break;
             case ADDLW:
                 cycles = 1;
-                wRegister = ArithmeticLogicUnit.operation(AluOperations.ADD, ram, wRegister, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.add(ram, wRegister, currentInstruction.getFK());
                 break;
             case ANDLW:
                 cycles = 1;
-                wRegister = ArithmeticLogicUnit.operation(AluOperations.AND, ram, wRegister, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.and(ram, wRegister, currentInstruction.getFK());
                 break;
             case CALL:
                 break;
@@ -123,7 +123,7 @@ public class PIC16F8X {
                 break;
             case IORLW:
                 cycles = 1;
-                wRegister = ArithmeticLogicUnit.operation(AluOperations.OR, ram, wRegister, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.xor(ram, wRegister, currentInstruction.getFK());
                 break;
             case MOVLW:
                 System.out.println("movelw " + currentInstruction.getFK());

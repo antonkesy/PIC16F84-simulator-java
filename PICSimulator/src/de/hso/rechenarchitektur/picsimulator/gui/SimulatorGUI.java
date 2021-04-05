@@ -166,11 +166,11 @@ public class SimulatorGUI {
     private void updateSFRBits() {
         if (pic == null) return;
         //status
-        fillModelRowWithData(modelStatusBits, pic.getStatusDataString(), 0);
+        fillModelRowWithData(modelStatusBits, pic.getRam().getStatusDataString(), 0);
         //status
-        fillModelRowWithData(modelOptionBits, pic.getOptionDataString(), 0);
+        fillModelRowWithData(modelOptionBits, pic.getRam().getOptionDataString(), 0);
         //Intcon
-        fillModelRowWithData(modelIntconBits, pic.getIntconDataString(), 0);
+        fillModelRowWithData(modelIntconBits, pic.getRam().getIntconDataString(), 0);
     }
 
     private void updateSFRW() {

@@ -8,16 +8,11 @@ public class PIC16F8X {
     private int quarzSpeed = 32;
 
     private Stack stack;
-    private ProgramMemory programMemory;
+    private final ProgramMemory programMemory;
     private RandomAccessMemory ram;
     private InstructionLine currentInstructionInRegister;
 
-
     private int wRegister;
-
-    //Flags
-    private boolean carryFlag, digitCarryFlag, zeroFlag; //todo("in ram speichern")
-
 
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);

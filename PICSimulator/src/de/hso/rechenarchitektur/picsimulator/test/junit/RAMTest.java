@@ -24,7 +24,7 @@ public class RAMTest {
     }
 
     private void setStatusAllFlags(RandomAccessMemory ram) {
-        ram.setStatus(0b111_1111);
+        ram.setStatus(0b1111_1111);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RAMTest {
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
         ram.setCarryFlag(true);
-        Assert.assertEquals(0b11_1111, ram.getStatus());
+        Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class RAMTest {
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
         ram.setDigitCarryFlag(true);
-        Assert.assertEquals(0b11_1111, ram.getStatus());
+        Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class RAMTest {
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
         ram.setZeroFlag(true);
-        Assert.assertEquals(0b11_1111, ram.getStatus());
+        Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class RAMTest {
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
         ram.setPowerDownFlag(true);
-        Assert.assertEquals(0b11_1111, ram.getStatus());
+        Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
     @Test
@@ -112,13 +112,13 @@ public class RAMTest {
         Assert.assertTrue(ram.isCarryFlag());
         Assert.assertFalse(ram.isRegisterBank0());
         ram.setTimeOutFlag(true);
-        Assert.assertEquals(0b11_1111, ram.getStatus());
+        Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
     @Test
-    public void testBank0Flag() {
+    public void testBankFlag() {
         setStatusAllFlags(ram);
-        ram.setRegisterBank0(true);
+        ram.setRegisterBank(RandomAccessMemory.Bank.BANK0);
         Assert.assertTrue(ram.isRegisterBank0());
         //
         Assert.assertTrue(ram.isDigitCarryFlag());
@@ -126,8 +126,8 @@ public class RAMTest {
         Assert.assertTrue(ram.isPowerDownFlag());
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertTrue(ram.isCarryFlag());
-        ram.setRegisterBank0(false);
-        Assert.assertEquals(0b11_1111, ram.getStatus());
+        ram.setRegisterBank(RandomAccessMemory.Bank.BANK1);
+        Assert.assertEquals(0b1011_1111, ram.getStatus());
     }
 
 }

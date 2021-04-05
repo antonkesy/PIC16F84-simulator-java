@@ -11,11 +11,9 @@ public class RandomAccessMemory {
      * Bank0 = [0-127][0] --- Bank1 = [0-127][1]
      */
     private final int[][] memory;
-    private boolean isBank0;
 
     public RandomAccessMemory() {
         memory = new int[128][2];
-        isBank0 = true;
         setStatus(0b0001_1000);
         setTrisA(0b11_1111);
         setTrisB(0b1111_1111);
@@ -30,22 +28,14 @@ public class RandomAccessMemory {
     public void setDataToAddress(int address, int data) {
         //Wenn im AnwenderBereich, dann wird es gespiegelt
         if (address >= 0x0C && address <= 0x2F) {
-            memory[address][isBank0 ? 1 : 0] = data;
+            memory[address][isRegisterBank0() ? 1 : 0] = data;
         }
 
         memory[address][getCurrentBankIndex()] = data;
     }
 
     private int getCurrentBankIndex() {
-        return isBank0 ? 0 : 1;
-    }
-
-    public void SetBank0() {
-        isBank0 = true;
-    }
-
-    public void SetBank1() {
-        isBank0 = false;
+        return isRegisterBank0() ? 0 : 1;
     }
 
     public int getIND() {
@@ -89,11 +79,14 @@ public class RandomAccessMemory {
     }
 
     public int getStatus() {
-        return getDataFromAddress(3);
+        return memory[3][0];
     }
 
     public void setStatus(int value) {
-        setDataToAddress(3, value);
+        //Gespiegelt?
+        memory[3][0] = value;
+        memory[3][1] = value;
+        //setDataToAddress(3, value);
     }
 
     public void setStatusBits(
@@ -124,12 +117,11 @@ public class RandomAccessMemory {
             statusValue += 0b1_0000;
         }
 
-        if (isRegisterBank0) {
+        if (!isRegisterBank0) {
             statusValue += 0b10_0000;
         }
 
         setStatus(statusValue);
-
     }
 
     public boolean isCarryFlag() {
@@ -149,15 +141,35 @@ public class RandomAccessMemory {
     }
 
     public boolean isTimeOutFlag() {
-        return (getStatus() & 0b1000) == 0b1000;
+        return (getStatus() & 0b10000) == 0b10000;
     }
 
     public boolean isRegisterBank0() {
-        return (getStatus() & 0b1000) == 0b1000;
+        return ((getStatus() & 0b10_0000) != 0b10_0000);
     }
 
     public void setCarryFlag(boolean isCarry) {
+        setStatusBits(isCarry, isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0());
+    }
 
+    public void setDigitCarryFlag(boolean isDigitCarry) {
+        setStatusBits(isCarryFlag(), isDigitCarry, isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0());
+    }
+
+    public void setZeroFlag(boolean isZero) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZero, isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0());
+    }
+
+    public void setPowerDownFlag(boolean isPowerDownFlag) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag, isTimeOutFlag(), isRegisterBank0());
+    }
+
+    public void setTimeOutFlag(boolean isTimeOutFlag) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag, isRegisterBank0());
+    }
+
+    public void setRegisterBank0(boolean isRegisterBank0) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0);
     }
 
     public int getFSR() {
@@ -177,7 +189,7 @@ public class RandomAccessMemory {
     }
 
     public int getTrisA() {
-        return memory[1][5];
+        return memory[5][1];
     }
 
     public void setTrisA(int value) {
@@ -185,7 +197,7 @@ public class RandomAccessMemory {
     }
 
     public int getPortB() {
-        return memory[0][6];
+        return memory[6][0];
     }
 
     public void setPortB(int value) {
@@ -193,7 +205,7 @@ public class RandomAccessMemory {
     }
 
     public int getTrisB() {
-        return memory[1][6];
+        return memory[6][1];
     }
 
     public void setTrisB(int value) {
@@ -255,7 +267,7 @@ public class RandomAccessMemory {
         int indexY = 0;
         //Value
         for (int[] bank : memory) {
-            result[indexY][indexX] = Integer.toHexString(bank[isBank0 ? 0 : 1]);
+            result[indexY][indexX] = Integer.toHexString(bank[isRegisterBank0() ? 0 : 1]);
             if (++indexX >= result[indexY].length) {
                 indexX = 1;
                 ++indexY;

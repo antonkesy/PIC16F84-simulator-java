@@ -21,6 +21,10 @@ public class RandomAccessMemory {
         setOption(0b1111_1111);
     }
 
+    public enum Bank {
+        BANK0, BANK1, BANK2, BANK3
+    }
+
     public int getDataFromAddress(int address) {
         return memory[address][getCurrentBankIndex()];
     }
@@ -95,7 +99,8 @@ public class RandomAccessMemory {
             boolean isZeroFlag,
             boolean isPowerDownFlag,
             boolean isTimeOutFlag,
-            boolean isRegisterBank0) {
+            Bank activeBank,
+            boolean isIRP) {
         int statusValue = 0;
         if (isCarryFlag) {
             statusValue += 0b1;
@@ -117,9 +122,25 @@ public class RandomAccessMemory {
             statusValue += 0b1_0000;
         }
 
-        if (!isRegisterBank0) {
-            statusValue += 0b10_0000;
+        switch (activeBank) {
+            case BANK0:
+                //nothing
+                break;
+            case BANK1:
+                statusValue += 0b10_0000;
+                break;
+            case BANK2:
+                statusValue += 0b100_0000;
+                break;
+            case BANK3:
+                statusValue += 0b110_0000;
+                break;
         }
+
+        if (isIRP) {
+            statusValue += 0b1000_0000;
+        }
+
 
         setStatus(statusValue);
     }
@@ -145,32 +166,68 @@ public class RandomAccessMemory {
     }
 
     public boolean isRegisterBank0() {
-        return ((getStatus() & 0b10_0000) != 0b10_0000);
+        return getCurrentBank() == Bank.BANK0;
+    }
+
+    public boolean isRP0() {
+        return (getStatus() & 0b1_0000) == 0b1_0000;
+    }
+
+    public boolean isRP1() {
+        return (getStatus() & 0b10_0000) == 0b10_0000;
+    }
+
+    public Bank getCurrentBank() {
+        Bank currentBank = Bank.BANK0;
+        switch (getStatus() & 0b110_0000) {
+            case 0b000_0000:
+                //already
+                break;
+            case 0b010_0000:
+                currentBank = Bank.BANK1;
+                break;
+            case 0b100_0000:
+                currentBank = Bank.BANK2;
+                break;
+            case 0b110_0000:
+                currentBank = Bank.BANK3;
+                break;
+        }
+        return currentBank;
+    }
+
+    public boolean isIRPFlag() {
+        return (getStatus() & 0b1000_0000) == 0b1000_0000;
     }
 
     public void setCarryFlag(boolean isCarry) {
-        setStatusBits(isCarry, isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0());
+        setStatusBits(isCarry, isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag());
     }
 
     public void setDigitCarryFlag(boolean isDigitCarry) {
-        setStatusBits(isCarryFlag(), isDigitCarry, isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0());
+        setStatusBits(isCarryFlag(), isDigitCarry, isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag());
     }
 
     public void setZeroFlag(boolean isZero) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZero, isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0());
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZero, isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag());
     }
 
     public void setPowerDownFlag(boolean isPowerDownFlag) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag, isTimeOutFlag(), isRegisterBank0());
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag, isTimeOutFlag(), getCurrentBank(), isIRPFlag());
     }
 
     public void setTimeOutFlag(boolean isTimeOutFlag) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag, isRegisterBank0());
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag, getCurrentBank(), isIRPFlag());
     }
 
-    public void setRegisterBank0(boolean isRegisterBank0) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRegisterBank0);
+    public void setRegisterBank(Bank setBank) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), setBank, isIRPFlag());
     }
+
+    public void setIRPFlag(boolean isIRPFlag) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag);
+    }
+
 
     public int getFSR() {
         return getDataFromAddress(4);
@@ -279,5 +336,17 @@ public class RandomAccessMemory {
         }
 
         return result;
+    }
+
+    public String[] getStatusDataString() {
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+    }
+
+    public String[] getOptionDataString() {
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+    }
+
+    public String[] getIntconDataString() {
+        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
     }
 }

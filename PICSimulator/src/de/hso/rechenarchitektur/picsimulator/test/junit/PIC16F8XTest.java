@@ -9,6 +9,8 @@ public class PIC16F8XTest {
     public void testIsEmpty() {
         //PIC16F8X testPic = new PIC16F8X();
         //TODO("create test for functionality")
+
+        //TODO Simple programs
     }
 
 }

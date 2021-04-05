@@ -339,7 +339,16 @@ public class RandomAccessMemory {
     }
 
     public String[] getStatusDataString() {
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+        return new String[]{
+                booleanToString(isIRPFlag()),
+                booleanToString(isRP1()),
+                booleanToString(isRP0()),
+                booleanToString(isTimeOutFlag()),
+                booleanToString(isPowerDownFlag()),
+                booleanToString(isZeroFlag()),
+                booleanToString(isDigitCarryFlag()),
+                booleanToString(isCarryFlag()),
+        };
     }
 
     public String[] getOptionDataString() {
@@ -348,5 +357,9 @@ public class RandomAccessMemory {
 
     public String[] getIntconDataString() {
         return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+    }
+
+    private String booleanToString(boolean isActive) {
+        return isActive ? "1" : "0";
     }
 }

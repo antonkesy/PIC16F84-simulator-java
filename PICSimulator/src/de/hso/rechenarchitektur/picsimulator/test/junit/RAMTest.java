@@ -38,6 +38,9 @@ public class RAMTest {
         Assert.assertTrue(ram.isPowerDownFlag());
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertTrue(ram.isIRPFlag());
     }
 
     @Test
@@ -51,6 +54,9 @@ public class RAMTest {
         Assert.assertTrue(ram.isPowerDownFlag());
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertTrue(ram.isIRPFlag());
         ram.setCarryFlag(true);
         Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
@@ -66,6 +72,9 @@ public class RAMTest {
         Assert.assertTrue(ram.isPowerDownFlag());
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertTrue(ram.isIRPFlag());
         ram.setDigitCarryFlag(true);
         Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
@@ -81,6 +90,9 @@ public class RAMTest {
         Assert.assertTrue(ram.isPowerDownFlag());
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertTrue(ram.isIRPFlag());
         ram.setZeroFlag(true);
         Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
@@ -96,6 +108,9 @@ public class RAMTest {
         Assert.assertTrue(ram.isCarryFlag());
         Assert.assertTrue(ram.isTimeOutFlag());
         Assert.assertFalse(ram.isRegisterBank0());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertTrue(ram.isIRPFlag());
         ram.setPowerDownFlag(true);
         Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
@@ -111,6 +126,9 @@ public class RAMTest {
         Assert.assertTrue(ram.isPowerDownFlag());
         Assert.assertTrue(ram.isCarryFlag());
         Assert.assertFalse(ram.isRegisterBank0());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertTrue(ram.isIRPFlag());
         ram.setTimeOutFlag(true);
         Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
@@ -128,6 +146,24 @@ public class RAMTest {
         Assert.assertTrue(ram.isCarryFlag());
         ram.setRegisterBank(RandomAccessMemory.Bank.BANK1);
         Assert.assertEquals(0b1011_1111, ram.getStatus());
+    }
+
+    @Test
+    public void testIRPFlag() {
+        setStatusAllFlags(ram);
+        ram.setIRPFlag(false);
+        Assert.assertFalse(ram.isIRPFlag());
+        //
+        Assert.assertTrue(ram.isDigitCarryFlag());
+        Assert.assertTrue(ram.isZeroFlag());
+        Assert.assertTrue(ram.isPowerDownFlag());
+        Assert.assertTrue(ram.isCarryFlag());
+        Assert.assertTrue(ram.isCarryFlag());
+        Assert.assertTrue(ram.isRP0());
+        Assert.assertTrue(ram.isRP1());
+        Assert.assertFalse(ram.isRegisterBank0());
+        ram.setIRPFlag(true);
+        Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
 }

@@ -170,11 +170,11 @@ public class RandomAccessMemory {
     }
 
     public boolean isRP0() {
-        return (getStatus() & 0b1_0000) == 0b1_0000;
+        return (getStatus() & 0b10_0000) == 0b10_0000;
     }
 
     public boolean isRP1() {
-        return (getStatus() & 0b10_0000) == 0b10_0000;
+        return (getStatus() & 0b100_0000) == 0b100_0000;
     }
 
     public Bank getCurrentBank() {

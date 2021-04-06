@@ -3,7 +3,7 @@ package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 public final class ArithmeticLogicUnit {
 
     public enum AluOperations {
-        ADD, SUB, AND, OR, XOR
+        ADD, SUB, AND, OR, XOR, NOT
     }
 
     public static int add(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
@@ -24,6 +24,10 @@ public final class ArithmeticLogicUnit {
 
     public static int xor(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
         return operation(AluOperations.XOR, ram, wRegisterValue, otherValue);
+    }
+
+    public static int not(RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+        return operation(AluOperations.NOT, ram, wRegisterValue, otherValue);
     }
 
     public static int operation(AluOperations operation, RandomAccessMemory ram, int wRegisterValue, int otherValue) {

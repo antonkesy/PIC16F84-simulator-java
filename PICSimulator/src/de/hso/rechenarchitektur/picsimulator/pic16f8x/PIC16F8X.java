@@ -126,7 +126,6 @@ public class PIC16F8X {
                 wRegister = ArithmeticLogicUnit.xor(ram, wRegister, currentInstruction.getFK());
                 break;
             case MOVLW:
-                System.out.println("movelw " + currentInstruction.getFK());
                 wRegister = currentInstruction.getFK();
                 break;
             case RETFIE:

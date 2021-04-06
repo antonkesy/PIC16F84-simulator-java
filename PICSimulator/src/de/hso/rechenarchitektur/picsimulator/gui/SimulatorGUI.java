@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Arrays;
 
 public class SimulatorGUI {
 
@@ -16,35 +17,35 @@ public class SimulatorGUI {
     private JButton autorunButton;
     private JButton stepButton;
     private JComboBox<ComboBoxItem> quarzBox;
-    private JCheckBox a4CheckBox;
-    private JCheckBox a0CheckBox;
-    private JCheckBox a3CheckBox1;
-    private JCheckBox a3CheckBox;
-    private JCheckBox a1CheckBox;
-    private JCheckBox a7CheckBox;
-    private JCheckBox a6CheckBox;
-    private JCheckBox a0CheckBox1;
-    private JCheckBox a1CheckBox1;
-    private JCheckBox a2CheckBox;
-    private JCheckBox a3CheckBox2;
-    private JCheckBox a4CheckBox1;
-    private JCheckBox a5CheckBox;
-    private JCheckBox a4CheckBox2;
-    private JCheckBox a0CheckBox2;
-    private JCheckBox a1CheckBox2;
-    private JCheckBox a2CheckBox1;
-    private JCheckBox a3CheckBox3;
-    private JCheckBox a7CheckBox1;
-    private JCheckBox a6CheckBox1;
-    private JCheckBox a0CheckBox3;
-    private JCheckBox a1CheckBox3;
-    private JCheckBox a2CheckBox2;
-    private JCheckBox a3CheckBox4;
-    private JCheckBox a5CheckBox1;
-    private JCheckBox a4CheckBox3;
-    private JCheckBox a5CheckBox2;
-    private JCheckBox a6CheckBox2;
-    private JCheckBox a7CheckBox2;
+    private JCheckBox pAp4CheckBox;
+    private JCheckBox pAp0CheckBox;
+    private JCheckBox pAp2CheckBox;
+    private JCheckBox pAp3CheckBox;
+    private JCheckBox pAp1CheckBox;
+    private JCheckBox pAt7CheckBox;
+    private JCheckBox pAt6CheckBox;
+    private JCheckBox pAt0CheckBox;
+    private JCheckBox pAt1CheckBox;
+    private JCheckBox pAt2CheckBox;
+    private JCheckBox pAt3CheckBox;
+    private JCheckBox pAt4CheckBox;
+    private JCheckBox pAt5CheckBox;
+    private JCheckBox pBp4CheckBox;
+    private JCheckBox pBp0CheckBox;
+    private JCheckBox pBp1CheckBox;
+    private JCheckBox pBp2CheckBox;
+    private JCheckBox pBp3CheckBox;
+    private JCheckBox pBt7CheckBox;
+    private JCheckBox pBt6CheckBox;
+    private JCheckBox pBt0CheckBox;
+    private JCheckBox pBt1CheckBox;
+    private JCheckBox pBt2CheckBox;
+    private JCheckBox pBt3CheckBox;
+    private JCheckBox pBt5CheckBox;
+    private JCheckBox pBt4CheckBox;
+    private JCheckBox pBp5CheckBox;
+    private JCheckBox pBp6CheckBox;
+    private JCheckBox pBp7CheckBox;
     private JTable fileRegisterTable;
     private JList list1;
     private JButton oeffneNeueDateiButton;
@@ -72,6 +73,10 @@ public class SimulatorGUI {
     private JLabel timer0Value;
     private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
+    private final JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
+    private final JCheckBox[] trisA = {pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
+    private final JCheckBox[] portBPins = {pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
+    private final JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
     //
     private PIC16F8X pic;
 
@@ -122,7 +127,36 @@ public class SimulatorGUI {
         //AutoRun Switch Button
         autorunButton.addActionListener(e -> switchAutoRunSimulator());
 
+
+        //PortAPin Listener
+
+        Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> updatePortAPins()));
+        Arrays.stream(portBPins).forEach(p -> p.addActionListener(a -> updatePortBPins()));
+
+
         updateFileRegister();
+
+
+    }
+
+    private int getPinValue(JCheckBox[] pins) {
+        int portPinValue = 0;
+        for (int i = 0; i < pins.length; ++i) {
+            if (pins[i].isSelected()) {
+                portPinValue += Math.pow(2, i);
+            }
+        }
+        return portPinValue;
+    }
+
+    private void updatePortBPins() {
+        pic.getRam().setPortB(getPinValue(portBPins));
+        updateUIFromPIC();
+    }
+
+    private void updatePortAPins() {
+        pic.getRam().setPortA(getPinValue(portAPins));
+        updateUIFromPIC();
     }
 
     public static void main(String[] args) {
@@ -146,7 +180,7 @@ public class SimulatorGUI {
         updateFileRegister();
         updateSFRBits();
         updateSFRW();
-        UpdatePorts();
+        UpdateTris();
     }
 
     /**
@@ -159,33 +193,23 @@ public class SimulatorGUI {
         }
     }
 
-    private void UpdatePorts() {
-        updatePortA();
-        updatePortB();
+    private void UpdateTris() {
+        updateTrisA();
+        updateTrisB();
     }
 
-    private void updatePortA() {
-        int portAValue = pic.getRam().getPortA();
-        a7CheckBox.setSelected(isBitInPosOne(portAValue, 7));
-        a6CheckBox.setSelected(isBitInPosOne(portAValue, 6));
-        a5CheckBox.setSelected(isBitInPosOne(portAValue, 5));
-        a4CheckBox.setSelected(isBitInPosOne(portAValue, 4));
-        a3CheckBox.setSelected(isBitInPosOne(portAValue, 3));
-        a2CheckBox.setSelected(isBitInPosOne(portAValue, 2));
-        a1CheckBox.setSelected(isBitInPosOne(portAValue, 1));
-        a0CheckBox.setSelected(isBitInPosOne(portAValue, 0));
+    private void updateTrisA() {
+        int portAValue = pic.getRam().getTrisA();
+        for (int i = 0; i < trisA.length; ++i) {
+            trisA[i].setSelected(isBitInPosOne(portAValue, i));
+        }
     }
 
-    private void updatePortB() {
-        int portBValue = pic.getRam().getPortB();
-        a7CheckBox1.setSelected(isBitInPosOne(portBValue, 7));
-        a6CheckBox1.setSelected(isBitInPosOne(portBValue, 6));
-        a5CheckBox1.setSelected(isBitInPosOne(portBValue, 5));
-        a4CheckBox1.setSelected(isBitInPosOne(portBValue, 4));
-        a3CheckBox1.setSelected(isBitInPosOne(portBValue, 3));
-        a2CheckBox1.setSelected(isBitInPosOne(portBValue, 2));
-        a1CheckBox1.setSelected(isBitInPosOne(portBValue, 1));
-        a0CheckBox1.setSelected(isBitInPosOne(portBValue, 0));
+    private void updateTrisB() {
+        int portBValue = pic.getRam().getTrisB();
+        for (int i = 0; i < trisB.length; ++i) {
+            trisB[i].setSelected(isBitInPosOne(portBValue, i));
+        }
     }
 
     private boolean isBitInPosOne(int byteValue, int pos) {

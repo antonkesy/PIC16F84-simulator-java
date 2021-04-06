@@ -563,7 +563,7 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <component id="e33c3" class="javax.swing.JCheckBox" binding="a4CheckBox2" default-binding="true">
+                              <component id="e33c3" class="javax.swing.JCheckBox" binding="pBp4CheckBox">
                                 <constraints>
                                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -571,7 +571,7 @@
                                   <text value="4"/>
                                 </properties>
                               </component>
-                              <component id="12b28" class="javax.swing.JCheckBox" binding="a0CheckBox2" default-binding="true">
+                              <component id="12b28" class="javax.swing.JCheckBox" binding="pBp0CheckBox">
                                 <constraints>
                                   <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -579,7 +579,7 @@
                                   <text value="0"/>
                                 </properties>
                               </component>
-                              <component id="db13a" class="javax.swing.JCheckBox" binding="a1CheckBox2" default-binding="true">
+                              <component id="db13a" class="javax.swing.JCheckBox" binding="pBp1CheckBox">
                                 <constraints>
                                   <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -587,7 +587,7 @@
                                   <text value="1"/>
                                 </properties>
                               </component>
-                              <component id="461d6" class="javax.swing.JCheckBox" binding="a2CheckBox1" default-binding="true">
+                              <component id="461d6" class="javax.swing.JCheckBox" binding="pBp2CheckBox">
                                 <constraints>
                                   <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -595,7 +595,7 @@
                                   <text value="2"/>
                                 </properties>
                               </component>
-                              <component id="bc73c" class="javax.swing.JCheckBox" binding="a3CheckBox3" default-binding="true">
+                              <component id="bc73c" class="javax.swing.JCheckBox" binding="pBp3CheckBox">
                                 <constraints>
                                   <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -603,7 +603,7 @@
                                   <text value="3"/>
                                 </properties>
                               </component>
-                              <component id="3157" class="javax.swing.JCheckBox" binding="a5CheckBox2" default-binding="true">
+                              <component id="3157" class="javax.swing.JCheckBox" binding="pBp5CheckBox">
                                 <constraints>
                                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -611,7 +611,7 @@
                                   <text value="5"/>
                                 </properties>
                               </component>
-                              <component id="55edb" class="javax.swing.JCheckBox" binding="a6CheckBox2" default-binding="true">
+                              <component id="55edb" class="javax.swing.JCheckBox" binding="pBp6CheckBox">
                                 <constraints>
                                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -619,7 +619,7 @@
                                   <text value="6"/>
                                 </properties>
                               </component>
-                              <component id="3b968" class="javax.swing.JCheckBox" binding="a7CheckBox2" default-binding="true">
+                              <component id="3b968" class="javax.swing.JCheckBox" binding="pBp7CheckBox">
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -629,7 +629,7 @@
                               </component>
                             </children>
                           </grid>
-                          <component id="94c8b" class="javax.swing.JCheckBox" binding="a7CheckBox1" default-binding="true">
+                          <component id="94c8b" class="javax.swing.JCheckBox" binding="pBt7CheckBox">
                             <constraints>
                               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -638,7 +638,7 @@
                               <text value="7"/>
                             </properties>
                           </component>
-                          <component id="f709b" class="javax.swing.JCheckBox" binding="a6CheckBox1" default-binding="true">
+                          <component id="f709b" class="javax.swing.JCheckBox" binding="pBt6CheckBox">
                             <constraints>
                               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -647,7 +647,7 @@
                               <text value="6"/>
                             </properties>
                           </component>
-                          <component id="10274" class="javax.swing.JCheckBox" binding="a0CheckBox3" default-binding="true">
+                          <component id="10274" class="javax.swing.JCheckBox" binding="pBt0CheckBox">
                             <constraints>
                               <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -656,7 +656,7 @@
                               <text value="0"/>
                             </properties>
                           </component>
-                          <component id="8f57a" class="javax.swing.JCheckBox" binding="a1CheckBox3" default-binding="true">
+                          <component id="8f57a" class="javax.swing.JCheckBox" binding="pBt1CheckBox">
                             <constraints>
                               <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -665,7 +665,7 @@
                               <text value="1"/>
                             </properties>
                           </component>
-                          <component id="f4729" class="javax.swing.JCheckBox" binding="a2CheckBox2" default-binding="true">
+                          <component id="f4729" class="javax.swing.JCheckBox" binding="pBt2CheckBox">
                             <constraints>
                               <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -674,7 +674,7 @@
                               <text value="2"/>
                             </properties>
                           </component>
-                          <component id="89f" class="javax.swing.JCheckBox" binding="a3CheckBox4" default-binding="true">
+                          <component id="89f" class="javax.swing.JCheckBox" binding="pBt3CheckBox">
                             <constraints>
                               <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -684,7 +684,7 @@
                               <text value="3"/>
                             </properties>
                           </component>
-                          <component id="fee94" class="javax.swing.JCheckBox" binding="a5CheckBox1" default-binding="true">
+                          <component id="fee94" class="javax.swing.JCheckBox" binding="pBt5CheckBox">
                             <constraints>
                               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -693,7 +693,7 @@
                               <text value="5"/>
                             </properties>
                           </component>
-                          <component id="c2358" class="javax.swing.JCheckBox" binding="a4CheckBox3" default-binding="true">
+                          <component id="c2358" class="javax.swing.JCheckBox" binding="pBt4CheckBox">
                             <constraints>
                               <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -736,7 +736,7 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <component id="3dcaf" class="javax.swing.JCheckBox" binding="a4CheckBox" default-binding="true">
+                              <component id="3dcaf" class="javax.swing.JCheckBox" binding="pAp4CheckBox">
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -744,7 +744,7 @@
                                   <text value="4"/>
                                 </properties>
                               </component>
-                              <component id="8e6b2" class="javax.swing.JCheckBox" binding="a0CheckBox" default-binding="true">
+                              <component id="8e6b2" class="javax.swing.JCheckBox" binding="pAp0CheckBox">
                                 <constraints>
                                   <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -752,7 +752,7 @@
                                   <text value="0"/>
                                 </properties>
                               </component>
-                              <component id="75f48" class="javax.swing.JCheckBox" binding="a3CheckBox1" default-binding="true">
+                              <component id="75f48" class="javax.swing.JCheckBox" binding="pAp2CheckBox">
                                 <constraints>
                                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -760,7 +760,7 @@
                                   <text value="3"/>
                                 </properties>
                               </component>
-                              <component id="4a57f" class="javax.swing.JCheckBox" binding="a3CheckBox" default-binding="true">
+                              <component id="4a57f" class="javax.swing.JCheckBox" binding="pAp3CheckBox">
                                 <constraints>
                                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -768,7 +768,7 @@
                                   <text value="3"/>
                                 </properties>
                               </component>
-                              <component id="4370" class="javax.swing.JCheckBox" binding="a1CheckBox" default-binding="true">
+                              <component id="4370" class="javax.swing.JCheckBox" binding="pAp1CheckBox">
                                 <constraints>
                                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -778,7 +778,7 @@
                               </component>
                             </children>
                           </grid>
-                          <component id="6d9a3" class="javax.swing.JCheckBox" binding="a7CheckBox" default-binding="true">
+                          <component id="6d9a3" class="javax.swing.JCheckBox" binding="pAt7CheckBox">
                             <constraints>
                               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -787,7 +787,7 @@
                               <text value="7"/>
                             </properties>
                           </component>
-                          <component id="f7254" class="javax.swing.JCheckBox" binding="a6CheckBox" default-binding="true">
+                          <component id="f7254" class="javax.swing.JCheckBox" binding="pAt6CheckBox">
                             <constraints>
                               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -797,7 +797,7 @@
                               <text value="6"/>
                             </properties>
                           </component>
-                          <component id="b2fdc" class="javax.swing.JCheckBox" binding="a0CheckBox1" default-binding="true">
+                          <component id="b2fdc" class="javax.swing.JCheckBox" binding="pAt0CheckBox">
                             <constraints>
                               <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -806,7 +806,7 @@
                               <text value="0"/>
                             </properties>
                           </component>
-                          <component id="608b7" class="javax.swing.JCheckBox" binding="a1CheckBox1" default-binding="true">
+                          <component id="608b7" class="javax.swing.JCheckBox" binding="pAt1CheckBox">
                             <constraints>
                               <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -815,7 +815,7 @@
                               <text value="1"/>
                             </properties>
                           </component>
-                          <component id="9cb6b" class="javax.swing.JCheckBox" binding="a2CheckBox" default-binding="true">
+                          <component id="9cb6b" class="javax.swing.JCheckBox" binding="pAt2CheckBox">
                             <constraints>
                               <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -824,7 +824,7 @@
                               <text value="2"/>
                             </properties>
                           </component>
-                          <component id="327f0" class="javax.swing.JCheckBox" binding="a3CheckBox2" default-binding="true">
+                          <component id="327f0" class="javax.swing.JCheckBox" binding="pAt3CheckBox">
                             <constraints>
                               <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -833,7 +833,7 @@
                               <text value="3"/>
                             </properties>
                           </component>
-                          <component id="5ab4f" class="javax.swing.JCheckBox" binding="a4CheckBox1" default-binding="true">
+                          <component id="5ab4f" class="javax.swing.JCheckBox" binding="pAt4CheckBox">
                             <constraints>
                               <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -842,7 +842,7 @@
                               <text value="4"/>
                             </properties>
                           </component>
-                          <component id="ad9fa" class="javax.swing.JCheckBox" binding="a5CheckBox" default-binding="true">
+                          <component id="ad9fa" class="javax.swing.JCheckBox" binding="pAt5CheckBox">
                             <constraints>
                               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>

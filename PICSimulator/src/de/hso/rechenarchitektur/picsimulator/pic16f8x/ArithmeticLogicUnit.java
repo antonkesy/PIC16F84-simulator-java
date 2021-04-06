@@ -45,6 +45,14 @@ public final class ArithmeticLogicUnit {
                 //
                 //TODO set flags
                 result += otherValue;
+                //CarryFlag
+                if (result > 255) {
+                    ram.setCarryFlag(true);
+                    result -= 255;
+                }
+                if (result == 0) {
+                    ram.setZeroFlag(true);
+                }
                 break;
             case SUB:
                 //Reset affected flags
@@ -55,16 +63,28 @@ public final class ArithmeticLogicUnit {
                 if (otherValue <= wRegisterValue) {
                     ram.setCarryFlag(true);
                 }
+                if (result == 0) {
+                    ram.setZeroFlag(true);
+                }
                 result -= otherValue;
                 break;
             case AND:
                 result &= otherValue;
+                if (result == 0) {
+                    ram.setZeroFlag(true);
+                }
                 break;
             case OR:
                 result |= otherValue;
+                if (result == 0) {
+                    ram.setZeroFlag(true);
+                }
                 break;
             case XOR:
                 result ^= otherValue;
+                if (result == 0) {
+                    ram.setZeroFlag(true);
+                }
                 break;
         }
         return result;

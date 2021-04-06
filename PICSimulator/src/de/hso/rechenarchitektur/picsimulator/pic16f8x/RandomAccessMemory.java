@@ -258,7 +258,7 @@ public class RandomAccessMemory {
     }
 
     public void setPortB(int value) {
-        memory[6][1] = value;
+        memory[6][0] = value;
     }
 
     public int getTrisB() {

@@ -238,7 +238,7 @@ public class RandomAccessMemory {
     }
 
     public int getPortA() {
-        return memory[0][5];
+        return memory[5][0];
     }
 
     public void setPortA(int value) {

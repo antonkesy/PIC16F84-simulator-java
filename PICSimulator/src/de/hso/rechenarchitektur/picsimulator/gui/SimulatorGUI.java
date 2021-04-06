@@ -146,6 +146,7 @@ public class SimulatorGUI {
         updateFileRegister();
         updateSFRBits();
         updateSFRW();
+        UpdatePorts();
     }
 
     /**
@@ -156,6 +157,40 @@ public class SimulatorGUI {
         for (int i = 0; i < stackArray.length; ++i) {
             stackFields[i].setText("" + stackArray[i]);
         }
+    }
+
+    private void UpdatePorts() {
+        updatePortA();
+        updatePortB();
+    }
+
+    private void updatePortA() {
+        int portAValue = pic.getRam().getPortA();
+        a7CheckBox.setSelected(isBitInPosOne(portAValue, 7));
+        a6CheckBox.setSelected(isBitInPosOne(portAValue, 6));
+        a5CheckBox.setSelected(isBitInPosOne(portAValue, 5));
+        a4CheckBox.setSelected(isBitInPosOne(portAValue, 4));
+        a3CheckBox.setSelected(isBitInPosOne(portAValue, 3));
+        a2CheckBox.setSelected(isBitInPosOne(portAValue, 2));
+        a1CheckBox.setSelected(isBitInPosOne(portAValue, 1));
+        a0CheckBox.setSelected(isBitInPosOne(portAValue, 0));
+    }
+
+    private void updatePortB() {
+        int portBValue = pic.getRam().getPortB();
+        a7CheckBox1.setSelected(isBitInPosOne(portBValue, 7));
+        a6CheckBox1.setSelected(isBitInPosOne(portBValue, 6));
+        a5CheckBox1.setSelected(isBitInPosOne(portBValue, 5));
+        a4CheckBox1.setSelected(isBitInPosOne(portBValue, 4));
+        a3CheckBox1.setSelected(isBitInPosOne(portBValue, 3));
+        a2CheckBox1.setSelected(isBitInPosOne(portBValue, 2));
+        a1CheckBox1.setSelected(isBitInPosOne(portBValue, 1));
+        a0CheckBox1.setSelected(isBitInPosOne(portBValue, 0));
+    }
+
+    private boolean isBitInPosOne(int byteValue, int pos) {
+        byteValue >>= pos;
+        return (byteValue & 0b1) == 1;
     }
 
     private void updateFileRegister() {

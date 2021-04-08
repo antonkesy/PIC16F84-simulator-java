@@ -98,7 +98,7 @@ public class SimulatorGUI {
 
         //Oeffne neue Datei OnClickListener
         oeffneNeueDateiButton.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
+            JFileChooser chooser = new JFileChooser(System.getProperty("user.dir") + "/LST");
             FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
             chooser.setFileFilter(filter);
             chooser.showOpenDialog(null);

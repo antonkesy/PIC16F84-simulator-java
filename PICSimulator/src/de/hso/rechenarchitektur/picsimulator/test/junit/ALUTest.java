@@ -15,6 +15,12 @@ public class ALUTest {
     }
 
     @Test
+    public void testIsDigitCarry() {
+        Assert.assertFalse(ArithmeticLogicUnit.isDigitCarry(241, 14));
+        Assert.assertTrue(ArithmeticLogicUnit.isDigitCarry(241, 15));
+    }
+
+    @Test
     public void testADD() {
         Assert.assertEquals(0x25, ArithmeticLogicUnit.add(ram, 0, 0x25));
         //TODO check status flags

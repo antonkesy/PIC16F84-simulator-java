@@ -6,9 +6,14 @@ import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,6 +79,10 @@ public class SimulatorGUI {
     private JLabel vorteilerValue;
     private JLabel timer0Value;
     private JLabel runTimeLabel;
+    private JSpinner stepsSpinner;
+    private JButton nStepsButton;
+    private JSlider speedSlider;
+    private JLabel speedLabel;
     private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     private final JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
@@ -92,6 +101,7 @@ public class SimulatorGUI {
     private AutoRunThread autoRunThread;
 
     private List<InstructionLine> lastReadInstructionsLines;
+
 
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
@@ -141,9 +151,24 @@ public class SimulatorGUI {
         updateFileRegister();
 
 
+        nStepsButton.addActionListener(e -> DoNSteps());
+    }
+
+    private void DoNSteps() {
+        System.out.println(stepsSpinner.getValue());
+        int steps = 0;
+        try {
+            steps = (int) (stepsSpinner.getValue());
+        } catch (Exception e) {
+            System.out.println("Exception");
+        }
+        for (int i = 0; i < steps; ++i) {
+            step();
+        }
     }
 
     private void setPIC() {
+        stepsSpinner.setValue(1000);
         pic = new PIC16F8X(lastReadInstructionsLines);
         list1.setSelectedIndex(0);
         updateUIFromPIC();

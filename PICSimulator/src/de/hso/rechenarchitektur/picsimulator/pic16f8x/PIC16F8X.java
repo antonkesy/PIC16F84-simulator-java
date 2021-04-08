@@ -160,6 +160,10 @@ public class PIC16F8X {
     private long getTimePerCycle() {
         //TODO
         //bei 1MHz => 4micoSecs
+        //
+        //runtime = runtimeCount * 1/(currFrequency * 1000) * 4;
+        //runtime in MS
+        //freq in kHz
         return quarzSpeed * 1000 * 4;
     }
 

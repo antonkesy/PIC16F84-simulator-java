@@ -118,6 +118,9 @@ public class PIC16F8X {
                 wRegister = ArithmeticLogicUnit.and(ram, wRegister, currentInstruction.getFK());
                 break;
             case CALL:
+                cycles = 2;
+                stack.AddNewAddress(getRam().getPCL());
+                getRam().setPCL(currentInstruction.getFK());
                 break;
             case CLRWDT:
                 break;
@@ -135,8 +138,14 @@ public class PIC16F8X {
             case RETFIE:
                 break;
             case RETLW:
+                cycles = 2;
+                //TODO difference between movlw?
+                wRegister = currentInstruction.getFK();
+                getRam().setPCL(stack.getCurrent());
                 break;
             case RETURN:
+                cycles = 2;
+                getRam().setPCL(stack.getCurrent());
                 break;
             case SLEEP:
                 break;

@@ -139,7 +139,6 @@ public class PIC16F8X {
                 break;
             case RETLW:
                 cycles = 2;
-                //TODO difference between movlw?
                 wRegister = currentInstruction.getFK();
                 getRam().setPCL(stack.getCurrent());
                 break;

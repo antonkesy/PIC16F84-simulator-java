@@ -138,7 +138,7 @@ public class PIC16F8X {
                 break;
             case SUBLW:
                 cycles = 1;
-                wRegister = ArithmeticLogicUnit.sub(ram, wRegister, currentInstruction.getFK());
+                wRegister = ArithmeticLogicUnit.sub(ram, currentInstruction.getFK(), wRegister);
                 break;
             case XORLW:
                 cycles = 1;

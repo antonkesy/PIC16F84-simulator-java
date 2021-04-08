@@ -55,7 +55,11 @@ public final class ArithmeticLogicUnit {
                     ram.setCarryFlag(true);
                     // result -= 256; //!!
                 }
+                //DigitCarryFlag
                 result &= 0xFF;
+                if (isDigitCarry(wRegisterValue, otherValue)) {
+                    ram.setDigitCarryFlag(true);
+                }
                 break;
             case AND:
                 result &= otherValue;
@@ -74,5 +78,15 @@ public final class ArithmeticLogicUnit {
         }
 
         return result & 0xFF;
+    }
+
+    public static boolean isDigitCarry(int firstStart, int secondStart) {
+        int carryCheck = (firstStart & 0b01111) + (secondStart & 0b01111);
+        carryCheck >>= 4;
+        System.out.println("CarryCheck : "
+                + Integer.toBinaryString((firstStart & 0b1111))
+                + " + " + Integer.toBinaryString((secondStart & 0b1111)) + " >>4= "
+                + Integer.toBinaryString(carryCheck));
+        return carryCheck != 0;
     }
 }

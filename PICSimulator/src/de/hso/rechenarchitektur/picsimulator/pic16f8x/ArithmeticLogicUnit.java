@@ -38,6 +38,11 @@ public final class ArithmeticLogicUnit {
         ram.setZeroFlag(false);
 
         switch (operation) {
+            case SUB:
+                //Zweierkompliment und dann fallthrough zu ADD
+                result = ~result;
+                result += 1;
+                result &= 0xFF;
             case ADD:
                 //Reset affected flags
                 ram.setCarryFlag(false);
@@ -48,20 +53,8 @@ public final class ArithmeticLogicUnit {
                 //CarryFlag
                 if (result > 255) {
                     ram.setCarryFlag(true);
-                    result -= 255;
+                    result -= 256; //!!
                 }
-                break;
-            case SUB:
-                //Reset affected flags
-                ram.setCarryFlag(false);
-                ram.setDigitCarryFlag(false);
-                //
-                //Maskenfehler des PIC ->  Ist der Subtrahend kleiner oder gleich dem Minuend, wird das Carryflag gesetzt
-                if (otherValue <= wRegisterValue) {
-                    ram.setCarryFlag(true);
-                    result += 255;
-                }
-                result -= otherValue;
                 break;
             case AND:
                 result &= otherValue;
@@ -79,6 +72,6 @@ public final class ArithmeticLogicUnit {
             ram.setZeroFlag(true);
         }
 
-        return result;
+        return result & 0xFF;
     }
 }

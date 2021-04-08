@@ -1,5 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
@@ -9,6 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class SimulatorGUI {
 
@@ -88,6 +90,8 @@ public class SimulatorGUI {
     private boolean isAutoRun;
     private AutoRunThread autoRunThread;
 
+    private List<InstructionLine> lastReadInstructionsLines;
+
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
 
@@ -100,8 +104,8 @@ public class SimulatorGUI {
             if (chooser.getSelectedFile() != null) {
                 FileReader fileReader = new FileReader(chooser.getSelectedFile());
                 list1.setListData(fileReader.getLineList().toArray());
-                pic = new PIC16F8X(fileReader.getInstructionLineList());
-                updateUIFromPIC();
+                lastReadInstructionsLines = fileReader.getInstructionLineList();
+                setPIC();
             }
         });
         //Step OnClickListener
@@ -110,10 +114,9 @@ public class SimulatorGUI {
 
         resetButton.addActionListener(e -> {
             if (pic != null) {
-                list1.setSelectedIndex(pic.resetCall());
                 if (isAutoRun)
                     switchAutoRunSimulator();
-                updateUIFromPIC();
+                setPIC();
             }
         });
         //Quazbox Listener
@@ -137,6 +140,12 @@ public class SimulatorGUI {
         updateFileRegister();
 
 
+    }
+
+    private void setPIC() {
+        pic = new PIC16F8X(lastReadInstructionsLines);
+        list1.setSelectedIndex(0);
+        updateUIFromPIC();
     }
 
     private int getPinValue(JCheckBox[] pins) {

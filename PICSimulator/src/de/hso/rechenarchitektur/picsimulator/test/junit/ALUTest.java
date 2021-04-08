@@ -15,6 +15,12 @@ public class ALUTest {
     }
 
     @Test
+    public void testIsCarry() {
+        Assert.assertFalse(ArithmeticLogicUnit.isCarry(250, 5));
+        Assert.assertTrue(ArithmeticLogicUnit.isCarry(255, 1));
+    }
+
+    @Test
     public void testIsDigitCarry() {
         Assert.assertFalse(ArithmeticLogicUnit.isDigitCarry(241, 14));
         Assert.assertTrue(ArithmeticLogicUnit.isDigitCarry(241, 15));

@@ -40,9 +40,9 @@ public final class ArithmeticLogicUnit {
         switch (operation) {
             case SUB:
                 //Zweierkompliment und dann fallthrough zu ADD
-                result = ~result;
-                result += 1;
-                result &= 0xFF;
+                otherValue = ~otherValue;
+                otherValue += 1;
+                otherValue &= 0xFF;
             case ADD:
                 //Reset affected flags
                 ram.setCarryFlag(false);
@@ -53,8 +53,9 @@ public final class ArithmeticLogicUnit {
                 //CarryFlag
                 if (result > 255) {
                     ram.setCarryFlag(true);
-                    result -= 256; //!!
+                    // result -= 256; //!!
                 }
+                result &= 0xFF;
                 break;
             case AND:
                 result &= otherValue;

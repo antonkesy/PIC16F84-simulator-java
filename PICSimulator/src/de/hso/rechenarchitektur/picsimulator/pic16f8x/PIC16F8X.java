@@ -36,7 +36,7 @@ public class PIC16F8X {
 
     private void InstructionWithDestinationBit(Instruction instruction, AluOperations aluOperation) {
         int result = ArithmeticLogicUnit.operation(aluOperation, ram, wRegister, instruction.getFK());
-        if (instruction.getBD() == 1) {
+        if (instruction.getBD() == 0) {
             wRegister = result;
         } else {
             ram.setDataToAddress(instruction.getFK(), result);

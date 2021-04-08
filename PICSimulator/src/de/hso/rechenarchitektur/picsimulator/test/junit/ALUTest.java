@@ -24,4 +24,15 @@ public class ALUTest {
         //TODO check status flags
         Assert.assertEquals(0x0, ArithmeticLogicUnit.add(ram, 0xF1, 0xF));
     }
+
+    @Test
+    public void testSUB() {
+        Assert.assertEquals(5, ArithmeticLogicUnit.sub(ram, 10, 5));
+        //TODO check status flags
+        Assert.assertEquals(0, ArithmeticLogicUnit.sub(ram, 255, 255));
+        //TODO check status flags
+        Assert.assertEquals(0xFF, ArithmeticLogicUnit.sub(ram, 0, 1));
+        //TODO check status flags
+        Assert.assertEquals(0x0, ArithmeticLogicUnit.sub(ram, 0, 0));
+    }
 }

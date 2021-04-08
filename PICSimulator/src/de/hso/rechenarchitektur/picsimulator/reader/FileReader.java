@@ -5,6 +5,7 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class FileReader {
@@ -28,7 +29,7 @@ public class FileReader {
 
     private void readFile() {
         try {
-            Scanner myReader = new Scanner(file);
+            Scanner myReader = new Scanner(file, String.valueOf(StandardCharsets.ISO_8859_1));
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
                 lines.add(line);

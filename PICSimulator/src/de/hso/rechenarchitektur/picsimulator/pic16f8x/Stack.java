@@ -1,7 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
 public class Stack {
-    private int[] stackArray;
+    private final int[] stackArray;
     private short index;
 
     public Stack() {
@@ -23,6 +23,10 @@ public class Stack {
 
     public int[] getStackArray() {
         return stackArray;
+    }
+
+    public int getCurrent() {
+        return stackArray[index--];
     }
 
 }

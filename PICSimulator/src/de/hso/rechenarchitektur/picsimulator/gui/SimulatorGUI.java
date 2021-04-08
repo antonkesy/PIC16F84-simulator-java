@@ -73,6 +73,7 @@ public class SimulatorGUI {
     private JLabel optionValue;
     private JLabel vorteilerValue;
     private JLabel timer0Value;
+    private JLabel runTimeLabel;
     private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     private final JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
@@ -190,6 +191,11 @@ public class SimulatorGUI {
         updateSFRBits();
         updateSFRW();
         UpdateTris();
+        updateRunTimeLabel();
+    }
+
+    private void updateRunTimeLabel() {
+        runTimeLabel.setText(pic.runTimeToString());
     }
 
     /**

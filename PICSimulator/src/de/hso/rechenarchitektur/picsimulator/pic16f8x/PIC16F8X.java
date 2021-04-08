@@ -8,7 +8,8 @@ public class PIC16F8X {
 
     private long runTime = 0;
 
-    private int quarzSpeed = 32;
+    //in kHz
+    private long quarzSpeed = 32;
 
     private Stack stack;
     private final ProgramMemory programMemory;
@@ -121,6 +122,7 @@ public class PIC16F8X {
             case CLRWDT:
                 break;
             case GOTO:
+                cycles = 2;
                 ram.setPCL(currentInstruction.getFK());
                 break;
             case IORLW:
@@ -157,7 +159,8 @@ public class PIC16F8X {
 
     private long getTimePerCycle() {
         //TODO
-        return quarzSpeed;
+        //bei 1MHz => 4micoSecs
+        return quarzSpeed * 1000 * 4;
     }
 
     public int getCurrentLine() {
@@ -176,7 +179,7 @@ public class PIC16F8X {
         return wRegister;
     }
 
-    public int getQuarzSpeed() {
+    public long getQuarzSpeed() {
         return quarzSpeed;
     }
 
@@ -193,4 +196,7 @@ public class PIC16F8X {
         return currentInstructionInRegister.getPositionLineInFile();
     }
 
+    public String runTimeToString() {
+        return runTime + "\u00B5s";
+    }
 }

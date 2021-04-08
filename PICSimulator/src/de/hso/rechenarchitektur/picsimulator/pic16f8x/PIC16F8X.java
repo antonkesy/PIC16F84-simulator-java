@@ -6,6 +6,8 @@ import java.util.List;
 
 public class PIC16F8X {
 
+    private long runTime = 0;
+
     private int quarzSpeed = 32;
 
     private Stack stack;
@@ -145,7 +147,17 @@ public class PIC16F8X {
                 wRegister = ArithmeticLogicUnit.xor(ram, wRegister, currentInstruction.getFK());
                 break;
         }
+        calculateRunTime(cycles);
         getNextInstruction();
+    }
+
+    private void calculateRunTime(int cycles) {
+        runTime += (cycles * getTimePerCycle());
+    }
+
+    private long getTimePerCycle() {
+        //TODO
+        return quarzSpeed;
     }
 
     public int getCurrentLine() {
@@ -179,16 +191,6 @@ public class PIC16F8X {
     public int nextInstruction() {
         instructionHandler();
         return currentInstructionInRegister.getPositionLineInFile();
-    }
-
-    /**
-     * Resets PIC
-     *
-     * @return selected index todo
-     */
-    public int resetCall() {
-        reset();
-        return 0;
     }
 
 }

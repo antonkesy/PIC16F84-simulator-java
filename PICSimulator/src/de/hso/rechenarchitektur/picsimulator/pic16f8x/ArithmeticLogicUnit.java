@@ -50,9 +50,6 @@ public final class ArithmeticLogicUnit {
                     ram.setCarryFlag(true);
                     result -= 255;
                 }
-                if (result == 0) {
-                    ram.setZeroFlag(true);
-                }
                 break;
             case SUB:
                 //Reset affected flags
@@ -62,31 +59,26 @@ public final class ArithmeticLogicUnit {
                 //Maskenfehler des PIC ->  Ist der Subtrahend kleiner oder gleich dem Minuend, wird das Carryflag gesetzt
                 if (otherValue <= wRegisterValue) {
                     ram.setCarryFlag(true);
-                }
-                if (result == 0) {
-                    ram.setZeroFlag(true);
+                    result += 255;
                 }
                 result -= otherValue;
                 break;
             case AND:
                 result &= otherValue;
-                if (result == 0) {
-                    ram.setZeroFlag(true);
-                }
                 break;
             case OR:
                 result |= otherValue;
-                if (result == 0) {
-                    ram.setZeroFlag(true);
-                }
                 break;
             case XOR:
                 result ^= otherValue;
-                if (result == 0) {
-                    ram.setZeroFlag(true);
-                }
                 break;
         }
+
+        //Zero Flag
+        if (result == 0) {
+            ram.setZeroFlag(true);
+        }
+
         return result;
     }
 }

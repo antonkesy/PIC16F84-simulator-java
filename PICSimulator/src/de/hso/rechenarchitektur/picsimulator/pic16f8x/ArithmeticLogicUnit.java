@@ -48,16 +48,11 @@ public final class ArithmeticLogicUnit {
                 ram.setCarryFlag(false);
                 ram.setDigitCarryFlag(false);
                 //
-                //TODO set flags
                 result += otherValue;
                 //CarryFlag
-                if (isCarry(wRegisterValue, otherValue)) {
-                    ram.setCarryFlag(true);
-                }
+                ram.setCarryFlag(isCarry(wRegisterValue, otherValue));
                 //DigitCarryFlag
-                if (isDigitCarry(wRegisterValue, otherValue)) {
-                    ram.setDigitCarryFlag(true);
-                }
+                ram.setDigitCarryFlag(isDigitCarry(wRegisterValue, otherValue));
                 //Result auf 8Bit maskieren
                 result &= 0xFF;
                 break;

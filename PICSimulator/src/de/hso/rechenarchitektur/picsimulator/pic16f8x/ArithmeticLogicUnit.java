@@ -40,9 +40,7 @@ public final class ArithmeticLogicUnit {
         switch (operation) {
             case SUB:
                 //Zweierkompliment und dann fallthrough zu ADD
-                otherValue = ~otherValue;
-                otherValue += 1;
-                otherValue &= 0xFF;
+                otherValue = getTwoCompliment(otherValue);
             case ADD:
                 //Reset affected flags
                 ram.setCarryFlag(false);
@@ -85,5 +83,18 @@ public final class ArithmeticLogicUnit {
         int carryCheck = (firstStart & 0xFF) + (secondStart & 0xFF);
         carryCheck >>= 8;
         return carryCheck != 0;
+    }
+
+    /**
+     * 8Bit 2er Kompliment
+     *
+     * @param value
+     * @return
+     */
+    public static int getTwoCompliment(int value) {
+        value = ~value;
+        value += 1;
+        value &= 0xFF;
+        return value;
     }
 }

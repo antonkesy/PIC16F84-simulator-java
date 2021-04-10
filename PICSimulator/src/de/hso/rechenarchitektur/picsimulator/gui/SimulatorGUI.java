@@ -132,7 +132,6 @@ public class SimulatorGUI {
         });
         //Quazbox Listener
         quarzBox.addActionListener(e -> {
-            System.out.println("quarz changed " + quarzBox.getSelectedItem().toString());
             if (pic != null) {
                 pic.setQuarzSpeed(((ComboBoxItem) quarzBox.getSelectedItem()).getValue());
             }
@@ -155,7 +154,6 @@ public class SimulatorGUI {
     }
 
     private void DoNSteps() {
-        System.out.println(stepsSpinner.getValue());
         int steps = 0;
         try {
             steps = (int) (stepsSpinner.getValue());

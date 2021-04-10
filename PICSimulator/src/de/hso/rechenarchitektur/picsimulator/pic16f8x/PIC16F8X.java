@@ -2,6 +2,7 @@ package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.ArithmeticLogicUnit.AluOperations;
 
+import java.util.BitSet;
 import java.util.List;
 
 public class PIC16F8X {
@@ -102,6 +103,11 @@ public class PIC16F8X {
             case XORWF:
                 break;
             case BCF:
+                ram.setDataToAddress(
+                        currentInstruction.getFK(),
+                        getBitClearF(currentInstruction.getBD(),
+                                ram.getDataFromAddress(currentInstruction.getFK()))
+                );
                 break;
             case BSF:
                 break;
@@ -159,6 +165,17 @@ public class PIC16F8X {
         }
         calculateRunTime(cycles);
         getNextInstruction();
+    }
+
+    /**
+     * Bit ’b’ in register ’f’ is cleared.
+     *
+     * @param b
+     * @param f
+     * @return
+     */
+    private int getBitClearF(int b, int f) {
+        return (f - (int) Math.pow(2, b));
     }
 
     private void calculateRunTime(int cycles) {

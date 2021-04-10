@@ -256,6 +256,7 @@ public class SimulatorGUI {
     }
 
     private void updateFileRegister() {
+        //TODO FileRegister
         if (pic == null) return;
         fillFRTable(pic.getRam().getDataString());
     }

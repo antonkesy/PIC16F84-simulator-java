@@ -332,7 +332,7 @@ public class RandomAccessMemory {
         }
         //Header
         for (int i = 0; i < result.length; ++i) {
-            result[i][0] = Integer.toHexString(i);
+            result[i][0] = Integer.toHexString(8 * i);
         }
 
         return result;

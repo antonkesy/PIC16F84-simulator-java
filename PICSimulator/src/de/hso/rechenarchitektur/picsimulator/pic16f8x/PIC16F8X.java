@@ -44,23 +44,20 @@ public class PIC16F8X {
     }
 
     private void instructionHandler() {
-        int cycles = 0; //TODO
+        int cycles = 1; //TODO immer mindestens einer
         Instruction currentInstruction = currentInstructionInRegister.getInstruction();
         switch (currentInstruction.getType()) {
             //TODO("alle implementieren")
             case ADDWF:
-                cycles = 1;
                 InstructionWithDestinationBit(currentInstruction, AluOperations.ADD);
                 break;
             case ANDWF:
-                cycles = 1;
                 InstructionWithDestinationBit(currentInstruction, AluOperations.AND);
                 break;
             case CLRF:
                 ram.setDataToAddress(currentInstruction.getFK(), 0);
                 break;
             case CLRW:
-                cycles = 1;
                 wRegister = 0;
                 break;
             case COMF:
@@ -116,15 +113,19 @@ public class PIC16F8X {
                 );
                 break;
             case BTFSC:
+                //TODO testen!
+                if (!isBitInFActive(currentInstruction.getBD(), currentInstruction.getFK())) {
+                    currentInstructionInRegister = new InstructionLine();
+                    ram.setPCL(ram.getPCL() + 1);
+                    instructionHandler();
+                }
                 break;
             case BTFSS:
                 break;
             case ADDLW:
-                cycles = 1;
                 wRegister = ArithmeticLogicUnit.add(ram, wRegister, currentInstruction.getFK());
                 break;
             case ANDLW:
-                cycles = 1;
                 wRegister = ArithmeticLogicUnit.and(ram, wRegister, currentInstruction.getFK());
                 break;
             case CALL:
@@ -139,7 +140,6 @@ public class PIC16F8X {
                 ram.setPCL(currentInstruction.getFK());
                 break;
             case IORLW:
-                cycles = 1;
                 wRegister = ArithmeticLogicUnit.or(ram, wRegister, currentInstruction.getFK());
                 break;
             case MOVLW:
@@ -163,7 +163,6 @@ public class PIC16F8X {
                 wRegister = ArithmeticLogicUnit.sub(ram, currentInstruction.getFK(), wRegister);
                 break;
             case XORLW:
-                cycles = 1;
                 wRegister = ArithmeticLogicUnit.xor(ram, wRegister, currentInstruction.getFK());
                 break;
         }
@@ -193,6 +192,11 @@ public class PIC16F8X {
     private int getBitSetF(int b, int f) {
         //TODO testen!
         return (f + (int) Math.pow(2, b));
+    }
+
+    private boolean isBitInFActive(int b, int f) {
+        f >>= (b - 1); //-1 weil Index start bei 1?
+        return (f & 1) == 1;
     }
 
     private void calculateRunTime(int cycles) {

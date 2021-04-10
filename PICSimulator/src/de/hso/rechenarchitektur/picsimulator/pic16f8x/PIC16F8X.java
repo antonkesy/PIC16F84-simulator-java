@@ -121,6 +121,12 @@ public class PIC16F8X {
                 }
                 break;
             case BTFSS:
+                //TODO testen!
+                if (isBitInFActive(currentInstruction.getBD(), currentInstruction.getFK())) {
+                    currentInstructionInRegister = new InstructionLine();
+                    ram.setPCL(ram.getPCL() + 1);
+                    instructionHandler();
+                }
                 break;
             case ADDLW:
                 wRegister = ArithmeticLogicUnit.add(ram, wRegister, currentInstruction.getFK());

@@ -256,7 +256,7 @@ public class SimulatorGUI {
     }
 
     private void updateFileRegister() {
-        //TODO FileRegister
+        //TODO FileRegister auf 16x8 anstatt 8x16
         if (pic == null) return;
         fillFRTable(pic.getRam().getDataString());
     }

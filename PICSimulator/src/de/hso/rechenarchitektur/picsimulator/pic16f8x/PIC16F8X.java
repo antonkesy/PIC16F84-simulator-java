@@ -67,6 +67,13 @@ public class PIC16F8X {
             case DECFSZ:
                 break;
             case INCF:
+                //TODO testen!
+                int result = (ram.getDataFromAddress(currentInstruction.getFK()) + 1);
+                if (currentInstruction.getBD() == 0) {
+                    wRegister = result;
+                } else {
+                    ram.setDataToAddress(currentInstruction.getFK(), result);
+                }
                 break;
             case INCFSZ:
                 break;

@@ -44,6 +44,7 @@ public class PIC16F8X {
     }
 
     private void instructionHandler() {
+        int result; //optional Variable fuer Zwischenergebnisse
         int cycles = 1; //TODO immer mindestens einer
         Instruction currentInstruction = currentInstructionInRegister.getInstruction();
         switch (currentInstruction.getType()) {
@@ -62,18 +63,18 @@ public class PIC16F8X {
                 break;
             case COMF:
                 break;
-            case DECF:
-                break;
-            case DECFSZ:
-                break;
+            case DECF: //Fallthroug
             case INCF:
+                result = ram.getDataFromAddress(currentInstruction.getFK());
+                result += currentInstruction.getType() == InstructionType.INCF ? 1 : -1;
                 //TODO testen!
-                int result = (ram.getDataFromAddress(currentInstruction.getFK()) + 1);
                 if (currentInstruction.getBD() == 0) {
                     wRegister = result;
                 } else {
                     ram.setDataToAddress(currentInstruction.getFK(), result);
                 }
+                break;
+            case DECFSZ:
                 break;
             case INCFSZ:
                 break;

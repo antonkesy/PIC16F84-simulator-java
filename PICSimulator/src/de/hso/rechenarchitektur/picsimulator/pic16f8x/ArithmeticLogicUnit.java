@@ -31,35 +31,35 @@ public final class ArithmeticLogicUnit {
         return operation(AluOperations.NOT, ram, wRegisterValue, otherValue);
     }
 
-    public static int operation(AluOperations operation, RandomAccessMemory ram, int wRegisterValue, int otherValue) {
+    public static int operation(AluOperations operation, RandomAccessMemory ram, int firstValue, int secondValue) {
         //todo check for flags
-        int result = wRegisterValue;
+        int result = firstValue;
 
         switch (operation) {
             case SUB:
                 //Zweierkompliment und dann fallthrough zu ADD
-                otherValue = getTwoCompliment(otherValue);
+                secondValue = getTwoCompliment(secondValue);
             case ADD:
                 //Reset affected flags
                 ram.setCarryFlag(false);
                 ram.setDigitCarryFlag(false);
                 //
-                result += otherValue;
+                result += secondValue;
                 //CarryFlag
-                ram.setCarryFlag(isCarry(wRegisterValue, otherValue));
+                ram.setCarryFlag(isCarry(firstValue, secondValue));
                 //DigitCarryFlag
-                ram.setDigitCarryFlag(isDigitCarry(wRegisterValue, otherValue));
+                ram.setDigitCarryFlag(isDigitCarry(firstValue, secondValue));
                 //Result auf 8Bit maskieren
                 result &= 0xFF;
                 break;
             case AND:
-                result &= otherValue;
+                result &= secondValue;
                 break;
             case OR:
-                result |= otherValue;
+                result |= secondValue;
                 break;
             case XOR:
-                result ^= otherValue;
+                result ^= secondValue;
                 break;
         }
 

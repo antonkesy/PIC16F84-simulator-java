@@ -85,8 +85,8 @@ public class PIC16F8X {
                     skipNextInstruction();
                 }
                 break;
-
             case IORWF:
+                wRegister = ArithmeticLogicUnit.or(ram, wRegister, ram.getDataFromAddress(currentInstruction.getFK()));
                 break;
             case MOVF:
                 int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());

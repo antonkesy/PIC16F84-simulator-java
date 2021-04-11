@@ -123,17 +123,13 @@ public class PIC16F8X {
             case BTFSC:
                 //TODO testen!
                 if (!isBitInFActive(currentInstruction.getBD(), currentInstruction.getFK())) {
-                    currentInstructionInRegister = new InstructionLine();
-                    ram.setPCL(ram.getPCL() + 1);
-                    instructionHandler();
+                    skipNextInstruction();
                 }
                 break;
             case BTFSS:
                 //TODO testen!
                 if (isBitInFActive(currentInstruction.getBD(), currentInstruction.getFK())) {
-                    currentInstructionInRegister = new InstructionLine();
-                    ram.setPCL(ram.getPCL() + 1);
-                    instructionHandler();
+                    skipNextInstruction();
                 }
                 break;
             case ADDLW:
@@ -182,6 +178,12 @@ public class PIC16F8X {
         }
         calculateRunTime(cycles);
         getNextInstruction();
+    }
+
+    private void skipNextInstruction() {
+        currentInstructionInRegister = new InstructionLine();
+        ram.setPCL(ram.getPCL() + 1);
+        instructionHandler();
     }
 
     /**

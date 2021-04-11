@@ -175,6 +175,9 @@ public class PIC16F8X {
                 getRam().setPCL(stack.pop());
                 break;
             case SLEEP:
+                ram.setPowerDownFlag(false);
+                ram.setTimeOutFlag(true);
+                //todo clear watchdog timer & its prescaler
                 break;
             case SUBLW:
                 cycles = 1;

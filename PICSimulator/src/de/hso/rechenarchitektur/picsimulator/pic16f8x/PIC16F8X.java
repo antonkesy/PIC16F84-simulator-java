@@ -74,6 +74,7 @@ public class PIC16F8X {
                 result += currentInstruction.getType() == InstructionType.INCF ? 1 : -1;
                 //TODO testen!
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
+                ram.setZeroFlag(result == 0);
                 break;
             case DECFSZ:
                 result = ram.getDataFromAddress(currentInstruction.getFK());

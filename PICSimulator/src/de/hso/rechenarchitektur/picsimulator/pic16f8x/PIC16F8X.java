@@ -34,26 +34,18 @@ public class PIC16F8X {
         ram.setPCL(ram.getPCL() + 1);
     }
 
-    private void InstructionWithDestinationBit(Instruction instruction, AluOperations aluOperation) {
-        int result = ArithmeticLogicUnit.operation(aluOperation, ram, wRegister, instruction.getFK());
-        if (instruction.getBD() == 0) {
-            wRegister = result;
-        } else {
-            ram.setDataToAddress(instruction.getFK(), result);
-        }
-    }
-
     private void instructionHandler() {
         int result; //optional Variable fuer Zwischenergebnisse
         int cycles = 1; //TODO immer mindestens einer
         Instruction currentInstruction = currentInstructionInRegister.getInstruction();
         switch (currentInstruction.getType()) {
-            //TODO("alle implementieren")
             case ADDWF:
-                InstructionWithDestinationBit(currentInstruction, AluOperations.ADD);
+                result = ArithmeticLogicUnit.add(ram, wRegister, ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case ANDWF:
-                InstructionWithDestinationBit(currentInstruction, AluOperations.AND);
+                result = ArithmeticLogicUnit.and(ram, wRegister, ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case CLRF:
                 ram.setDataToAddress(currentInstruction.getFK(), 0);
@@ -65,15 +57,16 @@ public class PIC16F8X {
                 break;
             case COMF:
                 result = ArithmeticLogicUnit.getCompliment(currentInstruction.getFK());
-                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
+                //TODO decrement 0 -> 255?
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result & 0xFF);
                 ram.setZeroFlag(result == 0);
                 break;
             case DECF: //Fallthroug
             case INCF:
                 result = ram.getDataFromAddress(currentInstruction.getFK());
                 result += currentInstruction.getType() == InstructionType.INCF ? 1 : -1;
-                //TODO testen!
-                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
+                //TODO decrement 0 -> 255?
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result & 0xFF);
                 ram.setZeroFlag(result == 0);
                 break;
             case DECFSZ:

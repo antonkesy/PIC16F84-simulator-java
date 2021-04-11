@@ -164,14 +164,11 @@ public class PIC16F8X {
                 //TODO INTCON Bit setzen
                 ram.setIntcon(0b100_0000);
                 break;
-            case RETLW:
-                cycles = 2;
+            case RETLW: //Fallthroug
                 wRegister = currentInstruction.getFK();
-                getRam().setPCL(stack.getCurrent());
-                break;
             case RETURN:
                 cycles = 2;
-                getRam().setPCL(stack.getCurrent());
+                getRam().setPCL(stack.pop());
                 break;
             case SLEEP:
                 break;

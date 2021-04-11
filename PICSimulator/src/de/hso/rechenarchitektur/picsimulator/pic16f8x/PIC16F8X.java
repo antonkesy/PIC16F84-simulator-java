@@ -1,7 +1,5 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.ArithmeticLogicUnit.AluOperations;
-
 import java.util.List;
 
 public class PIC16F8X {
@@ -56,7 +54,7 @@ public class PIC16F8X {
                 ram.setZeroFlag(true);
                 break;
             case COMF:
-                result = ArithmeticLogicUnit.getCompliment(currentInstruction.getFK());
+                result = ArithmeticLogicUnit.getCompliment(ram.getDataFromAddress(currentInstruction.getFK()));
                 //TODO decrement 0 -> 255?
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result & 0xFF);
                 ram.setZeroFlag(result == 0);
@@ -79,7 +77,8 @@ public class PIC16F8X {
                 }
                 break;
             case IORWF:
-                wRegister = ArithmeticLogicUnit.or(ram, wRegister, ram.getDataFromAddress(currentInstruction.getFK()));
+                result = ArithmeticLogicUnit.or(ram, wRegister, ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case MOVF:
                 int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());
@@ -101,6 +100,8 @@ public class PIC16F8X {
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case SUBWF:
+                result = ArithmeticLogicUnit.sub(ram, ram.getDataFromAddress(currentInstruction.getFK()), wRegister);
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case SWAPF:
                 result = getSwapNibbles(ram.getDataFromAddress(currentInstruction.getFK()));
@@ -113,26 +114,30 @@ public class PIC16F8X {
             case BCF:
                 ram.setDataToAddress(
                         currentInstruction.getFK(),
-                        getBitClearF(currentInstruction.getBD(),
-                                ram.getDataFromAddress(currentInstruction.getFK()))
+                        getBitClearF(
+                                currentInstruction.getBD(),
+                                ram.getDataFromAddress(currentInstruction.getFK())
+                        )
                 );
                 break;
             case BSF:
                 ram.setDataToAddress(
                         currentInstruction.getFK(),
-                        getBitSetF(currentInstruction.getBD(),
-                                ram.getDataFromAddress(currentInstruction.getFK()))
+                        getBitSetF(
+                                currentInstruction.getBD(),
+                                ram.getDataFromAddress(currentInstruction.getFK())
+                        )
                 );
                 break;
             case BTFSC:
                 //TODO testen!
-                if (!isBitInFActive(currentInstruction.getBD(), currentInstruction.getFK())) {
+                if (!isBitFActive(currentInstruction.getBD(), ram.getDataFromAddress(currentInstruction.getFK()))) {
                     skipNextInstruction();
                 }
                 break;
             case BTFSS:
                 //TODO testen!
-                if (isBitInFActive(currentInstruction.getBD(), currentInstruction.getFK())) {
+                if (isBitFActive(currentInstruction.getBD(), ram.getDataFromAddress(currentInstruction.getFK()))) {
                     skipNextInstruction();
                 }
                 break;
@@ -147,7 +152,14 @@ public class PIC16F8X {
                 stack.AddNewAddress(getRam().getPCL());
                 getRam().setPCL(currentInstruction.getFK());
                 break;
+            case SLEEP:
+                ram.setPowerDownFlag(false);
+                ram.setTimeOutFlag(true);
+                //todo clear watchdog timer & its prescaler
+                break;
             case CLRWDT:
+                //todo clear watchdog timer & its prescaler
+                //TODO SLEEP!!
                 break;
             case GOTO:
                 cycles = 2;
@@ -170,11 +182,6 @@ public class PIC16F8X {
             case RETURN:
                 cycles = 2;
                 getRam().setPCL(stack.pop());
-                break;
-            case SLEEP:
-                ram.setPowerDownFlag(false);
-                ram.setTimeOutFlag(true);
-                //todo clear watchdog timer & its prescaler
                 break;
             case SUBLW:
                 cycles = 1;
@@ -245,7 +252,7 @@ public class PIC16F8X {
         return (f + (int) Math.pow(2, b));
     }
 
-    private boolean isBitInFActive(int b, int f) {
+    private boolean isBitFActive(int b, int f) {
         f >>= (b - 1); //-1 weil Index start bei 1?
         return (f & 1) == 1;
     }

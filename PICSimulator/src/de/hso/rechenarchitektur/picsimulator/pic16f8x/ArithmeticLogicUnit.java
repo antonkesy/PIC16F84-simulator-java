@@ -35,9 +35,6 @@ public final class ArithmeticLogicUnit {
         //todo check for flags
         int result = wRegisterValue;
 
-        //Zero flag always reset
-        ram.setZeroFlag(false);
-
         switch (operation) {
             case SUB:
                 //Zweierkompliment und dann fallthrough zu ADD
@@ -67,9 +64,7 @@ public final class ArithmeticLogicUnit {
         }
 
         //Zero Flag
-        if (result == 0) {
-            ram.setZeroFlag(true);
-        }
+        ram.setZeroFlag(result == 0);
 
         return result & 0xFF;
     }

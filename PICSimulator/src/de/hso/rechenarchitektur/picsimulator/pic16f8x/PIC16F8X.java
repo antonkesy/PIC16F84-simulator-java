@@ -64,17 +64,14 @@ public class PIC16F8X {
                 ram.setZeroFlag(true);
                 break;
             case COMF:
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), 1);
                 break;
             case DECF: //Fallthroug
             case INCF:
                 result = ram.getDataFromAddress(currentInstruction.getFK());
                 result += currentInstruction.getType() == InstructionType.INCF ? 1 : -1;
                 //TODO testen!
-                if (currentInstruction.getBD() == 0) {
-                    wRegister = result;
-                } else {
-                    ram.setDataToAddress(currentInstruction.getFK(), result);
-                }
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case DECFSZ:
                 break;
@@ -84,13 +81,9 @@ public class PIC16F8X {
                 break;
             case MOVF:
                 int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());
-                ram.setZeroFlag(false);
                 //wenn d = 1 -> ueberpruefen auf null
-                if (currentInstruction.getBD() == 1 && valueOfAddress == 0) {
-                    ram.setZeroFlag(true);
-                } else {
-                    wRegister = valueOfAddress;
-                }
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), valueOfAddress);
+                ram.setZeroFlag(valueOfAddress == 0);
                 break;
             case MOVWF:
                 ram.setDataToAddress(currentInstruction.getFK(), wRegister);
@@ -180,6 +173,14 @@ public class PIC16F8X {
         }
         calculateRunTime(cycles);
         getNextInstruction();
+    }
+
+    private void setResultInDestination(int d, int f, int value) {
+        if (d == 0) {
+            wRegister = value;
+        } else {
+            ram.setDataToAddress(f, value);
+        }
     }
 
     private void skipNextInstruction() {

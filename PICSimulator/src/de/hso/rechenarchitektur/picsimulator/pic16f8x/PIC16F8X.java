@@ -77,14 +77,15 @@ public class PIC16F8X {
                 ram.setZeroFlag(result == 0);
                 break;
             case DECFSZ:
+            case INCFSZ:
                 result = ram.getDataFromAddress(currentInstruction.getFK());
+                result += currentInstruction.getType() == InstructionType.INCFSZ ? 1 : -1;
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 if (result == 0) {
                     skipNextInstruction();
                 }
                 break;
-            case INCFSZ:
-                break;
+
             case IORWF:
                 break;
             case MOVF:

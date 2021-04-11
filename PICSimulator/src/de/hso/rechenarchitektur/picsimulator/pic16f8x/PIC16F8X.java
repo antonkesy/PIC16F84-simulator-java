@@ -114,6 +114,8 @@ public class PIC16F8X {
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case XORWF:
+                result = ArithmeticLogicUnit.xor(ram, wRegister, ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case BCF:
                 ram.setDataToAddress(

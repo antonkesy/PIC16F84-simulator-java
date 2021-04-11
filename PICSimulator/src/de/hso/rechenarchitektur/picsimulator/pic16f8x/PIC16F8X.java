@@ -100,10 +100,12 @@ public class PIC16F8X {
                 //No Operation
                 break;
             case RLF:
-                result = getRotateLeft(ram.getDataFromAddress(currentInstruction.getFK()));
+                result = getRotateLeftThroughCarry(ram.getDataFromAddress(currentInstruction.getFK()));
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case RRF:
+                result = getRotateRightTroughCarry(ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case SUBWF:
                 break;
@@ -186,9 +188,18 @@ public class PIC16F8X {
         getNextInstruction();
     }
 
-    private int getRotateLeft(int f) {
+    private int getRotateLeftThroughCarry(int f) {
         f <<= 1;
         ram.setCarryFlag(f > 0xFF);
+        return f & 0xFF;
+    }
+
+    private int getRotateRightTroughCarry(int f) {
+        f >>= 1;
+        if (ram.isCarryFlag()) {
+            f |= 0b1000_0000;
+        }
+        ram.setCarryFlag(false);
         return f & 0xFF;
     }
 

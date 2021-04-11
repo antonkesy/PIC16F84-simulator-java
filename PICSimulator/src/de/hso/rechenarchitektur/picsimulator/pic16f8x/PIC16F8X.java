@@ -66,6 +66,7 @@ public class PIC16F8X {
             case COMF:
                 result = ArithmeticLogicUnit.getCompliment(currentInstruction.getFK());
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
+                ram.setZeroFlag(result == 0);
                 break;
             case DECF: //Fallthroug
             case INCF:
@@ -75,6 +76,11 @@ public class PIC16F8X {
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case DECFSZ:
+                result = ram.getDataFromAddress(currentInstruction.getFK());
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
+                if (result == 0) {
+                    skipNextInstruction();
+                }
                 break;
             case INCFSZ:
                 break;

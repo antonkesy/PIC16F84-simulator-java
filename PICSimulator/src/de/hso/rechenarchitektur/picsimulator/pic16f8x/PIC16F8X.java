@@ -110,6 +110,8 @@ public class PIC16F8X {
             case SUBWF:
                 break;
             case SWAPF:
+                result = getSwapNibbles(ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case XORWF:
                 break;
@@ -189,6 +191,10 @@ public class PIC16F8X {
         }
         calculateRunTime(cycles);
         getNextInstruction();
+    }
+
+    private int getSwapNibbles(int f) {
+        return ((f << 4 | f >> 4) & 0xFF);
     }
 
     private int getRotateLeftThroughCarry(int f) {

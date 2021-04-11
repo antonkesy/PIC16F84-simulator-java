@@ -90,7 +90,6 @@ public class PIC16F8X {
                 break;
             case MOVF:
                 int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());
-                //wenn d = 1 -> ueberpruefen auf null
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), valueOfAddress);
                 ram.setZeroFlag(valueOfAddress == 0);
                 break;

@@ -57,9 +57,11 @@ public class PIC16F8X {
                 break;
             case CLRF:
                 ram.setDataToAddress(currentInstruction.getFK(), 0);
+                ram.setZeroFlag(true);
                 break;
             case CLRW:
                 wRegister = 0;
+                ram.setZeroFlag(true);
                 break;
             case COMF:
                 break;

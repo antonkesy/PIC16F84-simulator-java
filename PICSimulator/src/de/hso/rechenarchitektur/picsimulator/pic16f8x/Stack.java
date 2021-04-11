@@ -26,7 +26,11 @@ public class Stack {
     }
 
     public int getCurrent() {
+        //TODO REMOVE
         return stackArray[index--];
     }
 
+    public int pop() {
+        return stackArray[index--];
+    }
 }

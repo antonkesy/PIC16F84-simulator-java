@@ -159,6 +159,10 @@ public class PIC16F8X {
                 wRegister = currentInstruction.getFK();
                 break;
             case RETFIE:
+                cycles = 2;
+                ram.setPCL(stack.pop());
+                //TODO INTCON Bit setzen
+                ram.setIntcon(0b100_0000);
                 break;
             case RETLW:
                 cycles = 2;

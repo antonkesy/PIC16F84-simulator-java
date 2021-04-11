@@ -100,6 +100,8 @@ public class PIC16F8X {
                 //No Operation
                 break;
             case RLF:
+                result = getRotateLeft(ram.getDataFromAddress(currentInstruction.getFK()));
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case RRF:
                 break;
@@ -182,6 +184,12 @@ public class PIC16F8X {
         }
         calculateRunTime(cycles);
         getNextInstruction();
+    }
+
+    private int getRotateLeft(int f) {
+        f <<= 1;
+        ram.setCarryFlag(f > 0xFF);
+        return f & 0xFF;
     }
 
     private void setResultInDestination(int d, int f, int value) {

@@ -24,7 +24,7 @@ public class Stack {
     public int[] getStackArray() {
         return stackArray;
     }
-    
+
     public int pop() {
         return stackArray[index--];
     }

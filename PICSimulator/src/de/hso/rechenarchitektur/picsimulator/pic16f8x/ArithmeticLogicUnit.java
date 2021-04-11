@@ -2,6 +2,7 @@ package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
 public final class ArithmeticLogicUnit {
 
+
     public enum AluOperations {
         ADD, SUB, AND, OR, XOR, NOT
     }
@@ -92,9 +93,13 @@ public final class ArithmeticLogicUnit {
      * @return
      */
     public static int getTwoCompliment(int value) {
-        value = ~value;
+        value = getCompliment(value);
         value += 1;
-        value &= 0xFF;
+        value &= 0xFF; //just to be sure
         return value;
+    }
+
+    public static int getCompliment(int f) {
+        return ~f & 0xFF;
     }
 }

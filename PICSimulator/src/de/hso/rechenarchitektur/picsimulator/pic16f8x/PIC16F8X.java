@@ -230,14 +230,17 @@ public class PIC16F8X {
 
     /**
      * Bit ’b’ in register ’f’ is cleared.
+     * <p>
+     * b start at 1 or 0?
      *
      * @param b
      * @param f
      * @return
      */
     private int getBitClearF(int b, int f) {
-        //TODO testen!
-        return (f - (int) Math.pow(2, b));
+        //TODO testen! faengt es von 0 oder 1 an
+        //ueberprueft ob das Bit schon 0 ist, wenn nicht zieht es den Wert an der Stelle 2^b ab
+        return ((f & (int) Math.pow(2, b)) == 1) ? (f - (int) Math.pow(2, b)) : f;
     }
 
     /**

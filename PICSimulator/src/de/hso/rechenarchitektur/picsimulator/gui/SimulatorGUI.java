@@ -49,7 +49,7 @@ public class SimulatorGUI {
     private JCheckBox pBp6CheckBox;
     private JCheckBox pBp7CheckBox;
     private JTable fileRegisterTable;
-    private JList list1;
+    private JList<Object> list1;
     private JButton oeffneNeueDateiButton;
     private JLabel stackField0;
     private JLabel stackField1;
@@ -76,6 +76,8 @@ public class SimulatorGUI {
     private JLabel runTimeLabel;
     private JSpinner stepsSpinner;
     private JButton nStepsButton;
+    private JScrollPane frScrollPanel;
+    private JPanel frPanel;
     private JSlider speedSlider;
     private JLabel speedLabel;
     private JLabel statusBitText;
@@ -294,14 +296,21 @@ public class SimulatorGUI {
 
     private void createUIComponents() {
         //JTable + Model for FLR
-        String[] column = {"0x", "+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
-        String[][] fileRegisterData = new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}};
+        String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
+        String[] column = new String[]{"0", "+1", "+2", "+3", "+4", "+6", "+7", "+8"};
+        ListModel lm = new FileRegisterTable.RowHeaderListModel();
         modelFileRegister = new DefaultTableModel(fileRegisterData, column);
         fileRegisterTable = new JTable(modelFileRegister);
+        JList rowHeader = new JList(lm);
+        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterTable));
+        frScrollPanel = new JScrollPane(fileRegisterTable);
+        frScrollPanel.setRowHeaderView(rowHeader);
+
         //Creates empty rows for FLR
         for (int i = 0; i < 15; ++i) {
             modelFileRegister.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
         }
+
         //Status Bits
         column = new String[]{"IRP", "RP1", "RP0", "TO", "PD", "Z", "DC", "C"};
         modelStatusBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
@@ -338,6 +347,12 @@ public class SimulatorGUI {
      * @param dataArray
      */
     private void fillFRTable(String[][] dataArray) {
+
+
+        //JScrollPane scroll = new JScrollPane(fileRegisterTable);
+        // scroll.setRowHeaderView(rowHeader);
+        //getContentPane().add(scroll, BorderLayout.CENTER);
+
         for (int i = 0; i < dataArray.length; ++i) {
             fillModelRowWithData(modelFileRegister, dataArray[i], i);
         }

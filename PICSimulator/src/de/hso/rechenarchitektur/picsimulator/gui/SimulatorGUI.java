@@ -6,14 +6,9 @@ import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -359,7 +354,7 @@ public class SimulatorGUI {
     public void step() {
         if (pic != null) {
             //Setzt den Selecter auf die aktuelle Instruktion
-            pic.nextInstruction();
+            pic.step();
             updateUIFromPIC();
         }
     }

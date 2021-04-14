@@ -302,12 +302,16 @@ public class PIC16F8X {
     /**
      * Debug Test fuer Instruktionen lesen und makieren in der GUI
      */
-    public int nextInstruction() {
+    public int step() {
         instructionHandler();
         return currentInstructionInRegister.getPositionLineInFile();
     }
 
     public String runTimeToString() {
         return runTime + "\u00B5s";
+    }
+
+    public InstructionLine getCurrentInstructionInRegister() {
+        return this.currentInstructionInRegister;
     }
 }

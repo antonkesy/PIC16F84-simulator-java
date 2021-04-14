@@ -2,7 +2,6 @@ package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
 public final class ArithmeticLogicUnit {
 
-
     public enum AluOperations {
         ADD, SUB, AND, OR, XOR, NOT
     }
@@ -94,6 +93,12 @@ public final class ArithmeticLogicUnit {
         return value;
     }
 
+    /**
+     * Returns 8-Bit compliment of f
+     *
+     * @param f
+     * @return
+     */
     public static int getCompliment(int f) {
         return ~f & 0xFF;
     }

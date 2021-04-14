@@ -37,8 +37,8 @@ public class Instruction {
     public String toString() {
         return "Instruction{" +
                 "instructionType=" + instructionType +
-                ", fK=" + fK +
-                ", bD=" + bD +
+                ", fK= 0x" + Integer.toHexString(fK) +
+                ", bD= 0x" + Integer.toHexString(bD) +
                 '}';
     }
 

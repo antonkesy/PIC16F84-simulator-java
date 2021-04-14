@@ -15,8 +15,8 @@ public class FileReader {
 
     private final ArrayList<String> lines;
 
-    public FileReader(File filePath) {
-        this.file = filePath;
+    public FileReader(File file) {
+        this.file = file;
         lines = new ArrayList<>();
         programMemoryMap = new ArrayList<>();
         readFile();

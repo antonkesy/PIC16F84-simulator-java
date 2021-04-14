@@ -318,21 +318,17 @@ public class RandomAccessMemory {
     }
 
     public String[][] getDataString() {
-        String[][] result = new String[16][9];
+        String[][] result = new String[16][8];
 
-        int indexX = 1;
+        int indexX = 0;
         int indexY = 0;
         //Value
         for (int[] bank : memory) {
             result[indexY][indexX] = Integer.toHexString(bank[isRegisterBank0() ? 0 : 1]);
             if (++indexX >= result[indexY].length) {
-                indexX = 1;
+                indexX = 0;
                 ++indexY;
             }
-        }
-        //Header
-        for (int i = 0; i < result.length; ++i) {
-            result[i][0] = Integer.toHexString(8 * i);
         }
 
         return result;

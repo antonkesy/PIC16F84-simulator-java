@@ -12,7 +12,7 @@ public class FileRegisterTable {
         public RowHeaderListModel() {
             strRowHeaders = new String[16];
             for (int i = 0; i < strRowHeaders.length; ++i) {
-                strRowHeaders[i] = Integer.toHexString(8 * i);
+                strRowHeaders[i] = "   " + Integer.toHexString(8 * i) + "   ";
             }
         }
 

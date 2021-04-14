@@ -17,9 +17,7 @@ public class Stack {
     public void push(int newAddress) {
         if (++index > stackArray.length - 1) {
             index = 0;
-            System.out.println("reset index");
         }
-        System.out.println(index);
         stackArray[index] = newAddress;
     }
 

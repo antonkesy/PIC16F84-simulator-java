@@ -149,7 +149,7 @@ public class PIC16F8X {
                 break;
             case CALL:
                 cycles = 2;
-                stack.AddNewAddress(getRam().getPCL());
+                stack.push(getRam().getPCL());
                 getRam().setPCL(currentInstruction.getFK());
                 break;
             case SLEEP:

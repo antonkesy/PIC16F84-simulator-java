@@ -14,21 +14,47 @@ public class PIC16F8XTest {
 
     public PIC16F8X testPIC;
 
+    /**
+     * checks carry, digitCarry & zero flag
+     *
+     * @param isCarry
+     * @param isDigitCarry
+     * @param isZero
+     */
     public void assertEqualsStatusFlags(boolean isCarry, boolean isDigitCarry, boolean isZero) {
         Assert.assertEquals(testPIC.getRam().isCarryFlag(), isCarry);
         Assert.assertEquals(testPIC.getRam().isDigitCarryFlag(), isDigitCarry);
         Assert.assertEquals(testPIC.getRam().isZeroFlag(), isZero);
     }
 
+    /**
+     * Checks custom instruction line
+     *
+     * @param posInLine
+     * @param posInMemory
+     * @param instructionType
+     * @param fK
+     * @param bD
+     */
     public void assertEqualsInstructionLine(int posInLine, int posInMemory, InstructionType instructionType, int fK, int bD) {
         Assert.assertEquals(new InstructionLine(posInLine, posInMemory, new Instruction(instructionType, fK, bD)), testPIC.getCurrentInstructionInRegister());
         testPIC.step();
     }
 
+    /**
+     * checks wRegister
+     *
+     * @param expectedValue
+     */
     public void assertEqualsWRegister(int expectedValue) {
         Assert.assertEquals(expectedValue, testPIC.getWRegister());
     }
 
+    /**
+     * Sets up new PIC with File from filePath
+     *
+     * @param filePath
+     */
     public void setupPIC(String filePath) {
         FileReader fileReader = new FileReader(new File(filePath));
         testPIC = new PIC16F8X(fileReader.getInstructionLineList());

@@ -14,6 +14,11 @@ public class PIC16F8XTest {
 
     public PIC16F8X testPIC;
 
+    public void assertEqualsCheckReset() {
+        Assert.assertEquals(new InstructionLine(), testPIC.getCurrentInstructionInRegister());
+        testPIC.step();
+    }
+
     /**
      * checks carry, digitCarry & zero flag
      *
@@ -64,14 +69,11 @@ public class PIC16F8XTest {
     public void testLST1() {
         setupPIC("LST/TPicSim1.LST");
         //RESET
-        Assert.assertEquals(new InstructionLine(), testPIC.getCurrentInstructionInRegister());
-        testPIC.step();
+        assertEqualsCheckReset();
         //0
-
         assertEqualsInstructionLine(18, 0, InstructionType.MOVLW, 17, 0);
         assertEqualsWRegister(0x11);
         //1
-
         assertEqualsInstructionLine(19, 1, InstructionType.ANDLW, 48, 0);
         assertEqualsWRegister(0x10);
         assertEqualsStatusFlags(false, false, false);
@@ -94,6 +96,54 @@ public class PIC16F8XTest {
         //6
         assertEqualsInstructionLine(27, 6, InstructionType.GOTO, 6, 0);
 
+    }
+
+    @Test
+    public void testLST2() {
+        setupPIC("LST/TPicSim2.LST");
+        //RESET
+        assertEqualsCheckReset();
+
+        for (int i = 0; i < 100; ++i) {
+            //0
+            assertEqualsInstructionLine(16, 0, InstructionType.MOVLW, 0x11, 0);
+            assertEqualsWRegister(0x11);
+            assertEqualsStatusFlags(false, false, false);
+
+            //1
+            assertEqualsInstructionLine(17, 1, InstructionType.CALL, 0x6, 0);
+            assertEqualsWRegister(0x11);
+            assertEqualsStatusFlags(false, false, false);
+            //2
+            assertEqualsInstructionLine(24, 6, InstructionType.ADDLW, 0x25, 0);
+            assertEqualsWRegister(0x36);
+            assertEqualsStatusFlags(false, false, false);
+            //3
+            assertEqualsInstructionLine(25, 7, InstructionType.RETURN, 0, 0);
+            assertEqualsWRegister(0x36);
+            assertEqualsStatusFlags(false, false, false);
+            //4
+            assertEqualsInstructionLine(18, 2, InstructionType.NOP, 0, 0);
+            assertEqualsWRegister(0x36);
+            assertEqualsStatusFlags(false, false, false);
+
+            //5
+            assertEqualsInstructionLine(19, 3, InstructionType.CALL, 0x8, 0);
+            assertEqualsWRegister(0x36);
+            assertEqualsStatusFlags(false, false, false);
+            //6
+            assertEqualsInstructionLine(28, 8, InstructionType.RETLW, 0x77, 0);
+            assertEqualsWRegister(0x77);
+            assertEqualsStatusFlags(false, false, false);
+            //7
+            assertEqualsInstructionLine(20, 4, InstructionType.NOP, 0, 0);
+            assertEqualsWRegister(0x77);
+            assertEqualsStatusFlags(false, false, false);
+            //7
+            assertEqualsInstructionLine(21, 5, InstructionType.GOTO, 0, 0);
+            assertEqualsWRegister(0x77);
+            assertEqualsStatusFlags(false, false, false);
+        }
     }
 
 }

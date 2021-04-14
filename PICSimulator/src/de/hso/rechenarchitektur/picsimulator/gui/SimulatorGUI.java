@@ -225,9 +225,9 @@ public class SimulatorGUI {
      * Updated Stack Labels
      */
     private void updateStack() {
-        int[] stackArray = pic.getStack().getStackArray();
-        for (int i = 0; i < stackArray.length; ++i) {
-            stackFields[i].setText("" + stackArray[i]);
+        String[] stackStringArray = pic.getStack().getStackStringArray();
+        for (int i = 0; i < stackStringArray.length; ++i) {
+            stackFields[i].setText(stackStringArray[i]);
         }
     }
 

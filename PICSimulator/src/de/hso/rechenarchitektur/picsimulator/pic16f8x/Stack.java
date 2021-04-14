@@ -28,4 +28,17 @@ public class Stack {
     public int pop() {
         return stackArray[index--];
     }
+
+    /**
+     * Returns Stack as String Array filled with leading zeros
+     *
+     * @return
+     */
+    public String[] getStackStringArray() {
+        String[] stackStringArray = new String[8];
+        for (int i = 0; i < stackArray.length; ++i) {
+            stackStringArray[i] = ("0000" + stackArray[i]).substring(Integer.toString(stackArray[i]).length());
+        }
+        return stackStringArray;
+    }
 }

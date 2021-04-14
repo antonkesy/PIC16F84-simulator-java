@@ -68,7 +68,6 @@ public class PIC16F8XTest {
         //6
         assertEqualsInstructionLine(27, 6, InstructionType.GOTO, 6, 0);
 
-
     }
 
 }

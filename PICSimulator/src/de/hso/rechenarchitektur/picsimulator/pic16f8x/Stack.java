@@ -5,7 +5,7 @@ public class Stack {
     private short index;
 
     public Stack() {
-        stackArray = new int[8]; //Todo("startwerte setzen")
+        stackArray = new int[8];
         index = 0;
     }
 
@@ -14,15 +14,13 @@ public class Stack {
      *
      * @param newAddress
      */
-    public void AddNewAddress(int newAddress) {
+    public void push(int newAddress) {
         if (++index > stackArray.length - 1) {
             index = 0;
+            System.out.println("reset index");
         }
+        System.out.println(index);
         stackArray[index] = newAddress;
-    }
-
-    public int[] getStackArray() {
-        return stackArray;
     }
 
     public int pop() {

@@ -188,6 +188,11 @@ public class SimulatorGUI {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception ignored) {
+        }
+
         JFrame frame = new JFrame("PIC Simulator");
         frame.setContentPane(new SimulatorGUI().panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PIC16F8X {
 
-    private long runTime = 0;
+    private float runTime = 0;
 
     //in kHz
     private long quarzSpeed = 32;
@@ -262,14 +262,12 @@ public class PIC16F8X {
         runTime += (cycles * getTimePerCycle());
     }
 
-    private long getTimePerCycle() {
-        //TODO
+    private float getTimePerCycle() {
         //bei 1MHz => 4micoSecs
-        //
         //runtime = runtimeCount * 1/(currFrequency * 1000) * 4;
         //runtime in MS
         //freq in kHz
-        return quarzSpeed * 1000 * 4;
+        return (float) quarzSpeed / 4000;
     }
 
     public int getCurrentLine() {

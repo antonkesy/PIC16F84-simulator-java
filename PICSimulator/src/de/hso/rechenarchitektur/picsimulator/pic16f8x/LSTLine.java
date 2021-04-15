@@ -17,7 +17,7 @@ public class LSTLine {
     }
 
     public String getLine() {
-        return (isBreakpoint ? "\uD83D\uDD34" : "") + line;
+        return (isBreakpoint ? "\uD83D\uDD34" : "   ") + line;
     }
 
     @Override

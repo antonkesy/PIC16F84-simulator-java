@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -157,6 +159,8 @@ public class SimulatorGUI {
 
 
         nStepsButton.addActionListener(e -> DoNSteps());
+
+        //Doppelklick auf LSTListe fuer Breakpoints
         lstList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -169,6 +173,23 @@ public class SimulatorGUI {
                 }
             }
         });
+
+        //FileRegisterTable Edit Value
+        fileRegisterTable.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                int inputNumber = 0;
+                try {
+                    inputNumber = Integer.decode("0x" + fileRegisterTable.getValueAt(fileRegisterTable.getSelectedRow(), fileRegisterTable.getSelectedColumn()));
+                    inputNumber &= 0xFF; //Max 8 Bit
+                } catch (Exception ignored) {
+                }
+                pic.getRam().setDataToAddress((fileRegisterTable.getSelectedColumn()) + (fileRegisterTable.getSelectedRow() * 16), inputNumber);
+                super.focusGained(e);
+            }
+        });
+
+
     }
 
     private void DoNSteps() {

@@ -405,7 +405,6 @@ public class SimulatorGUI {
     }
 
     public void stepWithBreakpoints() {
-        System.out.println(currentLine + " " + !lstLines.get(currentLine).isBreakpoint());
         if (pic != null) {
             //Ueberprueft ob naechste Instruktion breakpoint ist
             if (isNextInstructionNoBreakpoint()) {

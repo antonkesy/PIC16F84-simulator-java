@@ -146,4 +146,37 @@ public class PIC16F8XTest {
         }
     }
 
+    @Test
+    public void testLST3() {
+        setupPIC("LST/TPicSim3.LST");
+        //RESET
+        assertEqualsCheckReset();
+        //0
+        assertEqualsInstructionLine(35, 0, InstructionType.MOVLW, 0x11, 0);
+        //InstructionLine{positionLineInFile=35, positionInMemory=0, instruction=Instruction{instructionType=MOVLW, fK= 0x11, bD= 0x0}}
+        assertEqualsInstructionLine(36, 1, InstructionType.MOVWF, 0xc, 1);
+        //InstructionLine{positionLineInFile=36, positionInMemory=1, instruction=Instruction{instructionType=MOVWF, fK= 0xc, bD= 0x1}}
+        assertEqualsInstructionLine(37, 2, InstructionType.MOVLW, 0x14, 0);
+        //InstructionLine{positionLineInFile=37, positionInMemory=2, instruction=Instruction{instructionType=MOVLW, fK= 0x14, bD= 0x0}}
+        //InstructionLine{positionLineInFile=38, positionInMemory=3, instruction=Instruction{instructionType=ADDWF, fK= 0xc, bD= 0x0}}
+        //InstructionLine{positionLineInFile=39, positionInMemory=4, instruction=Instruction{instructionType=ADDWF, fK= 0xc, bD= 0x1}}
+        //InstructionLine{positionLineInFile=40, positionInMemory=5, instruction=Instruction{instructionType=ANDWF, fK= 0xc, bD= 0x0}}
+        //InstructionLine{positionLineInFile=41, positionInMemory=6, instruction=Instruction{instructionType=MOVWF, fK= 0xd, bD= 0x1}}
+        //InstructionLine{positionLineInFile=42, positionInMemory=7, instruction=Instruction{instructionType=CLRF, fK= 0xc, bD= 0x1}}
+        //InstructionLine{positionLineInFile=43, positionInMemory=8, instruction=Instruction{instructionType=COMF, fK= 0xd, bD= 0x0}}
+        //InstructionLine{positionLineInFile=44, positionInMemory=9, instruction=Instruction{instructionType=DECF, fK= 0xc, bD= 0x0}}
+        //InstructionLine{positionLineInFile=45, positionInMemory=10, instruction=Instruction{instructionType=INCF, fK= 0xd, bD= 0x1}}
+        //InstructionLine{positionLineInFile=46, positionInMemory=11, instruction=Instruction{instructionType=MOVF, fK= 0xc, bD= 0x1}}
+        //InstructionLine{positionLineInFile=47, positionInMemory=12, instruction=Instruction{instructionType=IORWF, fK= 0xc, bD= 0x1}}
+        //InstructionLine{positionLineInFile=48, positionInMemory=13, instruction=Instruction{instructionType=SUBWF, fK= 0xd, bD= 0x0}}
+        //InstructionLine{positionLineInFile=49, positionInMemory=14, instruction=Instruction{instructionType=SWAPF, fK= 0xd, bD= 0x1}}
+        //InstructionLine{positionLineInFile=50, positionInMemory=15, instruction=Instruction{instructionType=XORWF, fK= 0xc, bD= 0x1}}
+        //InstructionLine{positionLineInFile=51, positionInMemory=16, instruction=Instruction{instructionType=CLRW, fK= 0x0, bD= 0x0}}
+        //InstructionLine{positionLineInFile=53, positionInMemory=17, instruction=Instruction{instructionType=SUBWF, fK= 0xc, bD= 0x0}}
+        //InstructionLine{positionLineInFile=54, positionInMemory=18, instruction=Instruction{instructionType=SUBWF, fK= 0xd, bD= 0x0}}
+        //InstructionLine{positionLineInFile=55, positionInMemory=19, instruction=Instruction{instructionType=SUBWF, fK= 0xd, bD= 0x1}}
+        //InstructionLine{positionLineInFile=56, positionInMemory=20, instruction=Instruction{instructionType=SUBWF, fK= 0xd, bD= 0x1}}
+        //InstructionLine{positionLineInFile=60, positionInMemory=21, instruction=Instruction{instructionType=GOTO, fK= 0x15, bD= 0x0}}
+    }
+
 }

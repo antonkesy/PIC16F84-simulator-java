@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class SimulatorGUI {
 
@@ -138,7 +139,7 @@ public class SimulatorGUI {
         //Quazbox Listener
         quarzBox.addActionListener(e -> {
             if (pic != null) {
-                pic.setQuarzSpeed(((ComboBoxItem) quarzBox.getSelectedItem()).getValue());
+                pic.setQuarzSpeed(((ComboBoxItem) Objects.requireNonNull(quarzBox.getSelectedItem())).getValue());
             }
         });
 
@@ -159,7 +160,7 @@ public class SimulatorGUI {
         lstList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JList list = (JList) e.getSource();
+                JList<String> list = (JList) e.getSource();
                 if (e.getClickCount() == 2) {
                     // Double-click detected
                     int index = list.locationToIndex(e.getPoint());
@@ -323,10 +324,10 @@ public class SimulatorGUI {
         //JTable + Model for FLR
         String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
         String[] column = new String[]{"0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
-        ListModel lm = new FileRegisterTable.RowHeaderListModel();
+        ListModel<String> lm = new FileRegisterTable.RowHeaderListModel();
         modelFileRegister = new DefaultTableModel(fileRegisterData, column);
         fileRegisterTable = new JTable(modelFileRegister);
-        JList rowHeader = new JList(lm);
+        JList<String> rowHeader = new JList<String>(lm);
         rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterTable));
         frScrollPanel = new JScrollPane(fileRegisterTable);
         frScrollPanel.setRowHeaderView(rowHeader);

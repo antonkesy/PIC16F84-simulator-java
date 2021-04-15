@@ -1,6 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.LSTLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
@@ -9,6 +10,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class SimulatorGUI {
     private JCheckBox pBp6CheckBox;
     private JCheckBox pBp7CheckBox;
     private JTable fileRegisterTable;
-    private JList<Object> list1;
+    private JList<Object> lstList;
     private JButton oeffneNeueDateiButton;
     private JLabel stackField0;
     private JLabel stackField1;
@@ -99,6 +102,10 @@ public class SimulatorGUI {
 
     private List<InstructionLine> lastReadInstructionsLines;
 
+    private List<LSTLine> lstLines;
+
+    private int currentLine;
+
 
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
@@ -111,7 +118,8 @@ public class SimulatorGUI {
             chooser.showOpenDialog(null);
             if (chooser.getSelectedFile() != null) {
                 FileReader fileReader = new FileReader(chooser.getSelectedFile());
-                list1.setListData(fileReader.getLineList().toArray());
+                lstLines = fileReader.getLineList();
+                lstList.setListData(lstLines.toArray());
                 lastReadInstructionsLines = fileReader.getInstructionLineList();
                 setPIC();
             }
@@ -148,6 +156,18 @@ public class SimulatorGUI {
 
 
         nStepsButton.addActionListener(e -> DoNSteps());
+        lstList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JList list = (JList) e.getSource();
+                if (e.getClickCount() == 2) {
+                    // Double-click detected
+                    int index = list.locationToIndex(e.getPoint());
+                    lstLines.get(index).switchBreakpoint();
+                    updateLST();
+                }
+            }
+        });
     }
 
     private void DoNSteps() {
@@ -158,14 +178,14 @@ public class SimulatorGUI {
             System.out.println("Exception");
         }
         for (int i = 0; i < steps; ++i) {
-            step();
+            stepWithBreakpoints();
         }
     }
 
     private void setPIC() {
         stepsSpinner.setValue(1000);
         pic = new PIC16F8X(lastReadInstructionsLines);
-        list1.setSelectedIndex(0);
+        lstList.setSelectedIndex(0);
         updateUIFromPIC();
     }
 
@@ -210,13 +230,18 @@ public class SimulatorGUI {
 
     private void updateUIFromPIC() {
         if (pic == null) return;
-        list1.setSelectedIndex(pic.getCurrentLine());
+        currentLine = pic.getCurrentLine();
+        lstList.setSelectedIndex(currentLine);
         updateStack();
         updateFileRegister();
         updateSFRBits();
         updateSFRW();
         UpdateTris();
         updateRunTimeLabel();
+    }
+
+    private void updateLST() {
+        lstList.setListData(lstLines.toArray());
     }
 
     private void updateRunTimeLabel() {
@@ -373,9 +398,23 @@ public class SimulatorGUI {
 
     public void step() {
         if (pic != null) {
-            //Setzt den Selecter auf die aktuelle Instruktion
             pic.step();
             updateUIFromPIC();
         }
+    }
+
+    public void stepWithBreakpoints() {
+        System.out.println(currentLine + " " + !lstLines.get(currentLine).isBreakpoint());
+        if (pic != null) {
+            //Ueberprueft ob naechste Instruktion breakpoint ist
+            if (isNextInstructionNoBreakpoint()) {
+                pic.step();
+                updateUIFromPIC();
+            }
+        }
+    }
+
+    public boolean isNextInstructionNoBreakpoint() {
+        return currentLine >= 0 && !lstLines.get(currentLine).isBreakpoint();
     }
 }

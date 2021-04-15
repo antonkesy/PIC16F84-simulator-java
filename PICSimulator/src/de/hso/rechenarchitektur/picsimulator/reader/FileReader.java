@@ -2,6 +2,7 @@ package de.hso.rechenarchitektur.picsimulator.reader;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionDecoder;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.LSTLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +14,7 @@ public class FileReader {
 
     private final ArrayList<InstructionLine> programMemoryMap;
 
-    private final ArrayList<String> lines;
+    private final ArrayList<LSTLine> lines;
 
     public FileReader(File file) {
         this.file = file;
@@ -32,7 +33,7 @@ public class FileReader {
             Scanner myReader = new Scanner(file, String.valueOf(StandardCharsets.ISO_8859_1));
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
-                lines.add(line);
+                lines.add(new LSTLine(line));
                 interpretLine(line);
             }
             myReader.close();
@@ -57,7 +58,7 @@ public class FileReader {
         );
     }
 
-    public List<String> getLineList() {
+    public List<LSTLine> getLineList() {
         return lines;
     }
 

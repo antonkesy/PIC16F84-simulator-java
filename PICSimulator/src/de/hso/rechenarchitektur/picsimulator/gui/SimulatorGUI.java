@@ -323,7 +323,7 @@ public class SimulatorGUI {
     private void createUIComponents() {
         //JTable + Model for FLR
         String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
-        String[] column = new String[]{"0", "+1", "+2", "+3", "+4", "+5", "+6", "+7"};
+        String[] column = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
         ListModel<String> lm = new FileRegisterTable.RowHeaderListModel();
         modelFileRegister = new DefaultTableModel(fileRegisterData, column);
         fileRegisterTable = new JTable(modelFileRegister);
@@ -333,7 +333,7 @@ public class SimulatorGUI {
         frScrollPanel.setRowHeaderView(rowHeader);
 
         //Creates empty rows for FLR
-        for (int i = 0; i < 15; ++i) {
+        for (int i = 0; i < 7; ++i) {
             modelFileRegister.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
         }
 

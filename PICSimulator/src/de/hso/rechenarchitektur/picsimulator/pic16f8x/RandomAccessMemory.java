@@ -337,7 +337,7 @@ public class RandomAccessMemory {
     }
 
     public String[][] getDataString() {
-        String[][] result = new String[16][8];
+        String[][] result = new String[8][16];
 
         int indexX = 0;
         int indexY = 0;

@@ -10,9 +10,9 @@ public class FileRegisterTable {
         String[] strRowHeaders;
 
         public RowHeaderListModel() {
-            strRowHeaders = new String[16];
+            strRowHeaders = new String[8];
             for (int i = 0; i < strRowHeaders.length; ++i) {
-                strRowHeaders[i] = "   " + Integer.toHexString(8 * i) + "   ";
+                strRowHeaders[i] = "   " + Integer.toHexString(16 * i) + "   ";
             }
         }
 

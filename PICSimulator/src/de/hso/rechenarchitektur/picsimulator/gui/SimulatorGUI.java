@@ -190,6 +190,15 @@ public class SimulatorGUI {
         });
 
 
+        //Status Bit Switch values
+        statusBitTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("" + statusBitTable.getSelectedColumn() + " " + statusBitTable.getSelectedRow());
+                //TODO
+                super.mouseClicked(e);
+            }
+        });
     }
 
     private void DoNSteps() {

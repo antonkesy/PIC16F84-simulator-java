@@ -19,7 +19,7 @@ public class RandomAccessMemory {
         setStatus(0b0001_1000);
         setTrisA(0b11_1111);
         setTrisB(0b1111_1111);
-        setPCL(0b0000_0000);
+        setPCL(0);
         setOption(0b1111_1111);
     }
 
@@ -33,7 +33,10 @@ public class RandomAccessMemory {
 
     public void setDataToAddress(int address, int data) {
         //Wenn im AnwenderBereich, dann wird es gespiegelt
-        if (address >= 0x0C && address <= 0x2F) {
+
+        if (address == 2) {
+            setPCL(data);
+        } else if (address >= 0x0C && address <= 0x2F) {
             memory[address][isRegisterBank0() ? 1 : 0] = data;
         }
 
@@ -76,12 +79,33 @@ public class RandomAccessMemory {
         memory[1][1] = value;
     }
 
+    public int getJumpAddress(int f) {
+        int value = 0;
+        //Add pcl to front bits
+        int lath2 = getPCLath();
+        lath2 >>= 3;
+        value |= lath2;
+        //add f (11bits) to value
+        value <<= 11;
+        return value | f;
+    }
+
+    /**
+     * PC Low -> unteren 8 Bits
+     *
+     * @return
+     */
     public int getPCL() {
         return getDataFromAddress(2);
     }
 
     public void setPCL(int value) {
-        setDataToAddress(2, value);
+        int newPCLValue = 0;
+        newPCLValue |= getPCLath();
+        newPCLValue <<= 8;
+        newPCLValue |= value;
+        memory[2][0] = newPCLValue;
+        memory[2][1] = newPCLValue;
     }
 
     public int getPC() {
@@ -90,15 +114,16 @@ public class RandomAccessMemory {
 
     public void setPC(int value) {
         pc = value;
-        calculatePCL();
+        setPCL(value);
+    }
+
+    public void incrementPC() {
+        setPCL(++pc);
     }
 
     public void calculatePCL() {
         int pcl = getDataFromAddress(2);
         int pc = getPC();
-        pc &= 0xFF;
-        pcl ^= pc;
-        setPCL(pcl);
     }
 
     public int getStatus() {
@@ -320,8 +345,13 @@ public class RandomAccessMemory {
         return memory[9][1];
     }
 
+    /**
+     * only 5 bits
+     *
+     * @return
+     */
     public int getPCLath() {
-        return getDataFromAddress(10);
+        return getDataFromAddress(10) & 0b1_1111;
     }
 
     public void setPCLath(int value) {

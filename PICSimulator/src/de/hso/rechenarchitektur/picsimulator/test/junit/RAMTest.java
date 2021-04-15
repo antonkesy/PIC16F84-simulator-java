@@ -19,7 +19,7 @@ public class RAMTest {
         Assert.assertEquals(0b0001_1000, ramReset.getStatus());
         Assert.assertEquals(0b11_1111, ramReset.getTrisA());
         Assert.assertEquals(0b1111_1111, ramReset.getTrisB());
-        Assert.assertEquals(0b0000_0000, ramReset.getPCL());
+        Assert.assertEquals(0b0000_0000, ramReset.getPC()); //check for PCL
         Assert.assertEquals(0b1111_1111, ramReset.getOption());
     }
 

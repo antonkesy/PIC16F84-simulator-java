@@ -1,7 +1,5 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProgramMemory {

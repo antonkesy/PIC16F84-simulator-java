@@ -166,4 +166,9 @@ public class RAMTest {
         Assert.assertEquals(0b1111_1111, ram.getStatus());
     }
 
+    @Test
+    public void jumpAddressTest() {
+        ram.setPCLath(0b11000);
+        Assert.assertEquals(0b11011_0101_0101, ram.getJumpAddress(0b011_0101_0101));
+    }
 }

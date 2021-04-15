@@ -28,8 +28,8 @@ public class PIC16F8X {
     }
 
     private void getNextInstruction() {
-        currentInstructionInRegister = programMemory.getInstructionAt(ram.getPCL());
-        ram.setPCL(ram.getPCL() + 1);
+        currentInstructionInRegister = programMemory.getInstructionAt(ram.getPC());
+        ram.setPC(ram.getPC() + 1);
     }
 
     private void instructionHandler() {
@@ -149,8 +149,8 @@ public class PIC16F8X {
                 break;
             case CALL:
                 cycles = 2;
-                stack.push(getRam().getPCL());
-                getRam().setPCL(currentInstruction.getFK());
+                stack.push(getRam().getPC());
+                getRam().setPC(currentInstruction.getFK());
                 break;
             case SLEEP:
                 ram.setPowerDownFlag(false);
@@ -163,7 +163,7 @@ public class PIC16F8X {
                 break;
             case GOTO:
                 cycles = 2;
-                ram.setPCL(currentInstruction.getFK());
+                ram.setPC(currentInstruction.getFK());
                 break;
             case IORLW:
                 wRegister = ArithmeticLogicUnit.or(ram, wRegister, currentInstruction.getFK());
@@ -173,7 +173,7 @@ public class PIC16F8X {
                 break;
             case RETFIE:
                 cycles = 2;
-                ram.setPCL(stack.pop());
+                ram.setPC(stack.pop());
                 //TODO INTCON Bit setzen
                 ram.setIntcon(0b100_0000);
                 break;
@@ -181,7 +181,7 @@ public class PIC16F8X {
                 wRegister = currentInstruction.getFK();
             case RETURN:
                 cycles = 2;
-                getRam().setPCL(stack.pop());
+                getRam().setPC(stack.pop());
                 break;
             case SUBLW:
                 cycles = 1;
@@ -224,7 +224,7 @@ public class PIC16F8X {
 
     private void skipNextInstruction() {
         currentInstructionInRegister = new InstructionLine();
-        ram.setPCL(ram.getPCL() + 1);
+        ram.setPC(ram.getPC() + 1);
         instructionHandler();
     }
 

@@ -16,16 +16,16 @@ public class LSTLine {
         return isBreakpoint;
     }
 
-    public void setBreakpoint(boolean breakpoint) {
-        isBreakpoint = breakpoint;
-    }
-
     public String getLine() {
-        return isBreakpoint ? "\uD83D\uDD34" : "" + line;
+        return (isBreakpoint ? "\uD83D\uDD34" : "") + line;
     }
 
     @Override
     public String toString() {
         return getLine();
+    }
+
+    public void switchBreakpoint() {
+        isBreakpoint = !isBreakpoint;
     }
 }

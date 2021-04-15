@@ -28,8 +28,8 @@ public class PIC16F8X {
     }
 
     private void getNextInstruction() {
-        currentInstructionInRegister = programMemory.getInstructionAt(ram.getPC());
-        ram.incrementPC();
+        currentInstructionInRegister = programMemory.getInstructionAt(ram.getPCL());
+        ram.incrementPCL();
     }
 
     private void instructionHandler() {
@@ -149,8 +149,8 @@ public class PIC16F8X {
                 break;
             case CALL:
                 cycles = 2;
-                stack.push(getRam().getPC());
-                getRam().setPC(ram.getJumpAddress(currentInstruction.getFK()));
+                stack.push(getRam().getPCL());
+                getRam().setPCL(ram.getJumpAddress(currentInstruction.getFK()));
                 break;
             case SLEEP:
                 ram.setPowerDownFlag(false);
@@ -163,7 +163,7 @@ public class PIC16F8X {
                 break;
             case GOTO:
                 cycles = 2;
-                ram.setPC(ram.getJumpAddress(currentInstruction.getFK()));
+                ram.setPCL(ram.getJumpAddress(currentInstruction.getFK()));
                 break;
             case IORLW:
                 wRegister = ArithmeticLogicUnit.or(ram, wRegister, currentInstruction.getFK());
@@ -173,7 +173,7 @@ public class PIC16F8X {
                 break;
             case RETFIE:
                 cycles = 2;
-                ram.setPC(stack.pop());
+                ram.setPCL(stack.pop());
                 //TODO INTCON Bit setzen
                 ram.setIntcon(0b100_0000);
                 break;
@@ -181,7 +181,7 @@ public class PIC16F8X {
                 wRegister = currentInstruction.getFK();
             case RETURN:
                 cycles = 2;
-                getRam().setPC(stack.pop());
+                getRam().setPCL(stack.pop());
                 break;
             case SUBLW:
                 cycles = 1;

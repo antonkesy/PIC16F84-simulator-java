@@ -12,9 +12,6 @@ public class RandomAccessMemory {
      */
     private final int[][] memory;
 
-    private int pc = 0; //todo only change with lath by manual change
-    //todo remove
-
     public RandomAccessMemory() {
         memory = new int[128][2];
         setStatus(0b0001_1000);
@@ -89,7 +86,6 @@ public class RandomAccessMemory {
         value |= lath2;
         //add f (11bits) to value
         value <<= 11;
-        //  System.out.println("LATH  = " + Integer.toBinaryString(getPCLath()) + " " + Integer.toHexString(value | f) + " " + Integer.toBinaryString(value | f));
         return value | f;
     }
 
@@ -111,23 +107,12 @@ public class RandomAccessMemory {
         memory[2][1] = newPCLValue;
     }
 
-    public int getPC() {
-        return pc;
+
+    public void incrementPCL() {
+        memory[2][0] = memory[2][0] + 1;
+        memory[2][1] = memory[2][0] + 1;
     }
 
-    public void setPC(int value) {
-        pc = value;
-        setPCL(value);
-    }
-
-    public void incrementPC() {
-        setPCL(++pc);
-    }
-
-    public void calculatePCL() {
-        int pcl = getDataFromAddress(2);
-        int pc = getPC();
-    }
 
     public int getStatus() {
         return memory[3][0];

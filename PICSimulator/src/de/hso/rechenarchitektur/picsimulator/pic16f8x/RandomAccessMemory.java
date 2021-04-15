@@ -12,12 +12,14 @@ public class RandomAccessMemory {
      */
     private final int[][] memory;
 
+    private int pc = 0;
+
     public RandomAccessMemory() {
         memory = new int[128][2];
         setStatus(0b0001_1000);
         setTrisA(0b11_1111);
         setTrisB(0b1111_1111);
-        setPCL(0b0000_0000);
+        setPC(0b0000_0000);
         setOption(0b1111_1111);
     }
 
@@ -80,6 +82,23 @@ public class RandomAccessMemory {
 
     public void setPCL(int value) {
         setDataToAddress(2, value);
+    }
+
+    public int getPC() {
+        return pc;
+    }
+
+    public void setPC(int value) {
+        pc = value;
+        calculatePCL();
+    }
+
+    public void calculatePCL() {
+        int pcl = getDataFromAddress(2);
+        int pc = getPC();
+        pc &= 0xFF;
+        pcl ^= pc;
+        setPCL(pcl);
     }
 
     public int getStatus() {

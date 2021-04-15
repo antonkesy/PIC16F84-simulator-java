@@ -29,7 +29,7 @@ public class PIC16F8X {
 
     private void getNextInstruction() {
         currentInstructionInRegister = programMemory.getInstructionAt(ram.getPC());
-        ram.setPC(ram.getPC() + 1);
+        ram.incrementPC();
     }
 
     private void instructionHandler() {
@@ -150,7 +150,7 @@ public class PIC16F8X {
             case CALL:
                 cycles = 2;
                 stack.push(getRam().getPC());
-                getRam().setPC(currentInstruction.getFK());
+                getRam().setPC(ram.getJumpAddress(currentInstruction.getFK()));
                 break;
             case SLEEP:
                 ram.setPowerDownFlag(false);
@@ -163,7 +163,7 @@ public class PIC16F8X {
                 break;
             case GOTO:
                 cycles = 2;
-                ram.setPC(currentInstruction.getFK());
+                ram.setPC(ram.getJumpAddress(currentInstruction.getFK()));
                 break;
             case IORLW:
                 wRegister = ArithmeticLogicUnit.or(ram, wRegister, currentInstruction.getFK());

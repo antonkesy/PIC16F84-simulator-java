@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class FileRegisterTable {
 
-    static class RowHeaderListModel extends AbstractListModel {
+    static class RowHeaderListModel extends AbstractListModel<String> {
         String[] strRowHeaders;
 
         public RowHeaderListModel() {
@@ -20,7 +20,7 @@ public class FileRegisterTable {
             return strRowHeaders.length;
         }
 
-        public Object getElementAt(int index) {
+        public String getElementAt(int index) {
             return strRowHeaders[index];
         }
     }

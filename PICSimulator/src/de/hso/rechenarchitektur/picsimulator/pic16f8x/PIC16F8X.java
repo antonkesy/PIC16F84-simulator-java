@@ -223,9 +223,7 @@ public class PIC16F8X {
     }
 
     private void skipNextInstruction() {
-        currentInstructionInRegister = new InstructionLine();
-        ram.setPC(ram.getPC() + 1);
-        instructionHandler();
+        getNextInstruction();
     }
 
     /**

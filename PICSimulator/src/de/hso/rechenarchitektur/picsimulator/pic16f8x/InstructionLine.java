@@ -15,7 +15,7 @@ public class InstructionLine {
      * Konstruktor fuer NOP
      */
     public InstructionLine() {
-        positionLineInFile = 0;
+        positionLineInFile = 1;
         positionInMemory = 0;
         instruction = new Instruction(InstructionType.NOP);
     }

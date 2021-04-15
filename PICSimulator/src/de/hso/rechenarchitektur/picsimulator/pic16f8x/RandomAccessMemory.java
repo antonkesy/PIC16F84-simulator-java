@@ -19,7 +19,7 @@ public class RandomAccessMemory {
         setStatus(0b0001_1000);
         setTrisA(0b11_1111);
         setTrisB(0b1111_1111);
-        setPC(0b0000_0000);
+        setPCL(0b0000_0000);
         setOption(0b1111_1111);
     }
 

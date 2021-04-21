@@ -31,8 +31,11 @@ public class RandomAccessMemory {
 
     public void setDataToAddress(int address, int data) {
         //Wenn im AnwenderBereich, dann wird es gespiegelt
-
-        if (address == 2) {
+        //TMR0
+        if (address == 1) {
+            setTMR0(data);
+        } else if (address == 2) {
+            //PCL
             setPCL(data);
         } else if (address >= 0x0C && address <= 0x2F) {
             memory[address][isRegisterBank0() ? 1 : 0] = data;
@@ -65,8 +68,17 @@ public class RandomAccessMemory {
         return getDataFromAddress(0);
     }
 
+    public void incrementTMR0By(int value) {
+        setTMR0(memory[1][0] + value);
+    }
+
     public void setTMR0(int value) {
+        //todo +2, weil es 2 Takte braucht?
         memory[1][0] = value;
+        if (memory[1][0] > 0xFF) {
+            memory[1][0] = 0;
+            setIntcon(1); //TODO T01f wird 1
+        }
     }
 
     public int getOption() {

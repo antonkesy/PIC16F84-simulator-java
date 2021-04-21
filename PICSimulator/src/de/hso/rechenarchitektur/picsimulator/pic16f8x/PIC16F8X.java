@@ -191,6 +191,10 @@ public class PIC16F8X {
                 wRegister = ArithmeticLogicUnit.xor(ram, wRegister, currentInstruction.getFK());
                 break;
         }
+        //todo
+        //if(tmr0 watchdog was auch immer{
+        ram.incrementTMR0By(cycles);
+        //}
         calculateRunTime(cycles);
         getNextInstruction();
     }

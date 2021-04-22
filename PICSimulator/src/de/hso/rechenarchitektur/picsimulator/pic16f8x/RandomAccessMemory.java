@@ -32,7 +32,7 @@ public class RandomAccessMemory {
     public void setDataToAddress(int address, int data) {
         //Wenn im AnwenderBereich, dann wird es gespiegelt
         //TMR0
-        if (address == 1) {
+        if (address == 1 && isRegisterBank0()) {
             setTMR0(data);
         } else if (address == 2) {
             //PCL

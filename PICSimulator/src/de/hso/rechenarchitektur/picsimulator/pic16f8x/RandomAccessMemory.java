@@ -195,6 +195,7 @@ public class RandomAccessMemory {
         return getCurrentBank() == Bank.BANK0;
     }
 
+    //TODO something wrong
     public boolean isRP0() {
         return (getStatus() & 0b10_0000) == 0b10_0000;
     }
@@ -246,6 +247,7 @@ public class RandomAccessMemory {
         setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag, isRP0(), isRP1(), isIRPFlag());
     }
 
+    //TODO check if correct
     public void setRegisterBank(Bank setBank) {
         switch (setBank) {
             case BANK0:

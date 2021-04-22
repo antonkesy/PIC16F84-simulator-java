@@ -79,38 +79,41 @@ public class SimulatorGUI {
     private JScrollPane frB1ScrollPanel;
     private FileRegisterTable fileRegisterBank0Table;
     private FileRegisterTable fileRegisterBank1Table;
-    private JCheckBox checkBoxIRP;
-    private JCheckBox checkBoxRP1;
-    private JCheckBox checkBoxRP0;
-    private JCheckBox checkBoxTO;
-    private JCheckBox checkBoxPD;
-    private JCheckBox checkBoxZ;
-    private JCheckBox checkBoxDC;
-    private JCheckBox checkBoxC;
-    private JCheckBox checkBoxRPu;
-    private JCheckBox checkBoxIEG;
-    private JCheckBox checkBoxTCs;
-    private JCheckBox checkBoxTSe;
-    private JCheckBox checkBoxPSA;
-    private JCheckBox checkBoxPS2;
-    private JCheckBox checkBoxPS1;
-    private JCheckBox checkBoxPS0;
-    private JCheckBox checkBoxGIE;
-    private JCheckBox checkBoxEIE;
-    private JCheckBox checkBoxTIE;
-    private JCheckBox checkBoxIE;
-    private JCheckBox checkBoxRIE;
-    private JCheckBox checkBoxTIF;
-    private JCheckBox checkBoxIF;
-    private JCheckBox checkBoxRIF;
+    private JBitCheckBox checkBoxIRP;
+    private JBitCheckBox checkBoxRP1;
+    private JBitCheckBox checkBoxRP0;
+    private JBitCheckBox checkBoxTO;
+    private JBitCheckBox checkBoxPD;
+    private JBitCheckBox checkBoxZ;
+    private JBitCheckBox checkBoxDC;
+    private JBitCheckBox checkBoxC;
+    private JBitCheckBox checkBoxRPu;
+    private JBitCheckBox checkBoxIEG;
+    private JBitCheckBox checkBoxTCs;
+    private JBitCheckBox checkBoxTSe;
+    private JBitCheckBox checkBoxPSA;
+    private JBitCheckBox checkBoxPS2;
+    private JBitCheckBox checkBoxPS1;
+    private JBitCheckBox checkBoxPS0;
+    private JBitCheckBox checkBoxGIE;
+    private JBitCheckBox checkBoxEIE;
+    private JBitCheckBox checkBoxTIE;
+    private JBitCheckBox checkBoxIE;
+    private JBitCheckBox checkBoxRIE;
+    private JBitCheckBox checkBoxTIF;
+    private JBitCheckBox checkBoxIF;
+    private JBitCheckBox checkBoxRIF;
     private JPanel frPanel;
     private JLabel statusBitText;
-    private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
-    private final JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
-    private final JCheckBox[] trisA = {pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
-    private final JCheckBox[] portBPins = {pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
-    private final JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
+    private JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
+    private JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
+    private JCheckBox[] trisA = {pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
+    private JCheckBox[] portBPins = {pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
+    private JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
     //
+    private JBitCheckBox[] statusBitCheckBoxes;
+    private JBitCheckBox[] optionBitCheckBoxes;
+    private JBitCheckBox[] intconBitCheckBoxes;
     private PIC16F8X pic;
 
     private boolean isAutoRun;
@@ -125,7 +128,6 @@ public class SimulatorGUI {
 
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
-
         //Oeffne neue Datei OnClickListener
         oeffneNeueDateiButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser(System.getProperty("user.dir") + "/LST");
@@ -201,6 +203,7 @@ public class SimulatorGUI {
         fileRegisterBank1Table.setPIC(pic);
         quarzBox.setPIC(pic);
         lstList.setSelectedIndex(0);
+        updateBitCheckBoxesRAM();
         updateUIFromPIC();
     }
 
@@ -305,43 +308,15 @@ public class SimulatorGUI {
 
     private void updateSFRBits() {
         if (pic == null) return;
-        updateStatusCheckBoxes();
-        updateOptionCheckBoxes();
-        updateIntconCheckBoxes();
+        updateBitCheckBoxes(statusBitCheckBoxes);
+        updateBitCheckBoxes(optionBitCheckBoxes);
+        updateBitCheckBoxes(intconBitCheckBoxes);
     }
 
-    //Todo load checkboxes in list and stream
-    private void updateStatusCheckBoxes() {
-        checkBoxIRP.setSelected(pic.getRam().isIRPFlag());
-        checkBoxRP1.setSelected(pic.getRam().isRP1());
-        checkBoxRP0.setSelected(pic.getRam().isRP0());
-        checkBoxTO.setSelected(pic.getRam().isTimeOutFlag());
-        checkBoxPD.setSelected(pic.getRam().isPowerDownFlag());
-        checkBoxZ.setSelected(pic.getRam().isZeroFlag());
-        checkBoxDC.setSelected(pic.getRam().isDigitCarryFlag());
-        checkBoxC.setSelected(pic.getRam().isCarryFlag());
-    }
-
-    private void updateOptionCheckBoxes() {
-        checkBoxRPu.setSelected(pic.getRam().isRPu());
-        checkBoxIEG.setSelected(pic.getRam().isIEg());
-        checkBoxTCs.setSelected(pic.getRam().isTCs());
-        checkBoxTSe.setSelected(pic.getRam().isTSe());
-        checkBoxPSA.setSelected(pic.getRam().isPSA());
-        checkBoxPS2.setSelected(pic.getRam().isPS2());
-        checkBoxPS1.setSelected(pic.getRam().isPS1());
-        checkBoxPS0.setSelected(pic.getRam().isPS0());
-    }
-
-    private void updateIntconCheckBoxes() {
-        checkBoxGIE.setSelected(pic.getRam().isGIE());
-        checkBoxEIE.setSelected(pic.getRam().isEIE());
-        checkBoxTIE.setSelected(pic.getRam().isTIE());
-        checkBoxIE.setSelected(pic.getRam().isIE());
-        checkBoxRIE.setSelected(pic.getRam().isRIE());
-        checkBoxTIF.setSelected(pic.getRam().isTIF());
-        checkBoxIF.setSelected(pic.getRam().isIF());
-        checkBoxRIF.setSelected(pic.getRam().isRIF());
+    private void updateBitCheckBoxes(JBitCheckBox[] checkBoxes) {
+        for (JBitCheckBox checkBox : checkBoxes) {
+            checkBox.updateValue();
+        }
     }
 
     private void updateSFRW() {
@@ -361,6 +336,13 @@ public class SimulatorGUI {
 
 
     private void createUIComponents() {
+        stackFields = new JLabel[]{stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
+        portAPins = new JCheckBox[]{pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
+        trisA = new JCheckBox[]{pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
+        portBPins = new JCheckBox[]{pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
+        trisB = new JCheckBox[]{pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
+
+
         //JTable + Model for FLR
         frScrollPanel = new JScrollPane();
         frB1ScrollPanel = new JScrollPane();
@@ -368,6 +350,60 @@ public class SimulatorGUI {
         fileRegisterBank1Table = new FileRegisterTable(frB1ScrollPanel, false, this);
         //QuarzSpeedCombobox
         quarzBox = new JQuarzComboBox();
+        //SFR Bits
+
+        createStatusCheckBoxes();
+        createOptionCheckBoxes();
+        createIntconCheckBoxes();
+    }
+
+    private void createStatusCheckBoxes() {
+        checkBoxC = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 0, this);
+        checkBoxDC = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 1, this);
+        checkBoxZ = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 2, this);
+        checkBoxPD = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 3, this);
+        checkBoxTO = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 4, this);
+        checkBoxRP0 = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 5, this);
+        checkBoxRP1 = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 6, this);
+        checkBoxIRP = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.STATUS, 7, this);
+        statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
+    }
+
+
+    private void createOptionCheckBoxes() {
+        checkBoxPS0 = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 0, this);
+        checkBoxPS1 = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 1, this);
+        checkBoxPS2 = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 2, this);
+        checkBoxPSA = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 3, this);
+        checkBoxTSe = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 4, this);
+        checkBoxTCs = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 5, this);
+        checkBoxIEG = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 6, this);
+        checkBoxRPu = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.OPTION, 7, this);
+        optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
+    }
+
+    private void createIntconCheckBoxes() {
+        checkBoxRIF = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 0, this);
+        checkBoxIF = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 1, this);
+        checkBoxTIF = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 2, this);
+        checkBoxRIE = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 3, this);
+        checkBoxIE = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 4, this);
+        checkBoxTIE = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 5, this);
+        checkBoxEIE = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 6, this);
+        checkBoxGIE = new JBitCheckBox(JBitCheckBox.BitCheckBoxCategories.INTCON, 7, this);
+        intconBitCheckBoxes = new JBitCheckBox[]{checkBoxRIF, checkBoxIF, checkBoxTIF, checkBoxRIE, checkBoxIE, checkBoxTIE, checkBoxEIE, checkBoxGIE};
+    }
+
+    private void setRAMCheckBoxesArray(JBitCheckBox[] checkBoxes) {
+        for (JBitCheckBox checkBox : checkBoxes) {
+            checkBox.setRam(pic.getRam());
+        }
+    }
+
+    private void updateBitCheckBoxesRAM() {
+        setRAMCheckBoxesArray(statusBitCheckBoxes);
+        setRAMCheckBoxesArray(optionBitCheckBoxes);
+        setRAMCheckBoxesArray(intconBitCheckBoxes);
     }
 
 

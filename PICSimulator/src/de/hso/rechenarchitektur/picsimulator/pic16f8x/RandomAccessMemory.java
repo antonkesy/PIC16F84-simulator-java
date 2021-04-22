@@ -156,57 +156,20 @@ public class RandomAccessMemory {
         memory[3][1] = value;
     }
 
+
     public void setStatusBits(
             boolean isCarryFlag,
             boolean isDigitCarry,
             boolean isZeroFlag,
             boolean isPowerDownFlag,
             boolean isTimeOutFlag,
-            Bank activeBank,
+            boolean isRP0,
+            boolean isRP1,
             boolean isIRP) {
-        int statusValue = 0;
-        if (isCarryFlag) {
-            statusValue += 0b1;
-        }
 
-        if (isDigitCarry) {
-            statusValue += 0b10;
-        }
-
-        if (isZeroFlag) {
-            statusValue += 0b100;
-        }
-
-        if (isPowerDownFlag) {
-            statusValue += 0b1000;
-        }
-
-        if (isTimeOutFlag) {
-            statusValue += 0b1_0000;
-        }
-
-        switch (activeBank) {
-            case BANK0:
-                //nothing
-                break;
-            case BANK1:
-                statusValue += 0b10_0000;
-                break;
-            case BANK2:
-                statusValue += 0b100_0000;
-                break;
-            case BANK3:
-                statusValue += 0b110_0000;
-                break;
-        }
-
-        if (isIRP) {
-            statusValue += 0b1000_0000;
-        }
-
-
-        setStatus(statusValue);
+        setStatus(getFlagBitsValue(isCarryFlag, isDigitCarry, isZeroFlag, isPowerDownFlag, isTimeOutFlag, isRP0, isRP1, isIRP));
     }
+
 
     public boolean isCarryFlag() {
         return (getStatus() & 0b1) == 0b1;
@@ -264,33 +227,57 @@ public class RandomAccessMemory {
     }
 
     public void setCarryFlag(boolean isCarry) {
-        setStatusBits(isCarry, isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag());
+        setStatusBits(isCarry, isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRP0(), isRP1(), isIRPFlag());
     }
 
     public void setDigitCarryFlag(boolean isDigitCarry) {
-        setStatusBits(isCarryFlag(), isDigitCarry, isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag());
+        setStatusBits(isCarryFlag(), isDigitCarry, isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRP0(), isRP1(), isIRPFlag());
     }
 
     public void setZeroFlag(boolean isZero) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZero, isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag());
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZero, isPowerDownFlag(), isTimeOutFlag(), isRP0(), isRP1(), isIRPFlag());
     }
 
     public void setPowerDownFlag(boolean isPowerDownFlag) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag, isTimeOutFlag(), getCurrentBank(), isIRPFlag());
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag, isTimeOutFlag(), isRP0(), isRP1(), isIRPFlag());
     }
 
     public void setTimeOutFlag(boolean isTimeOutFlag) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag, getCurrentBank(), isIRPFlag());
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag, isRP0(), isRP1(), isIRPFlag());
     }
 
     public void setRegisterBank(Bank setBank) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), setBank, isIRPFlag());
+        switch (setBank) {
+            case BANK0:
+                setRPBits(false, false);
+                break;
+            case BANK1:
+                setRPBits(true, false);
+                break;
+            case BANK2:
+                setRPBits(false, true);
+                break;
+            case BANK3:
+                setRPBits(true, true);
+                break;
+        }
     }
 
     public void setIRPFlag(boolean isIRPFlag) {
-        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), getCurrentBank(), isIRPFlag);
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRP0(), isRP1(), isIRPFlag);
     }
 
+    public void setRPBits(boolean isRP0, boolean isRP1) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRP0, isRP1, isIRPFlag());
+    }
+
+    public void setRP0(boolean isRP0) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRP0, isRP1(), isIRPFlag());
+    }
+
+    public void setRP1(boolean isRP1) {
+        setStatusBits(isCarryFlag(), isDigitCarryFlag(), isZeroFlag(), isPowerDownFlag(), isTimeOutFlag(), isRP0(), isRP1, isIRPFlag());
+    }
 
     public int getFSR() {
         return getDataFromAddress(4);
@@ -437,6 +424,45 @@ public class RandomAccessMemory {
         return (getOption() & 0b1) == 0b1;
     }
 
+    public void setOptionBits(boolean isPS0, boolean isPS1, boolean isPS2, boolean isPSA,
+                              boolean isTSe, boolean isTCs, boolean isIEG, boolean isRPu) {
+
+        setOption(getFlagBitsValue(isPS0, isPS1, isPS2, isPSA, isTSe, isTCs, isIEG, isRPu));
+
+    }
+
+    public void setRPu(boolean isRPu) {
+        setOptionBits(isPS0(), isPS1(), isPS2(), isPSA(), isTSe(), isTCs(), isIEg(), isRPu);
+    }
+
+    public void setIEg(boolean isIEg) {
+        setOptionBits(isPS0(), isPS1(), isPS2(), isPSA(), isTSe(), isTCs(), isIEg, isRPu());
+    }
+
+    public void setTCs(boolean isTCs) {
+        setOptionBits(isPS0(), isPS1(), isPS2(), isPSA(), isTSe(), isTCs, isIEg(), isRPu());
+    }
+
+    public void setTSe(boolean isTSe) {
+        setOptionBits(isPS0(), isPS1(), isPS2(), isPSA(), isTSe, isTCs(), isIEg(), isRPu());
+    }
+
+    public void setPSA(boolean isPSA) {
+        setOptionBits(isPS0(), isPS1(), isPS2(), isPSA, isTSe(), isTCs(), isIEg(), isRPu());
+    }
+
+    public void setPS2(boolean isPS2) {
+        setOptionBits(isPS0(), isPS1(), isPS2, isPSA(), isTSe(), isTCs(), isIEg(), isRPu());
+    }
+
+    public void setPS1(boolean isPS1) {
+        setOptionBits(isPS0(), isPS1, isPS2(), isPSA(), isTSe(), isTCs(), isIEg(), isRPu());
+    }
+
+    public void setPS0(boolean isPS0) {
+        setOptionBits(isPS0, isPS1(), isPS2(), isPSA(), isTSe(), isTCs(), isIEg(), isRPu());
+    }
+
 
     public boolean isGIE() {
         return (getIntcon() & 0b1000_0000) == 0b1000_0000;
@@ -467,6 +493,7 @@ public class RandomAccessMemory {
         return (getIntcon() & 0b10) == 0b10;
     }
 
+    //TODO wad?
     public void setT0IF() {
         if ((getIntcon() & 0b10) != 0b10) {
             setIntcon(getIntcon() + 0b10);
@@ -477,84 +504,173 @@ public class RandomAccessMemory {
         return (getIntcon() & 0b1) == 0b1;
     }
 
+    public void setGIE(boolean isGIE) {
+        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE(), isTIE(), isEIE(), isGIE);
+    }
 
-    private String booleanToString(boolean isActive) {
-        return isActive ? "1" : "0";
+    public void setEIE(boolean isEIE) {
+        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE(), isTIE(), isEIE, isGIE());
+    }
+
+    public void setTIE(boolean isTIE) {
+        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE(), isTIE, isEIE(), isGIE());
+    }
+
+    public void setIE(boolean isIE) {
+        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE, isTIE(), isEIE(), isGIE());
+    }
+
+    public void setRIE(boolean isRIE) {
+        setIntconBits(isRIF(), isIF(), isTIF(), isRIE, isIE(), isTIE(), isEIE(), isGIE());
+    }
+
+    public void setTIF(boolean isTIF) {
+        setIntconBits(isRIF(), isIF(), isTIF, isRIE(), isIE(), isTIE(), isEIE(), isGIE());
     }
 
 
-    //TODO
-    public void switchCarryFlag() {
+    public void setIF(boolean isIF) {
+        setIntconBits(isRIF(), isIF, isTIF(), isRIE(), isIE(), isTIE(), isEIE(), isGIE());
+    }
 
+    public void setRIF(boolean isRIF) {
+        setIntconBits(isRIF, isIF(), isTIF(), isRIE(), isIE(), isTIE(), isEIE(), isGIE());
+    }
+
+    public void setIntconBits(boolean isRIF, boolean isIF, boolean isTIF, boolean isRIE, boolean isIE, boolean isTIE, boolean isEIE, boolean isGIE) {
+        setIntcon(getFlagBitsValue(isRIF, isIF, isTIF, isRIE, isIE, isTIE, isEIE, isGIE));
+    }
+
+    public void switchCarryFlag() {
+        setCarryFlag(!isCarryFlag());
     }
 
     public void switchDigitCarryFlag() {
+        setDigitCarryFlag(!isDigitCarryFlag());
     }
 
     public void switchZero() {
+        setZeroFlag(!isZeroFlag());
     }
 
     public void switchPD() {
+        setPowerDownFlag(!isPowerDownFlag());
     }
 
     public void switchTO() {
+        setTimeOutFlag(!isTimeOutFlag());
     }
 
     public void switchRP0() {
+        setRP0(!isRP1());
     }
 
     public void switchRP1() {
+        setRP1(!isRP1());
     }
 
     public void switchIRP() {
+        setIRPFlag(!isIRPFlag());
     }
 
-    public void switchRPU() {
+    public void switchRPu() {
+        setRPu(!isRPu());
     }
 
     public void switchIEG() {
+        setIEg(!isIEg());
     }
 
     public void switchTCs() {
+        setTCs(!isTCs());
     }
 
     public void switchTSe() {
+        setTSe(!isTSe());
     }
 
     public void switchPSA() {
+        setPSA(!isPSA());
     }
 
     public void switchPS2() {
+        setPS2(!isPS2());
     }
 
     public void switchPS1() {
+        setPS1(!isPS1());
     }
 
     public void switchPS0() {
+        setPS0(!isPS0());
     }
 
     public void switchRIF() {
+        setRIF(!isRIF());
     }
 
     public void switchIF() {
+        setIF(!isIF());
     }
 
     public void switchTIF() {
+        setTIF(!isTIF());
     }
 
     public void switchRIE() {
+        setRIE(!isRIE());
     }
 
     public void switchIE() {
+        setIE(!isIE());
     }
 
     public void switchTIE() {
+        setTIE(!isTIE());
     }
 
     public void switchEIE() {
+        setEIE(!isEIE());
     }
 
     public void switchGIE() {
+        setGIE(!isGIE());
+    }
+
+    public int getFlagBitsValue(boolean is0, boolean is1, boolean is2, boolean is3,
+                                boolean is4, boolean is5, boolean is6, boolean is7) {
+        int flagValue = 0;
+        if (is0) {
+            flagValue += 0b1;
+        }
+
+        if (is1) {
+            flagValue += 0b10;
+        }
+
+        if (is2) {
+            flagValue += 0b100;
+        }
+
+        if (is3) {
+            flagValue += 0b1000;
+        }
+
+        if (is4) {
+            flagValue += 0b1_0000;
+        }
+
+        if (is5) {
+            flagValue += 0b10_0000;
+        }
+        if (is6) {
+            flagValue += 0b10_0000;
+        }
+
+        if (is7) {
+            flagValue += 0b1000_0000;
+        }
+        return flagValue;
     }
 
 }

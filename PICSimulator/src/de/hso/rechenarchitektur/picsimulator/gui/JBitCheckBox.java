@@ -17,6 +17,13 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
 
     private final SimulatorGUI gui;
 
+    public JBitCheckBox() {
+        this.index = 0;
+        this.category = BitCheckBoxCategories.STATUS;
+        this.gui = null;
+        setText("Error!");
+        addActionListener(this);
+    }
 
     public JBitCheckBox(BitCheckBoxCategories category, int index, SimulatorGUI gui) {
         this.index = index;

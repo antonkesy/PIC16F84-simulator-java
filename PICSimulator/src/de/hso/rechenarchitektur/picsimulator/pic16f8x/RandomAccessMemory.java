@@ -381,7 +381,7 @@ public class RandomAccessMemory {
 
         return result;
     }
-    
+
     public boolean isRPu() {
         return (getOption() & 0b1000_0000) == 0b1000_0000;
     }

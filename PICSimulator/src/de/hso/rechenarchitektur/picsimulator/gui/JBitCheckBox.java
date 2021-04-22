@@ -18,11 +18,11 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
     private final SimulatorGUI gui;
 
 
-    public JBitCheckBox(String label, BitCheckBoxCategories category, int index, SimulatorGUI gui) {
-        this.setText(label);
+    public JBitCheckBox(BitCheckBoxCategories category, int index, SimulatorGUI gui) {
         this.index = index;
         this.category = category;
         this.gui = gui;
+        setLabel();
         addActionListener(this);
     }
 
@@ -211,5 +211,97 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
                 break;
         }
         gui.updateUIFromPIC();
+    }
+
+    private void setLabel() {
+        String label = "";
+
+        switch (category) {
+            case STATUS:
+                switch (index) {
+                    case 0:
+                        label = "C";
+                        break;
+                    case 1:
+                        label = "DC";
+                        break;
+                    case 2:
+                        label = "Z";
+                        break;
+                    case 3:
+                        label = "PD";
+                        break;
+                    case 4:
+                        label = "TO";
+                        break;
+                    case 5:
+                        label = "RP0";
+                        break;
+                    case 6:
+                        label = "RP1";
+                        break;
+                    case 7:
+                        label = "IRP";
+                        break;
+                }
+                break;
+            case OPTION:
+                switch (index) {
+                    case 0:
+                        label = "PS0";
+                        break;
+                    case 1:
+                        label = "PS1";
+                        break;
+                    case 2:
+                        label = "PS2";
+                        break;
+                    case 3:
+                        label = "PSA";
+                        break;
+                    case 4:
+                        label = "TSe";
+                        break;
+                    case 5:
+                        label = "TCs";
+                        break;
+                    case 6:
+                        label = "IEG";
+                        break;
+                    case 7:
+                        label = "RPu";
+                        break;
+                }
+                break;
+            case INTCON:
+                switch (index) {
+                    case 0:
+                        label = "RIF";
+                        break;
+                    case 1:
+                        label = "IF";
+                        break;
+                    case 2:
+                        label = "TIF";
+                        break;
+                    case 3:
+                        label = "RIE";
+                        break;
+                    case 4:
+                        label = "IE";
+                        break;
+                    case 5:
+                        label = "TIE";
+                        break;
+                    case 6:
+                        label = "EIE";
+                        break;
+                    case 7:
+                        label = "GIE";
+                        break;
+                }
+                break;
+        }
+        this.setText(label);
     }
 }

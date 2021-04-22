@@ -435,7 +435,7 @@
                           <text value="IRP"/>
                         </properties>
                       </component>
-                      <component id="4b94f" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRP1">
+                      <component id="4b94f" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRP1" custom-create="true">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -444,7 +444,7 @@
                           <text value="RP1"/>
                         </properties>
                       </component>
-                      <component id="54b4b" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRP0">
+                      <component id="54b4b" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRP0" custom-create="true">
                         <constraints>
                           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -452,7 +452,7 @@
                           <text value="RP0"/>
                         </properties>
                       </component>
-                      <component id="edcd0" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTO">
+                      <component id="edcd0" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTO" custom-create="true">
                         <constraints>
                           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -460,7 +460,7 @@
                           <text value="TO"/>
                         </properties>
                       </component>
-                      <component id="ceaca" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPD">
+                      <component id="ceaca" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPD" custom-create="true">
                         <constraints>
                           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -468,7 +468,7 @@
                           <text value="PD"/>
                         </properties>
                       </component>
-                      <component id="5b6d9" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxZ">
+                      <component id="5b6d9" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxZ" custom-create="true">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -476,7 +476,7 @@
                           <text value="Z"/>
                         </properties>
                       </component>
-                      <component id="f107d" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxDC">
+                      <component id="f107d" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxDC" custom-create="true">
                         <constraints>
                           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -485,7 +485,7 @@
                           <text value="DC"/>
                         </properties>
                       </component>
-                      <component id="dd065" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxC">
+                      <component id="dd065" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxC" custom-create="true">
                         <constraints>
                           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -504,7 +504,7 @@
                     <properties/>
                     <border type="none" title="Option"/>
                     <children>
-                      <component id="84ca7" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRPu">
+                      <component id="84ca7" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRPu" custom-create="true">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -513,7 +513,7 @@
                           <text value="RPu"/>
                         </properties>
                       </component>
-                      <component id="fcec7" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxIEG">
+                      <component id="fcec7" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxIEG" custom-create="true">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -521,7 +521,7 @@
                           <text value="IEG"/>
                         </properties>
                       </component>
-                      <component id="93953" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTCs">
+                      <component id="93953" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTCs" custom-create="true">
                         <constraints>
                           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -529,7 +529,7 @@
                           <text value="TCs"/>
                         </properties>
                       </component>
-                      <component id="3b01e" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTSe">
+                      <component id="3b01e" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTSe" custom-create="true">
                         <constraints>
                           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -537,7 +537,7 @@
                           <text value="TSe"/>
                         </properties>
                       </component>
-                      <component id="25a4e" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPSA">
+                      <component id="25a4e" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPSA" custom-create="true">
                         <constraints>
                           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -545,7 +545,7 @@
                           <text value="PSA"/>
                         </properties>
                       </component>
-                      <component id="7eb5f" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPS2">
+                      <component id="7eb5f" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPS2" custom-create="true">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -553,7 +553,7 @@
                           <text value="PS2"/>
                         </properties>
                       </component>
-                      <component id="6d4ba" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPS1">
+                      <component id="6d4ba" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPS1" custom-create="true">
                         <constraints>
                           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -561,7 +561,7 @@
                           <text value="PS1"/>
                         </properties>
                       </component>
-                      <component id="2cec7" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPS0">
+                      <component id="2cec7" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxPS0" custom-create="true">
                         <constraints>
                           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -579,7 +579,7 @@
                     <properties/>
                     <border type="none" title="Intcon"/>
                     <children>
-                      <component id="2eda1" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxGIE">
+                      <component id="2eda1" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxGIE" custom-create="true">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -588,7 +588,7 @@
                           <text value="GIE"/>
                         </properties>
                       </component>
-                      <component id="d11a2" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxEIE">
+                      <component id="d11a2" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxEIE" custom-create="true">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -597,7 +597,7 @@
                           <text value="EIE"/>
                         </properties>
                       </component>
-                      <component id="ad4f" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTIE">
+                      <component id="ad4f" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTIE" custom-create="true">
                         <constraints>
                           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -606,7 +606,7 @@
                           <text value="TIE"/>
                         </properties>
                       </component>
-                      <component id="d0240" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxIE">
+                      <component id="d0240" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxIE" custom-create="true">
                         <constraints>
                           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -615,7 +615,7 @@
                           <text value="IE"/>
                         </properties>
                       </component>
-                      <component id="d3c7c" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRIE">
+                      <component id="d3c7c" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRIE" custom-create="true">
                         <constraints>
                           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -624,7 +624,7 @@
                           <text value="RIE"/>
                         </properties>
                       </component>
-                      <component id="37f95" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTIF">
+                      <component id="37f95" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxTIF" custom-create="true">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -633,7 +633,7 @@
                           <text value="TIF"/>
                         </properties>
                       </component>
-                      <component id="36786" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxIF">
+                      <component id="36786" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxIF" custom-create="true">
                         <constraints>
                           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -642,7 +642,7 @@
                           <text value="IF"/>
                         </properties>
                       </component>
-                      <component id="cf9a2" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRIF">
+                      <component id="cf9a2" class="de.hso.rechenarchitektur.picsimulator.gui.JBitCheckBox" binding="checkBoxRIF" custom-create="true">
                         <constraints>
                           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>

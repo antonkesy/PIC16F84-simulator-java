@@ -2,16 +2,13 @@ package de.hso.rechenarchitektur.picsimulator.gui;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.LSTLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -54,7 +51,6 @@ public class SimulatorGUI {
     private JCheckBox pBp5CheckBox;
     private JCheckBox pBp6CheckBox;
     private JCheckBox pBp7CheckBox;
-    private JTable fileRegisterBank0Table;
     private JList<Object> lstList;
     private JButton oeffneNeueDateiButton;
     private JLabel stackField0;
@@ -66,8 +62,6 @@ public class SimulatorGUI {
     private JLabel stackField6;
     private JLabel stackField7;
     private JTable statusBitTable;
-    private JTable optionBitTable;
-    private JTable inctonBitTable;
     private JCheckBox freigabeWatchdogCheckBox;
     private JLabel watchdogValueLabel;
     private JLabel wValue;
@@ -84,7 +78,8 @@ public class SimulatorGUI {
     private JButton nStepsButton;
     private JScrollPane frScrollPanel;
     private JScrollPane frB1ScrollPanel;
-    private JTable fileRegisterBank1Table;
+    private FileRegisterTable fileRegisterBank0Table;
+    private FileRegisterTable fileRegisterBank1Table;
     private JCheckBox checkBoxIRP;
     private JCheckBox checkBoxRP1;
     private JCheckBox checkBoxRP0;
@@ -110,8 +105,6 @@ public class SimulatorGUI {
     private JCheckBox checkBoxIF;
     private JCheckBox checkBoxRIF;
     private JPanel frPanel;
-    private JSlider speedSlider;
-    private JLabel speedLabel;
     private JLabel statusBitText;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     private final JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
@@ -120,12 +113,6 @@ public class SimulatorGUI {
     private final JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
     //
     private PIC16F8X pic;
-
-    DefaultTableModel modelFileRegisterBank0;
-    DefaultTableModel modelFileRegisterBank1;
-    DefaultTableModel modelStatusBits;
-    DefaultTableModel modelOptionBits;
-    DefaultTableModel modelIntconBits;
 
     private boolean isAutoRun;
     private AutoRunThread autoRunThread;
@@ -201,31 +188,6 @@ public class SimulatorGUI {
             }
         });
 
-        //FileRegisterTable Edit Value
-        fileRegisterBank0Table.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                int inputNumber = 0;
-                try {
-                    inputNumber = Integer.decode("0x" + fileRegisterBank0Table.getValueAt(fileRegisterBank0Table.getSelectedRow(), fileRegisterBank0Table.getSelectedColumn()));
-                    inputNumber &= 0xFF; //Max 8 Bit
-                } catch (Exception ignored) {
-                }
-                pic.getRam().setDataToAddress((fileRegisterBank0Table.getSelectedColumn()) + (fileRegisterBank0Table.getSelectedRow() * 16), inputNumber);
-                super.focusGained(e);
-            }
-        });
-
-
-        //Status Bit Switch values
-        statusBitTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("" + statusBitTable.getSelectedColumn() + " " + statusBitTable.getSelectedRow());
-                //TODO
-                super.mouseClicked(e);
-            }
-        });
     }
 
     private void DoNSteps() {
@@ -243,6 +205,8 @@ public class SimulatorGUI {
     private void setPIC() {
         stepsSpinner.setValue(1000);
         pic = new PIC16F8X(lastReadInstructionsLines);
+        fileRegisterBank0Table.setPIC(pic);
+        fileRegisterBank1Table.setPIC(pic);
         lstList.setSelectedIndex(0);
         quarzBox.setSelectedIndex(5);//4Mhz
         updateUIFromPIC();
@@ -343,7 +307,8 @@ public class SimulatorGUI {
 
     private void updateFileRegister() {
         if (pic == null) return;
-        fillFRTable(pic.getRam().getDataString(true), pic.getRam().getDataString(false));
+        fileRegisterBank0Table.updateTable();
+        fileRegisterBank1Table.updateTable();
     }
 
     private void updateSFRBits() {
@@ -401,52 +366,13 @@ public class SimulatorGUI {
 
     }
 
-    private void fillModelRowWithData(DefaultTableModel model, String[] data, int row) {
-        for (int i = 0; i < data.length; ++i) {
-            model.setValueAt(data[i], row, i);
-        }
-    }
 
     private void createUIComponents() {
         //JTable + Model for FLR
-        String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
-        String[] column = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
-        //Bank 0
-        ListModel<String> lm = new FileRegisterTable.RowHeaderListModel();
-        modelFileRegisterBank0 = new DefaultTableModel(fileRegisterData, column);
-        fileRegisterBank0Table = new JTable(modelFileRegisterBank0);
-        JList<String> rowHeader = new JList<String>(lm);
-        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterBank0Table));
-        frScrollPanel = new JScrollPane(fileRegisterBank0Table);
-        frScrollPanel.setRowHeaderView(rowHeader);
-
-        //Bank 1
-        lm = new FileRegisterTable.RowHeaderListModel();
-        modelFileRegisterBank1 = new DefaultTableModel(fileRegisterData, column);
-        fileRegisterBank1Table = new JTable(modelFileRegisterBank1);
-        rowHeader = new JList<>(lm);
-        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterBank1Table));
-        frB1ScrollPanel = new JScrollPane(fileRegisterBank1Table);
-        frB1ScrollPanel.setRowHeaderView(rowHeader);
-
-        //Creates empty rows for FLR Table
-        for (int i = 0; i < 7; ++i) {
-            modelFileRegisterBank0.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
-            modelFileRegisterBank1.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
-        }
-
-        //Status Bits
-        column = new String[]{"IRP", "RP1", "RP0", "TO", "PD", "Z", "DC", "C"};
-        modelStatusBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
-        statusBitTable = new JTable(modelStatusBits);
-        //Option
-        column = new String[]{"RPu", "IEg", "TCs", "TSe", "PSA", "PS2", "PS1", "PS0"};
-        modelOptionBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
-        optionBitTable = new JTable(modelOptionBits);
-        //Intcon
-        column = new String[]{"GIE", "EIE", "TIE", "IE", "RIE", "TIF", "IF", "RIF"};
-        modelIntconBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
-        inctonBitTable = new JTable(modelIntconBits);
+        frScrollPanel = new JScrollPane();
+        frB1ScrollPanel = new JScrollPane();
+        fileRegisterBank0Table = new FileRegisterTable(pic, frScrollPanel, true);
+        fileRegisterBank1Table = new FileRegisterTable(pic, frB1ScrollPanel, false);
 
         //QuarzSpeedCombobox
         quarzBox = new JComboBox<>();
@@ -464,19 +390,6 @@ public class SimulatorGUI {
 
     }
 
-
-    /**
-     * Refills JTableModel with new values
-     *
-     * @param dataArrayBank0
-     * @param dataArrayBank1
-     */
-    private void fillFRTable(String[][] dataArrayBank0, String[][] dataArrayBank1) {
-        for (int i = 0; i < dataArrayBank0.length; ++i) {
-            fillModelRowWithData(modelFileRegisterBank0, dataArrayBank0[i], i);
-            fillModelRowWithData(modelFileRegisterBank1, dataArrayBank1[i], i);
-        }
-    }
 
     private void switchAutoRunSimulator() {
         if (isAutoRun) {

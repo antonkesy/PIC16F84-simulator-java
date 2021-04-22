@@ -682,7 +682,7 @@
                     </properties>
                     <border type="etched" title="Bank 0"/>
                     <children>
-                      <component id="b023d" class="javax.swing.JTable" binding="fileRegisterBank0Table" custom-create="true">
+                      <component id="b023d" class="de.hso.rechenarchitektur.picsimulator.gui.FileRegisterTable" binding="fileRegisterBank0Table" custom-create="true">
                         <constraints/>
                         <properties>
                           <autoCreateRowSorter value="false"/>
@@ -701,7 +701,7 @@
                     <properties/>
                     <border type="none" title="Bank 1"/>
                     <children>
-                      <component id="dc037" class="javax.swing.JTable" binding="fileRegisterBank1Table" custom-create="true">
+                      <component id="dc037" class="de.hso.rechenarchitektur.picsimulator.gui.FileRegisterTable" binding="fileRegisterBank1Table" custom-create="true">
                         <constraints/>
                         <properties/>
                       </component>

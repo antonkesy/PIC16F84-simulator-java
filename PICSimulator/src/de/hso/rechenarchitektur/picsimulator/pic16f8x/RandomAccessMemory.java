@@ -429,7 +429,7 @@ public class RandomAccessMemory {
 
     public String[] getOptionDataString() {
         return new String[]{
-                booleanToString(isRPu()), booleanToString(isIEg()), booleanToString(isTSe()),
+                booleanToString(isRPu()), booleanToString(isIEg()), booleanToString(isTCs()),
                 booleanToString(isTSe()), booleanToString(isPSA()), booleanToString(isPS2()),
                 booleanToString(isPS1()), booleanToString(isPS0())
         };

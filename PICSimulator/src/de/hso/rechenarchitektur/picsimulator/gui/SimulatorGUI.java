@@ -54,7 +54,7 @@ public class SimulatorGUI {
     private JCheckBox pBp5CheckBox;
     private JCheckBox pBp6CheckBox;
     private JCheckBox pBp7CheckBox;
-    private JTable fileRegisterTable;
+    private JTable fileRegisterBank0Table;
     private JList<Object> lstList;
     private JButton oeffneNeueDateiButton;
     private JLabel stackField0;
@@ -83,6 +83,8 @@ public class SimulatorGUI {
     private JSpinner stepsSpinner;
     private JButton nStepsButton;
     private JScrollPane frScrollPanel;
+    private JScrollPane frB1ScrollPanel;
+    private JTable fileRegisterBank1Table;
     private JPanel frPanel;
     private JSlider speedSlider;
     private JLabel speedLabel;
@@ -95,7 +97,8 @@ public class SimulatorGUI {
     //
     private PIC16F8X pic;
 
-    DefaultTableModel modelFileRegister;
+    DefaultTableModel modelFileRegisterBank0;
+    DefaultTableModel modelFileRegisterBank1;
     DefaultTableModel modelStatusBits;
     DefaultTableModel modelOptionBits;
     DefaultTableModel modelIntconBits;
@@ -175,16 +178,16 @@ public class SimulatorGUI {
         });
 
         //FileRegisterTable Edit Value
-        fileRegisterTable.addFocusListener(new FocusAdapter() {
+        fileRegisterBank0Table.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 int inputNumber = 0;
                 try {
-                    inputNumber = Integer.decode("0x" + fileRegisterTable.getValueAt(fileRegisterTable.getSelectedRow(), fileRegisterTable.getSelectedColumn()));
+                    inputNumber = Integer.decode("0x" + fileRegisterBank0Table.getValueAt(fileRegisterBank0Table.getSelectedRow(), fileRegisterBank0Table.getSelectedColumn()));
                     inputNumber &= 0xFF; //Max 8 Bit
                 } catch (Exception ignored) {
                 }
-                pic.getRam().setDataToAddress((fileRegisterTable.getSelectedColumn()) + (fileRegisterTable.getSelectedRow() * 16), inputNumber);
+                pic.getRam().setDataToAddress((fileRegisterBank0Table.getSelectedColumn()) + (fileRegisterBank0Table.getSelectedRow() * 16), inputNumber);
                 super.focusGained(e);
             }
         });
@@ -316,7 +319,7 @@ public class SimulatorGUI {
     private void updateFileRegister() {
         //TODO FileRegister auf 16x8 anstatt 8x16
         if (pic == null) return;
-        fillFRTable(pic.getRam().getDataString());
+        fillFRTable(pic.getRam().getDataString(true), pic.getRam().getDataString(false));
     }
 
     private void updateSFRBits() {
@@ -354,17 +357,28 @@ public class SimulatorGUI {
         //JTable + Model for FLR
         String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
         String[] column = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+        //Bank 0
         ListModel<String> lm = new FileRegisterTable.RowHeaderListModel();
-        modelFileRegister = new DefaultTableModel(fileRegisterData, column);
-        fileRegisterTable = new JTable(modelFileRegister);
+        modelFileRegisterBank0 = new DefaultTableModel(fileRegisterData, column);
+        fileRegisterBank0Table = new JTable(modelFileRegisterBank0);
         JList<String> rowHeader = new JList<String>(lm);
-        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterTable));
-        frScrollPanel = new JScrollPane(fileRegisterTable);
+        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterBank0Table));
+        frScrollPanel = new JScrollPane(fileRegisterBank0Table);
         frScrollPanel.setRowHeaderView(rowHeader);
 
-        //Creates empty rows for FLR
+        //Bank 1
+        lm = new FileRegisterTable.RowHeaderListModel();
+        modelFileRegisterBank1 = new DefaultTableModel(fileRegisterData, column);
+        fileRegisterBank1Table = new JTable(modelFileRegisterBank1);
+        rowHeader = new JList<>(lm);
+        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(fileRegisterBank1Table));
+        frB1ScrollPanel = new JScrollPane(fileRegisterBank1Table);
+        frB1ScrollPanel.setRowHeaderView(rowHeader);
+
+        //Creates empty rows for FLR Table
         for (int i = 0; i < 7; ++i) {
-            modelFileRegister.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
+            modelFileRegisterBank0.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
+            modelFileRegisterBank1.addRow(new String[][]{{"e", "m", "p", "t", "y", "", "", "", ""}});
         }
 
         //Status Bits
@@ -400,17 +414,13 @@ public class SimulatorGUI {
     /**
      * Refills JTableModel with new values
      *
-     * @param dataArray
+     * @param dataArrayBank0
+     * @param dataArrayBank1
      */
-    private void fillFRTable(String[][] dataArray) {
-
-
-        //JScrollPane scroll = new JScrollPane(fileRegisterTable);
-        // scroll.setRowHeaderView(rowHeader);
-        //getContentPane().add(scroll, BorderLayout.CENTER);
-
-        for (int i = 0; i < dataArray.length; ++i) {
-            fillModelRowWithData(modelFileRegister, dataArray[i], i);
+    private void fillFRTable(String[][] dataArrayBank0, String[][] dataArrayBank1) {
+        for (int i = 0; i < dataArrayBank0.length; ++i) {
+            fillModelRowWithData(modelFileRegisterBank0, dataArrayBank0[i], i);
+            fillModelRowWithData(modelFileRegisterBank1, dataArrayBank1[i], i);
         }
     }
 

@@ -366,14 +366,14 @@ public class RandomAccessMemory {
         setDataToAddress(11, value);
     }
 
-    public String[][] getDataString() {
+    public String[][] getDataString(boolean isFirstBank) {
         String[][] result = new String[8][16];
 
         int indexX = 0;
         int indexY = 0;
         //Value
         for (int[] bank : memory) {
-            result[indexY][indexX] = Integer.toHexString(bank[isRegisterBank0() ? 0 : 1]);
+            result[indexY][indexX] = Integer.toHexString(bank[isFirstBank ? 0 : 1]);
             if (++indexX >= result[indexY].length) {
                 indexX = 0;
                 ++indexY;

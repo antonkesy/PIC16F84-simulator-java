@@ -293,7 +293,8 @@ public class RandomAccessMemory {
     }
 
     public void setFSR(int value) {
-        setDataToAddress(4, value);
+        memory[4][0] = value;
+        memory[4][1] = value;
     }
 
     public int getPortA() {
@@ -370,7 +371,8 @@ public class RandomAccessMemory {
     }
 
     public void setPCLath(int value) {
-        setDataToAddress(10, value);
+        memory[10][0] = value;
+        memory[10][1] = value;
     }
 
     public int getIntcon() {
@@ -378,7 +380,8 @@ public class RandomAccessMemory {
     }
 
     public void setIntcon(int value) {
-        setDataToAddress(11, value);
+        memory[11][0] = value;
+        memory[11][1] = value;
     }
 
     public String[][] getDataString(boolean isFirstBank) {

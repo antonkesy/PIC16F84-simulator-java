@@ -32,16 +32,32 @@ public class RandomAccessMemory {
     public void setDataToAddress(int address, int data) {
         //Wenn im AnwenderBereich, dann wird es gespiegelt
         //TMR0
-        if (address == 1 && isRegisterBank0()) {
-            setTMR0(data);
-        } else if (address == 2) {
-            //PCL
-            setPCL(data);
-        } else if (address >= 0x0C && address <= 0x2F) {
-            memory[address][isRegisterBank0() ? 1 : 0] = data;
+        switch (address) {
+            case 1:
+                if (isRegisterBank0()) {
+                    setTMR0(data);
+                } else {
+                    setOption(data);
+                }
+                break;
+            case 2:
+                setPCL(data);
+                break;
+            case 3:
+                setStatus(data);
+                break;
+            case 4:
+                setFSR(data);
+                break;
+            case 0xA:
+                setPCLath(data);
+                break;
+            case 0xB:
+                setIntcon(data);
+                break;
+            default:
+                memory[address][getCurrentBankIndex()] = data;
         }
-
-        memory[address][getCurrentBankIndex()] = data;
     }
 
     private int getCurrentBankIndex() {

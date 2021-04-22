@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class SimulatorGUI {
 
@@ -21,7 +20,7 @@ public class SimulatorGUI {
     private JButton resetButton;
     private JButton autorunButton;
     private JButton stepButton;
-    private JComboBox<ComboBoxItem> quarzBox;
+    private JQuarzComboBox quarzBox;
     private JCheckBox pAp4CheckBox;
     private JCheckBox pAp0CheckBox;
     private JCheckBox pAp2CheckBox;
@@ -152,12 +151,6 @@ public class SimulatorGUI {
                 setPIC();
             }
         });
-        //Quazbox Listener
-        quarzBox.addActionListener(e -> {
-            if (pic != null) {
-                pic.setQuarzSpeed(((ComboBoxItem) Objects.requireNonNull(quarzBox.getSelectedItem())).getValue());
-            }
-        });
 
         //AutoRun Switch Button
         autorunButton.addActionListener(e -> switchAutoRunSimulator());
@@ -207,8 +200,8 @@ public class SimulatorGUI {
         pic = new PIC16F8X(lastReadInstructionsLines);
         fileRegisterBank0Table.setPIC(pic);
         fileRegisterBank1Table.setPIC(pic);
+        quarzBox.setPIC(pic);
         lstList.setSelectedIndex(0);
-        quarzBox.setSelectedIndex(5);//4Mhz
         updateUIFromPIC();
     }
 
@@ -375,19 +368,7 @@ public class SimulatorGUI {
         fileRegisterBank1Table = new FileRegisterTable(pic, frB1ScrollPanel, false);
 
         //QuarzSpeedCombobox
-        quarzBox = new JComboBox<>();
-        //Value in Kilohertz
-        quarzBox.addItem(new ComboBoxItem("32 kHz", 32));
-        quarzBox.addItem(new ComboBoxItem("100 kHz", 100));
-        quarzBox.addItem(new ComboBoxItem("500 kHz", 500));
-        quarzBox.addItem(new ComboBoxItem("1 MHz", 1000));
-        quarzBox.addItem(new ComboBoxItem("2 MHz", 2000));
-        quarzBox.addItem(new ComboBoxItem("4 MHz", 4000));
-        quarzBox.addItem(new ComboBoxItem("8 MHz", 8000));
-        quarzBox.addItem(new ComboBoxItem("12 MHz", 12000));
-        quarzBox.addItem(new ComboBoxItem("16 MHz", 16000));
-        quarzBox.addItem(new ComboBoxItem("20 MHz", 20000));
-
+        quarzBox = new JQuarzComboBox();
     }
 
 

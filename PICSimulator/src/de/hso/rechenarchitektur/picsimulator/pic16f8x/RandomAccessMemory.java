@@ -395,6 +395,46 @@ public class RandomAccessMemory {
         };
     }
 
+    public boolean isRPu() {
+        return (getOption() & 0b1000_0000) == 0b1000_0000;
+    }
+
+    public boolean isIEg() {
+        return (getOption() & 0b100_0000) == 0b100_0000;
+    }
+
+    public boolean isTCs() {
+        return (getOption() & 0b10_0000) == 0b10_0000;
+    }
+
+    public boolean isTSe() {
+        return (getOption() & 0b1_0000) == 0b1_0000;
+    }
+
+    public boolean isPSA() {
+        return (getOption() & 0b1000) == 0b1000;
+    }
+
+    public boolean isPS2() {
+        return (getOption() & 0b100) == 0b100;
+    }
+
+    public boolean isPS1() {
+        return (getOption() & 0b10) == 0b10;
+    }
+
+    public boolean isPS0() {
+        return (getOption() & 0b1) == 0b1;
+    }
+
+    public String[] getOptionDataString() {
+        return new String[]{
+                booleanToString(isRPu()), booleanToString(isIEg()), booleanToString(isTSe()),
+                booleanToString(isTSe()), booleanToString(isPSA()), booleanToString(isPS2()),
+                booleanToString(isPS1()), booleanToString(isPS0())
+        };
+    }
+
     public boolean isGIE() {
         return (getIntcon() & 0b1000_0000) == 0b1000_0000;
     }
@@ -427,9 +467,6 @@ public class RandomAccessMemory {
         return (getIntcon() & 0b1) == 0b1;
     }
 
-    public String[] getOptionDataString() {
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
-    }
 
     public String[] getIntconDataString() {
         return new String[]{

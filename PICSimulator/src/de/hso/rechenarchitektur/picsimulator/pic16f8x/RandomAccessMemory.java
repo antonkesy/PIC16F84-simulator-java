@@ -77,7 +77,7 @@ public class RandomAccessMemory {
         memory[1][0] = value;
         if (memory[1][0] > 0xFF) {
             memory[1][0] = 0;
-            setIntcon(1); //TODO T01f wird 1
+            setT0IF();
         }
     }
 
@@ -459,8 +459,15 @@ public class RandomAccessMemory {
         return (getIntcon() & 0b100) == 0b100;
     }
 
+
     public boolean isIF() {
         return (getIntcon() & 0b10) == 0b10;
+    }
+
+    public void setT0IF() {
+        if ((getIntcon() & 0b10) != 0b10) {
+            setIntcon(getIntcon() + 0b10);
+        }
     }
 
     public boolean isRIF() {

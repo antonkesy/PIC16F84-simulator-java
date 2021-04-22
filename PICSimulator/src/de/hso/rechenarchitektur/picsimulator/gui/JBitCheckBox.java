@@ -15,11 +15,14 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
 
     private RandomAccessMemory ram;
 
+    private final SimulatorGUI gui;
 
-    public JBitCheckBox(String label, BitCheckBoxCategories category, int index) {
+
+    public JBitCheckBox(String label, BitCheckBoxCategories category, int index, SimulatorGUI gui) {
         this.setText(label);
         this.index = index;
         this.category = category;
+        this.gui = gui;
         addActionListener(this);
     }
 
@@ -37,81 +40,80 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
                         break;
                     case 1:
                         setSelected(ram.isDigitCarryFlag());
-                        //TODO selectedValue from ram
                         break;
                     case 2:
-                        ram.switchZero();
+                        setSelected(ram.isZeroFlag());
                         break;
                     case 3:
-                        ram.switchPD();
+                        setSelected(ram.isPowerDownFlag());
                         break;
                     case 4:
-                        ram.switchTO();
+                        setSelected(ram.isTimeOutFlag());
                         break;
                     case 5:
-                        ram.switchRP0();
+                        setSelected(ram.isRP0());
                         break;
                     case 6:
-                        ram.switchRP1();
+                        setSelected(ram.isRP1());
                         break;
                     case 7:
-                        ram.switchIRP();
+                        setSelected(ram.isIRPFlag());
                         break;
                 }
                 break;
             case OPTION:
                 switch (index) {
                     case 0:
-                        ram.switchPS0();
+                        setSelected(ram.isPS0());
                         break;
                     case 1:
-                        ram.switchPS1();
+                        setSelected(ram.isPS1());
                         break;
                     case 2:
-                        ram.switchPS2();
+                        setSelected(ram.isPS2());
                         break;
                     case 3:
-                        ram.switchPSA();
+                        setSelected(ram.isPSA());
                         break;
                     case 4:
-                        ram.switchTSe();
+                        setSelected(ram.isTSe());
                         break;
                     case 5:
-                        ram.switchTCs();
+                        setSelected(ram.isTCs());
                         break;
                     case 6:
-                        ram.switchIEG();
+                        setSelected(ram.isIEg());
                         break;
                     case 7:
-                        ram.switchRPU();
+                        setSelected(ram.isRPu());
                         break;
                 }
                 break;
             case INTCON:
                 switch (index) {
                     case 0:
-                        ram.switchRIF();
+                        setSelected(ram.isRIF());
                         break;
                     case 1:
-                        ram.switchIF();
+                        setSelected(ram.isIF());
                         break;
                     case 2:
-                        ram.switchTIF();
+                        setSelected(ram.isTIF());
                         break;
                     case 3:
-                        ram.switchRIE();
+                        setSelected(ram.isRIE());
                         break;
                     case 4:
-                        ram.switchIE();
+                        setSelected(ram.isIE());
                         break;
                     case 5:
-                        ram.switchTIE();
+                        setSelected(ram.isTIE());
                         break;
                     case 6:
-                        ram.switchEIE();
+                        setSelected(ram.isEIE());
                         break;
                     case 7:
-                        ram.switchGIE();
+                        setSelected(ram.isGIE());
                         break;
                 }
                 break;
@@ -175,7 +177,7 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
                         ram.switchIEG();
                         break;
                     case 7:
-                        ram.switchRPU();
+                        ram.switchRPu();
                         break;
                 }
                 break;
@@ -208,5 +210,6 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
                 }
                 break;
         }
+        gui.updateUIFromPIC();
     }
 }

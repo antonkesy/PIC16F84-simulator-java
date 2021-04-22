@@ -15,10 +15,11 @@ public class FileRegisterTable extends JTable implements FocusListener {
     DefaultTableModel modelFileRegisterBank;
     private PIC16F8X pic;
     private final boolean isBank0;
+    private final SimulatorGUI gui;
 
-    public FileRegisterTable(PIC16F8X pic, JScrollPane frScrollPanel, boolean isBank0) {
+    public FileRegisterTable(JScrollPane frScrollPanel, boolean isBank0, SimulatorGUI gui) {
         this.isBank0 = isBank0;
-        this.pic = pic;
+        this.gui = gui;
         addFocusListener(this);
 
         //Vertical Header and default values of table
@@ -56,6 +57,7 @@ public class FileRegisterTable extends JTable implements FocusListener {
         } catch (Exception ignored) {
         }
         pic.getRam().setDataToAddress((getSelectedColumn()) + (getSelectedRow() * 16), inputNumber);
+        gui.updateUIFromPIC();
     }
 
     @Override

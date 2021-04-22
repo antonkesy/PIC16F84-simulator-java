@@ -244,7 +244,7 @@ public class SimulatorGUI {
 
     }
 
-    private void updateUIFromPIC() {
+    public void updateUIFromPIC() {
         if (pic == null) return;
         currentLine = pic.getCurrentLine();
         lstList.setSelectedIndex(currentLine);
@@ -364,9 +364,8 @@ public class SimulatorGUI {
         //JTable + Model for FLR
         frScrollPanel = new JScrollPane();
         frB1ScrollPanel = new JScrollPane();
-        fileRegisterBank0Table = new FileRegisterTable(pic, frScrollPanel, true);
-        fileRegisterBank1Table = new FileRegisterTable(pic, frB1ScrollPanel, false);
-
+        fileRegisterBank0Table = new FileRegisterTable(frScrollPanel, true, this);
+        fileRegisterBank1Table = new FileRegisterTable(frB1ScrollPanel, false, this);
         //QuarzSpeedCombobox
         quarzBox = new JQuarzComboBox();
     }

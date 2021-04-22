@@ -21,6 +21,7 @@ public class FileRegisterTable extends JTable implements FocusListener {
         this.pic = pic;
         addFocusListener(this);
 
+        //Vertical Header and default values of table
         String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
         String[] column = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
         ListModel<String> lm = new FileRegisterTable.RowHeaderListModel();

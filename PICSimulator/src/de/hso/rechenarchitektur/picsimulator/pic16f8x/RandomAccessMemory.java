@@ -381,20 +381,7 @@ public class RandomAccessMemory {
 
         return result;
     }
-
-    public String[] getStatusDataString() {
-        return new String[]{
-                booleanToString(isIRPFlag()),
-                booleanToString(isRP1()),
-                booleanToString(isRP0()),
-                booleanToString(isTimeOutFlag()),
-                booleanToString(isPowerDownFlag()),
-                booleanToString(isZeroFlag()),
-                booleanToString(isDigitCarryFlag()),
-                booleanToString(isCarryFlag()),
-        };
-    }
-
+    
     public boolean isRPu() {
         return (getOption() & 0b1000_0000) == 0b1000_0000;
     }
@@ -427,13 +414,6 @@ public class RandomAccessMemory {
         return (getOption() & 0b1) == 0b1;
     }
 
-    public String[] getOptionDataString() {
-        return new String[]{
-                booleanToString(isRPu()), booleanToString(isIEg()), booleanToString(isTCs()),
-                booleanToString(isTSe()), booleanToString(isPSA()), booleanToString(isPS2()),
-                booleanToString(isPS1()), booleanToString(isPS0())
-        };
-    }
 
     public boolean isGIE() {
         return (getIntcon() & 0b1000_0000) == 0b1000_0000;
@@ -474,14 +454,6 @@ public class RandomAccessMemory {
         return (getIntcon() & 0b1) == 0b1;
     }
 
-
-    public String[] getIntconDataString() {
-        return new String[]{
-                booleanToString(isGIE()), booleanToString(isEIE()), booleanToString(isTIE()),
-                booleanToString(isIE()), booleanToString(isRIE()), booleanToString(isTIF()),
-                booleanToString(isIF()), booleanToString(isRIF())
-        };
-    }
 
     private String booleanToString(boolean isActive) {
         return isActive ? "1" : "0";

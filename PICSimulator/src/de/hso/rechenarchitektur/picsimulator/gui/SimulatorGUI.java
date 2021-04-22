@@ -85,6 +85,30 @@ public class SimulatorGUI {
     private JScrollPane frScrollPanel;
     private JScrollPane frB1ScrollPanel;
     private JTable fileRegisterBank1Table;
+    private JCheckBox checkBoxIRP;
+    private JCheckBox checkBoxRP1;
+    private JCheckBox checkBoxRP0;
+    private JCheckBox checkBoxTO;
+    private JCheckBox checkBoxPD;
+    private JCheckBox checkBoxZ;
+    private JCheckBox checkBoxDC;
+    private JCheckBox checkBoxC;
+    private JCheckBox checkBoxRPu;
+    private JCheckBox checkBoxIEG;
+    private JCheckBox checkBoxTCs;
+    private JCheckBox checkBoxTSe;
+    private JCheckBox checkBoxPSA;
+    private JCheckBox checkBoxPS2;
+    private JCheckBox checkBoxPS1;
+    private JCheckBox checkBoxPS0;
+    private JCheckBox checkBoxGIE;
+    private JCheckBox checkBoxEIE;
+    private JCheckBox checkBoxTIE;
+    private JCheckBox checkBoxIE;
+    private JCheckBox checkBoxRIE;
+    private JCheckBox checkBoxTIF;
+    private JCheckBox checkBoxIF;
+    private JCheckBox checkBoxRIF;
     private JPanel frPanel;
     private JSlider speedSlider;
     private JLabel speedLabel;
@@ -318,19 +342,48 @@ public class SimulatorGUI {
     }
 
     private void updateFileRegister() {
-        //TODO FileRegister auf 16x8 anstatt 8x16
         if (pic == null) return;
         fillFRTable(pic.getRam().getDataString(true), pic.getRam().getDataString(false));
     }
 
     private void updateSFRBits() {
         if (pic == null) return;
-        //status
-        fillModelRowWithData(modelStatusBits, pic.getRam().getStatusDataString(), 0);
-        //status
-        fillModelRowWithData(modelOptionBits, pic.getRam().getOptionDataString(), 0);
-        //Intcon
-        fillModelRowWithData(modelIntconBits, pic.getRam().getIntconDataString(), 0);
+        updateStatusCheckBoxes();
+        updateOptionCheckBoxes();
+        updateIntconCheckBoxes();
+    }
+
+    private void updateStatusCheckBoxes() {
+        checkBoxIRP.setSelected(pic.getRam().isIRPFlag());
+        checkBoxRP1.setSelected(pic.getRam().isRP1());
+        checkBoxRP0.setSelected(pic.getRam().isRP0());
+        checkBoxTO.setSelected(pic.getRam().isTimeOutFlag());
+        checkBoxPD.setSelected(pic.getRam().isPowerDownFlag());
+        checkBoxZ.setSelected(pic.getRam().isZeroFlag());
+        checkBoxDC.setSelected(pic.getRam().isDigitCarryFlag());
+        checkBoxC.setSelected(pic.getRam().isCarryFlag());
+    }
+
+    private void updateOptionCheckBoxes() {
+        checkBoxRPu.setSelected(pic.getRam().isRPu());
+        checkBoxIEG.setSelected(pic.getRam().isIEg());
+        checkBoxTCs.setSelected(pic.getRam().isTCs());
+        checkBoxTSe.setSelected(pic.getRam().isTSe());
+        checkBoxPSA.setSelected(pic.getRam().isPSA());
+        checkBoxPS2.setSelected(pic.getRam().isPS2());
+        checkBoxPS1.setSelected(pic.getRam().isPS1());
+        checkBoxPS0.setSelected(pic.getRam().isPS0());
+    }
+
+    private void updateIntconCheckBoxes() {
+        checkBoxGIE.setSelected(pic.getRam().isGIE());
+        checkBoxEIE.setSelected(pic.getRam().isEIE());
+        checkBoxTIE.setSelected(pic.getRam().isTIE());
+        checkBoxIE.setSelected(pic.getRam().isIE());
+        checkBoxRIE.setSelected(pic.getRam().isRIE());
+        checkBoxTIF.setSelected(pic.getRam().isTIF());
+        checkBoxIF.setSelected(pic.getRam().isIF());
+        checkBoxRIF.setSelected(pic.getRam().isRIF());
     }
 
     private void updateSFRW() {

@@ -220,6 +220,7 @@ public class SimulatorGUI {
         stepsSpinner.setValue(1000);
         pic = new PIC16F8X(lastReadInstructionsLines);
         lstList.setSelectedIndex(0);
+        quarzBox.setSelectedIndex(5);//4Mhz
         updateUIFromPIC();
     }
 

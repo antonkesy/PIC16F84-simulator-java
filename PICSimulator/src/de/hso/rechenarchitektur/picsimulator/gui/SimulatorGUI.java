@@ -180,7 +180,6 @@ public class SimulatorGUI {
                 }
             }
         });
-
     }
 
     private void DoNSteps() {
@@ -311,6 +310,7 @@ public class SimulatorGUI {
         updateIntconCheckBoxes();
     }
 
+    //Todo load checkboxes in list and stream
     private void updateStatusCheckBoxes() {
         checkBoxIRP.setSelected(pic.getRam().isIRPFlag());
         checkBoxRP1.setSelected(pic.getRam().isRP1());

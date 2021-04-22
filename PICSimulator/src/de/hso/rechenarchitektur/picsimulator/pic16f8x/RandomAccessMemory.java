@@ -21,6 +21,7 @@ public class RandomAccessMemory {
         setOption(0b1111_1111);
     }
 
+
     public enum Bank {
         BANK0, BANK1, BANK2, BANK3
     }
@@ -480,4 +481,80 @@ public class RandomAccessMemory {
     private String booleanToString(boolean isActive) {
         return isActive ? "1" : "0";
     }
+
+
+    //TODO
+    public void switchCarryFlag() {
+
+    }
+
+    public void switchDigitCarryFlag() {
+    }
+
+    public void switchZero() {
+    }
+
+    public void switchPD() {
+    }
+
+    public void switchTO() {
+    }
+
+    public void switchRP0() {
+    }
+
+    public void switchRP1() {
+    }
+
+    public void switchIRP() {
+    }
+
+    public void switchRPU() {
+    }
+
+    public void switchIEG() {
+    }
+
+    public void switchTCs() {
+    }
+
+    public void switchTSe() {
+    }
+
+    public void switchPSA() {
+    }
+
+    public void switchPS2() {
+    }
+
+    public void switchPS1() {
+    }
+
+    public void switchPS0() {
+    }
+
+    public void switchRIF() {
+    }
+
+    public void switchIF() {
+    }
+
+    public void switchTIF() {
+    }
+
+    public void switchRIE() {
+    }
+
+    public void switchIE() {
+    }
+
+    public void switchTIE() {
+    }
+
+    public void switchEIE() {
+    }
+
+    public void switchGIE() {
+    }
+
 }

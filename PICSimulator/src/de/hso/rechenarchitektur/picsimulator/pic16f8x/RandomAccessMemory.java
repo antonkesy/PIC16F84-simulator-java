@@ -33,6 +33,8 @@ public class RandomAccessMemory {
         //Wenn im AnwenderBereich, dann wird es gespiegelt
         //TMR0
         switch (address) {
+            case 0:
+                setIND(data);
             case 1:
                 if (isRegisterBank0()) {
                     setTMR0(data);
@@ -69,7 +71,8 @@ public class RandomAccessMemory {
     }
 
     public void setIND(int value) {
-        setDataToAddress(0, value);
+        memory[0][0] = value;
+        memory[0][1] = value;
     }
 
     public int getTMR0() {

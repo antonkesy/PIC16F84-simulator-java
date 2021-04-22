@@ -159,7 +159,8 @@ public class PIC16F8X {
                 break;
             case CLRWDT:
                 //todo clear watchdog timer & its prescaler
-                //TODO SLEEP!!
+                ram.setPowerDownFlag(true);
+                ram.setTimeOutFlag(true);
                 break;
             case GOTO:
                 cycles = 2;

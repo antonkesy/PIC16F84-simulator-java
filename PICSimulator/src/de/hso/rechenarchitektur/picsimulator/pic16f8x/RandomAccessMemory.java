@@ -134,7 +134,6 @@ public class RandomAccessMemory {
         //Gespiegelt?
         memory[3][0] = value;
         memory[3][1] = value;
-        //setDataToAddress(3, value);
     }
 
     public void setStatusBits(
@@ -396,12 +395,48 @@ public class RandomAccessMemory {
         };
     }
 
+    public boolean isGIE() {
+        return (getIntcon() & 0b1000_0000) == 0b1000_0000;
+    }
+
+    public boolean isEIE() {
+        return (getIntcon() & 0b100_0000) == 0b100_0000;
+    }
+
+    public boolean isTIE() {
+        return (getIntcon() & 0b10_0000) == 0b10_0000;
+    }
+
+    public boolean isIE() {
+        return (getIntcon() & 0b1_0000) == 0b1_0000;
+    }
+
+    public boolean isRIE() {
+        return (getIntcon() & 0b1000) == 0b1000;
+    }
+
+    public boolean isTIF() {
+        return (getIntcon() & 0b100) == 0b100;
+    }
+
+    public boolean isIF() {
+        return (getIntcon() & 0b10) == 0b10;
+    }
+
+    public boolean isRIF() {
+        return (getIntcon() & 0b1) == 0b1;
+    }
+
     public String[] getOptionDataString() {
         return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
     }
 
     public String[] getIntconDataString() {
-        return new String[]{"0", "0", "0", "0", "0", "0", "0", "0"};
+        return new String[]{
+                booleanToString(isGIE()), booleanToString(isEIE()), booleanToString(isTIE()),
+                booleanToString(isIE()), booleanToString(isRIE()), booleanToString(isTIF()),
+                booleanToString(isIF()), booleanToString(isRIF())
+        };
     }
 
     private String booleanToString(boolean isActive) {

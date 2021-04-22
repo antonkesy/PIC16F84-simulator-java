@@ -66,8 +66,8 @@ public class SimulatorGUI {
     private JLabel stackField6;
     private JLabel stackField7;
     private JTable statusBitTable;
-    private JTable intconBitTable;
     private JTable optionBitTable;
+    private JTable inctonBitTable;
     private JCheckBox freigabeWatchdogCheckBox;
     private JLabel watchdogValueLabel;
     private JLabel wValue;
@@ -392,7 +392,7 @@ public class SimulatorGUI {
         //Intcon
         column = new String[]{"GIE", "EIE", "TIE", "IE", "RIE", "TIF", "IF", "RIF"};
         modelIntconBits = new DefaultTableModel(new String[][]{{"e", "m", "p", "t", "y", "", "", ""}}, column);
-        intconBitTable = new JTable(modelIntconBits);
+        inctonBitTable = new JTable(modelIntconBits);
 
         //QuarzSpeedCombobox
         quarzBox = new JComboBox<>();

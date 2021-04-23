@@ -1,9 +1,12 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.LSTLine;
+import de.hso.rechenarchitektur.picsimulator.gui.elements.JBitCheckBox;
+import de.hso.rechenarchitektur.picsimulator.gui.elements.JFileRegisterTable;
+import de.hso.rechenarchitektur.picsimulator.gui.elements.JQuarzComboBox;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 
 import javax.swing.*;
@@ -77,8 +80,8 @@ public class SimulatorGUI {
     private JButton nStepsButton;
     private JScrollPane frScrollPanel;
     private JScrollPane frB1ScrollPanel;
-    private FileRegisterTable fileRegisterBank0Table;
-    private FileRegisterTable fileRegisterBank1Table;
+    private JFileRegisterTable fileRegisterBank0Table;
+    private JFileRegisterTable fileRegisterBank1Table;
     private JBitCheckBox checkBoxIRP;
     private JBitCheckBox checkBoxRP1;
     private JBitCheckBox checkBoxRP0;
@@ -343,8 +346,8 @@ public class SimulatorGUI {
         //JTable + Model for FLR
         frScrollPanel = new JScrollPane();
         frB1ScrollPanel = new JScrollPane();
-        fileRegisterBank0Table = new FileRegisterTable(frScrollPanel, true, this);
-        fileRegisterBank1Table = new FileRegisterTable(frB1ScrollPanel, false, this);
+        fileRegisterBank0Table = new JFileRegisterTable(frScrollPanel, true, this);
+        fileRegisterBank1Table = new JFileRegisterTable(frB1ScrollPanel, false, this);
         //QuarzSpeedCombobox
         quarzBox = new JQuarzComboBox();
         //SFR Bits

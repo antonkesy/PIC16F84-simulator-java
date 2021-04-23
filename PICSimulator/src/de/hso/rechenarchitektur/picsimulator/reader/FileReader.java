@@ -1,8 +1,8 @@
 package de.hso.rechenarchitektur.picsimulator.reader;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionDecoder;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.LSTLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionDecoder;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;

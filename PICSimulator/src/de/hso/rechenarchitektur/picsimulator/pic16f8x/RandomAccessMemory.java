@@ -666,7 +666,7 @@ public class RandomAccessMemory {
             flagValue += 0b10_0000;
         }
         if (is6) {
-            flagValue += 0b10_0000;
+            flagValue += 0b100_0000;
         }
 
         if (is7) {

@@ -1,6 +1,7 @@
-package de.hso.rechenarchitektur.picsimulator.gui;
+package de.hso.rechenarchitektur.picsimulator.gui.elements;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
+import de.hso.rechenarchitektur.picsimulator.gui.SimulatorGUI;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions;
 
 /**
  * Utility KLasse

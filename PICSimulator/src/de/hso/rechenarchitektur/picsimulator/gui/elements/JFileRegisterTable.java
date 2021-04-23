@@ -1,5 +1,6 @@
-package de.hso.rechenarchitektur.picsimulator.gui;
+package de.hso.rechenarchitektur.picsimulator.gui.elements;
 
+import de.hso.rechenarchitektur.picsimulator.gui.SimulatorGUI;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 
 import javax.swing.*;
@@ -11,13 +12,13 @@ import java.awt.event.FocusListener;
 
 import static de.hso.rechenarchitektur.picsimulator.gui.GUIUtilities.fillModelRowWithData;
 
-public class FileRegisterTable extends JTable implements FocusListener {
+public class JFileRegisterTable extends JTable implements FocusListener {
     DefaultTableModel modelFileRegisterBank;
     private PIC16F8X pic;
     private final boolean isBank0;
     private final SimulatorGUI gui;
 
-    public FileRegisterTable(JScrollPane frScrollPanel, boolean isBank0, SimulatorGUI gui) {
+    public JFileRegisterTable(JScrollPane frScrollPanel, boolean isBank0, SimulatorGUI gui) {
         this.isBank0 = isBank0;
         this.gui = gui;
         addFocusListener(this);
@@ -25,11 +26,11 @@ public class FileRegisterTable extends JTable implements FocusListener {
         //Vertical Header and default values of table
         String[][] fileRegisterData = new String[][]{{"", "", "", "", "", "", "", "", ""}};
         String[] column = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
-        ListModel<String> lm = new FileRegisterTable.RowHeaderListModel();
+        ListModel<String> lm = new JFileRegisterTable.RowHeaderListModel();
         modelFileRegisterBank = new DefaultTableModel(fileRegisterData, column);
         setModel(modelFileRegisterBank);
         JList<String> rowHeader = new JList<String>(lm);
-        rowHeader.setCellRenderer(new FileRegisterTable.RowHeaderRenderer(this));
+        rowHeader.setCellRenderer(new JFileRegisterTable.RowHeaderRenderer(this));
         frScrollPanel.setRowHeaderView(rowHeader);
 
         //Creates empty rows for FLR Table

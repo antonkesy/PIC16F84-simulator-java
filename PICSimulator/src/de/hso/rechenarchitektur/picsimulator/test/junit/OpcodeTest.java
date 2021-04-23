@@ -1,8 +1,8 @@
 package de.hso.rechenarchitektur.picsimulator.test.junit;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.Instruction;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionDecoder;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionType;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionDecoder;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

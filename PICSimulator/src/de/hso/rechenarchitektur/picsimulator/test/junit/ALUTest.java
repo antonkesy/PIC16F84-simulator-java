@@ -1,7 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.test.junit;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.ArithmeticLogicUnit;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.RandomAccessMemory;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.ArithmeticLogicUnit;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

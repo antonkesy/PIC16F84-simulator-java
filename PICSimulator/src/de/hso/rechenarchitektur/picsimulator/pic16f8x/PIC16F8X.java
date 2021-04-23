@@ -1,5 +1,13 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.ArithmeticLogicUnit;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.ProgramMemory;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.Stack;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionType;
+
 import java.util.List;
 
 public class PIC16F8X {

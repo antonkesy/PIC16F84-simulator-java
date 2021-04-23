@@ -1,4 +1,6 @@
-package de.hso.rechenarchitektur.picsimulator.pic16f8x;
+package de.hso.rechenarchitektur.picsimulator.pic16f8x.elements;
+
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
 
 import java.util.List;
 

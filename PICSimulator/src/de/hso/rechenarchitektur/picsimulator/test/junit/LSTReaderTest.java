@@ -1,9 +1,9 @@
 package de.hso.rechenarchitektur.picsimulator.test.junit;
 
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.Instruction;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionLine;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.InstructionType;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionType;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.gui;
+package de.hso.rechenarchitektur.picsimulator.gui.elements;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 

@@ -241,9 +241,9 @@ public class PIC16F8X {
      * @return
      */
     private int getBitClearF(int b, int f) {
-        //TODO testen! faengt es von 0 oder 1 an
-        //ueberprueft ob das Bit schon 0 ist, wenn nicht zieht es den Wert an der Stelle 2^b ab
-        return ((f & (int) Math.pow(2, b)) == 1) ? (f - (int) Math.pow(2, b)) : f;
+        //if bit already clear -> return current f -> else return f - 2^b
+        return (!isBitFActive(b, f)) ? f : (f - (int) Math.pow(2, b));
+
     }
 
     /**
@@ -254,15 +254,12 @@ public class PIC16F8X {
      * @return
      */
     private int getBitSetF(int b, int f) {
-        //already active
-        if (isBitFActive(b, f))
-            return f;
-        return (f + (int) Math.pow(2, b));
+        //if bit already active -> return current f -> else return f + 2^b
+        return (isBitFActive(b, f)) ? f : (f + (int) Math.pow(2, b));
     }
 
     private boolean isBitFActive(int b, int f) {
-        f >>= (b);
-        return (f & 1) == 1;
+        return (f >> (b) & 1) == 1;
     }
 
     private void calculateRunTime(int cycles) {

@@ -140,8 +140,8 @@ public class SimulatorGUI {
         //AutoRun Switch Button
         autorunButton.addActionListener(e -> switchAutoRunSimulator());
         //PortAPin Listener
-        Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> updatePortAPins()));
-        Arrays.stream(portBPins).forEach(p -> p.addActionListener(a -> updatePortBPins()));
+        Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> portAPinsClickUpdate()));
+        Arrays.stream(portBPins).forEach(p -> p.addActionListener(a -> portBPinsClickUpdate()));
 
         updateFileRegister();
 
@@ -207,6 +207,17 @@ public class SimulatorGUI {
         updateUIFromPIC();
     }
 
+    private void updatePortPins() {
+        setPortSelected(portAPins, pic.getRam().getPortA());
+        setPortSelected(portBPins, pic.getRam().getPortB());
+    }
+
+    private void setPortSelected(JCheckBox[] portPins, int portValue) {
+        for (int i = 0; i < portPins.length; ++i) {
+            portPins[i].setSelected((portValue >> (i) & 1) == 1);
+        }
+    }
+
     private int getPinValue(JCheckBox[] pins) {
         int portPinValue = 0;
         for (int i = 0; i < pins.length; ++i) {
@@ -217,12 +228,12 @@ public class SimulatorGUI {
         return portPinValue;
     }
 
-    private void updatePortBPins() {
+    private void portBPinsClickUpdate() {
         pic.getRam().setPortB(getPinValue(portBPins));
         updateUIFromPIC();
     }
 
-    private void updatePortAPins() {
+    private void portAPinsClickUpdate() {
         pic.getRam().setPortA(getPinValue(portAPins));
         updateUIFromPIC();
     }
@@ -256,6 +267,7 @@ public class SimulatorGUI {
         updateSFRW();
         UpdateTris();
         updateRunTimeLabel();
+        updatePortPins();
     }
 
     private void updateLST() {

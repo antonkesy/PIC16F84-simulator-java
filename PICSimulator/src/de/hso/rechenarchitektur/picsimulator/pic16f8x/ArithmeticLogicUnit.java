@@ -31,7 +31,6 @@ public final class ArithmeticLogicUnit {
     }
 
     public static int operation(AluOperations operation, RandomAccessMemory ram, int firstValue, int secondValue) {
-        //todo check for flags
         int result = firstValue;
 
         switch (operation) {

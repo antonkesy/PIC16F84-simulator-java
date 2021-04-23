@@ -130,13 +130,11 @@ public class PIC16F8X {
                 );
                 break;
             case BTFSC:
-                //TODO testen!
                 if (!isBitFActive(currentInstruction.getBD(), ram.getDataFromAddress(currentInstruction.getFK()))) {
                     skipNextInstruction();
                 }
                 break;
             case BTFSS:
-                //TODO testen!
                 if (isBitFActive(currentInstruction.getBD(), ram.getDataFromAddress(currentInstruction.getFK()))) {
                     skipNextInstruction();
                 }

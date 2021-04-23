@@ -70,7 +70,6 @@ public final class InstructionDecoder {
                 break;
             case 0b1:
                 //CLRF & CLRW
-                //TODO split and load only necessary
                 resultInstruction = new Instruction(is7thBitOne(opcode) ? InstructionType.CLRF : InstructionType.CLRW, getByteFs(opcode), get7thBit(opcode));
                 break;
             case 0b1001:
@@ -296,5 +295,4 @@ public final class InstructionDecoder {
         return getCodeInRange(code, 0, 7);
     }
 
-    //TODO("x cases as fallthrougs in switches")
 }

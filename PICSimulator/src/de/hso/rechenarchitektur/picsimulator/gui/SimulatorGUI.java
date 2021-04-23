@@ -409,11 +409,9 @@ public class SimulatorGUI {
 
     private void switchAutoRunSimulator() {
         if (isAutoRun) {
-            //TODO
             autoRunThread.stop();
             autoRunThread = null;
         } else {
-            //TODO create thread for autorun
             autoRunThread = new AutoRunThread(this);
         }
         isAutoRun = !isAutoRun;

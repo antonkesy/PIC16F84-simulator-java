@@ -13,14 +13,19 @@ import java.util.List;
 public class PICSingleInstructionTest {
 
     PIC16F8X pic;
+    List<InstructionLine> instructions;
 
     //TODO
 
+    public void loadInstructionsWithValueInRegister(int value, int position) {
+        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, value)));
+        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVWF, position)));
+    }
+
     public void testBitSetFValues(int testValue, int bitPosition, int expectedValue) {
         //possible values
-        List<InstructionLine> instructions = new ArrayList<>();
-        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, testValue)));
-        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVWF, 0x20)));
+        instructions = new ArrayList<>();
+        loadInstructionsWithValueInRegister(testValue, 0x20);
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.BSF, 0x20, bitPosition)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
         pic = new PIC16F8X(instructions);
@@ -44,8 +49,7 @@ public class PICSingleInstructionTest {
     public void testBitClearFValues(int testValue, int bitPosition, int expectedValue) {
         //possible values
         List<InstructionLine> instructions = new ArrayList<>();
-        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, testValue)));
-        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVWF, 0x20)));
+        loadInstructionsWithValueInRegister(testValue, 0x20);
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.BCF, 0x20, bitPosition)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
         pic = new PIC16F8X(instructions);
@@ -65,5 +69,28 @@ public class PICSingleInstructionTest {
         testBitClearFValues(0xC7, 7, 0x47);
         testBitClearFValues(0b0010, 0, 0b0010);
         testBitClearFValues(0b0001, 0, 0);
+    }
+
+    public void testBitAddLWValues(int testValue, int addValue, int expectedValue) {
+        //possible values
+        List<InstructionLine> instructions = new ArrayList<>();
+        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, testValue)));
+        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.ADDLW, addValue)));
+        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
+        pic = new PIC16F8X(instructions);
+        pic.step(); //NOP
+        pic.step(); //MOVLW
+        Assert.assertEquals(testValue, pic.getWRegister());
+        pic.step(); //ADDLW
+        Assert.assertEquals(expectedValue, pic.getWRegister());
+        ////NOP
+    }
+
+    @Test
+    public void testAddLW() {
+        testBitAddLWValues(0, 7, 7);
+        testBitAddLWValues(10, 5, 15);
+        testBitAddLWValues(200, 0, 200);
+        testBitAddLWValues(255, 1, 0);
     }
 }

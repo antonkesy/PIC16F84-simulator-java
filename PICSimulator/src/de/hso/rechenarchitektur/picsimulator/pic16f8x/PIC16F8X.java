@@ -34,7 +34,7 @@ public class PIC16F8X {
 
     private void instructionHandler() {
         int result; //optional Variable fuer Zwischenergebnisse
-        int cycles = 1; //TODO immer mindestens einer
+        int cycles = 1;
         Instruction currentInstruction = currentInstructionInRegister.getInstruction();
         switch (currentInstruction.getType()) {
             case ADDWF:
@@ -254,12 +254,14 @@ public class PIC16F8X {
      * @return
      */
     private int getBitSetF(int b, int f) {
-        //TODO testen!
+        //already active
+        if (isBitFActive(b, f))
+            return f;
         return (f + (int) Math.pow(2, b));
     }
 
     private boolean isBitFActive(int b, int f) {
-        f >>= (b - 1); //-1 weil Index start bei 1?
+        f >>= (b);
         return (f & 1) == 1;
     }
 

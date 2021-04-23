@@ -129,43 +129,18 @@ public class SimulatorGUI {
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
         //Oeffne neue Datei OnClickListener
-        oeffneNeueDateiButton.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser(System.getProperty("user.dir") + "/LST");
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
-            chooser.setFileFilter(filter);
-            chooser.showOpenDialog(null);
-            if (chooser.getSelectedFile() != null) {
-                FileReader fileReader = new FileReader(chooser.getSelectedFile());
-                lstLines = fileReader.getLineList();
-                lstList.setListData(lstLines.toArray());
-                lastReadInstructionsLines = fileReader.getInstructionLineList();
-                setPIC();
-            }
-        });
+        oeffneNeueDateiButton.addActionListener(e -> openNewFile());
         //Step OnClickListener
         stepButton.addActionListener(e -> step());
         //Reset OnClickListener
-
-        resetButton.addActionListener(e -> {
-            if (pic != null) {
-                if (isAutoRun)
-                    switchAutoRunSimulator();
-                setPIC();
-            }
-        });
-
+        resetButton.addActionListener(e -> resetPIC());
         //AutoRun Switch Button
         autorunButton.addActionListener(e -> switchAutoRunSimulator());
-
-
         //PortAPin Listener
-
         Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> updatePortAPins()));
         Arrays.stream(portBPins).forEach(p -> p.addActionListener(a -> updatePortBPins()));
 
-
         updateFileRegister();
-
 
         nStepsButton.addActionListener(e -> DoNSteps());
 
@@ -182,6 +157,28 @@ public class SimulatorGUI {
                 }
             }
         });
+    }
+
+    private void resetPIC() {
+        if (pic != null) {
+            if (isAutoRun)
+                switchAutoRunSimulator();
+            setPIC();
+        }
+    }
+
+    private void openNewFile() {
+        JFileChooser chooser = new JFileChooser(System.getProperty("user.dir") + "/LST");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
+        chooser.setFileFilter(filter);
+        chooser.showOpenDialog(null);
+        if (chooser.getSelectedFile() != null) {
+            FileReader fileReader = new FileReader(chooser.getSelectedFile());
+            lstLines = fileReader.getLineList();
+            lstList.setListData(lstLines.toArray());
+            lastReadInstructionsLines = fileReader.getInstructionLineList();
+            setPIC();
+        }
     }
 
     private void DoNSteps() {

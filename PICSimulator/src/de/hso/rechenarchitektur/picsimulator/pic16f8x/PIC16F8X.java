@@ -306,7 +306,7 @@ public class PIC16F8X {
     }
 
     public String runTimeToString() {
-        return runTime + "\u00B5s";
+        return String.format("%.3f", runTime) + "\u00B5s";
     }
 
     public InstructionLine getCurrentInstructionInRegister() {

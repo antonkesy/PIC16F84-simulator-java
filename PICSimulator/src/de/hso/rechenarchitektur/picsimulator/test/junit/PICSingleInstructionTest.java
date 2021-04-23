@@ -48,7 +48,7 @@ public class PICSingleInstructionTest {
 
     public void testBitClearFValues(int testValue, int bitPosition, int expectedValue) {
         //possible values
-        List<InstructionLine> instructions = new ArrayList<>();
+        instructions = new ArrayList<>();
         loadInstructionsWithValueInRegister(testValue, 0x20);
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.BCF, 0x20, bitPosition)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
@@ -73,7 +73,7 @@ public class PICSingleInstructionTest {
 
     public void testBitAddLWValues(int testValue, int addValue, int expectedValue) {
         //possible values
-        List<InstructionLine> instructions = new ArrayList<>();
+        instructions = new ArrayList<>();
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, testValue)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.ADDLW, addValue)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));

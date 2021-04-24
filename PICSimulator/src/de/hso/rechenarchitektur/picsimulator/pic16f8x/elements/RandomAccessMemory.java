@@ -107,9 +107,9 @@ public class RandomAccessMemory {
         return getDataFromAddress(0);
     }
 
-    public void incrementTMR0By(int value) {
+   /* public void incrementTMR0By(int value) {
         setTMR0(memory[1][0] + value);
-    }
+    }*/
 
     public void setTMR0(int value) {
         //todo +2, weil es 2 Takte braucht?

@@ -22,7 +22,10 @@ public class Stack {
     }
 
     public int pop() {
-        return stackArray[--index];
+        if (--index < 0) {
+            index = (short) (stackArray.length - 1);
+        }
+        return stackArray[index];
     }
 
     /**

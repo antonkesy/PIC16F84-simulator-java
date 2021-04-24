@@ -265,6 +265,7 @@ public class SimulatorGUI {
         if (pic == null) return;
         currentLine = pic.getCurrentLine();
         lstList.setSelectedIndex(currentLine);
+        lstList.ensureIndexIsVisible(lstList.getSelectedIndex());
         updateStack();
         updateFileRegister();
         updateSFRBits();

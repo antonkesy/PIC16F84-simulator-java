@@ -165,7 +165,10 @@ public class SimulatorGUI {
         });
 
         ignoreButton.addActionListener(e -> ignoreNextInstruction());
+
+        pAp4CheckBox.addActionListener(e -> pic.switchRA4T0CKI(pAp4CheckBox.isSelected()));
     }
+
 
     private void ignoreNextInstruction() {
         pic.skipNextInstruction();

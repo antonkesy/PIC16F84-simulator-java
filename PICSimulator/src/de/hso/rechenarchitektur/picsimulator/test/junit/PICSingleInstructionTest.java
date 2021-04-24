@@ -93,4 +93,31 @@ public class PICSingleInstructionTest {
         testBitAddLWValues(200, 0, 200);
         testBitAddLWValues(255, 1, 0);
     }
+
+    public void testDECFSZValues(int testValue, int expectedValue) {
+        //possible values
+        instructions = new ArrayList<>();
+        loadInstructionsWithValueInRegister(testValue, 0x20);
+        instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.DECFSZ, 0x20, 1)));
+        instructions.add(new InstructionLine(1, 0, new Instruction(InstructionType.NOP)));
+        instructions.add(new InstructionLine(2, 0, new Instruction(InstructionType.NOP)));
+        pic = new PIC16F8X(instructions);
+        pic.step(); //NOP
+        pic.step(); //MOVLW
+        pic.step(); //MOVWF
+        Assert.assertEquals(testValue, pic.getRam().getDataFromAddress(0x20));
+        pic.step(); //DECFSZ
+        Assert.assertEquals(expectedValue, pic.getRam().getDataFromAddress(0x20));
+        //skip if 0
+        if (expectedValue == 0) {
+            Assert.assertEquals(2, pic.getCurrentInstructionInRegister().getPositionLineInFile());
+        }
+        ////NOP
+    }
+
+    @Test
+    public void testDECFSZ() {
+        testDECFSZValues(2, 1);
+        testDECFSZValues(1, 0);
+    }
 }

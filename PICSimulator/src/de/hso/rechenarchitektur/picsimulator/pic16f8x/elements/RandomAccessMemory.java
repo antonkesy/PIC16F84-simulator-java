@@ -27,6 +27,9 @@ public class RandomAccessMemory {
     }
 
     public int getDataFromAddress(int address) {
+        if (address == 0) {
+            return getIND();
+        }
         return memory[address][getCurrentBankIndex()];
     }
 
@@ -68,12 +71,28 @@ public class RandomAccessMemory {
     }
 
     public int getIND() {
-        return getDataFromAddress(0);
+        int fsrValue = getFSR();
+        if (fsrValue == 0) {
+            return memory[0][0];
+        } else {
+            //Bank 1
+            if (fsrValue >= 0x80) {
+                fsrValue -= 0x80;
+                return memory[fsrValue][1];
+            } else {
+                return memory[fsrValue][0];
+            }
+        }
     }
 
     public void setIND(int value) {
-        memory[0][0] = value;
-        memory[0][1] = value;
+        int fsrValue = getFSR();
+        if (fsrValue == 0) {
+            memory[0][0] = value;
+            memory[0][1] = value;
+        } else {
+            setDataToAddress(fsrValue, value);
+        }
     }
 
     public int getTMR0() {

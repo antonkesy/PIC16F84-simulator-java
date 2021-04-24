@@ -3,10 +3,10 @@ package de.hso.rechenarchitektur.picsimulator.gui;
 import de.hso.rechenarchitektur.picsimulator.gui.components.JBitCheckBox;
 import de.hso.rechenarchitektur.picsimulator.gui.components.JFileRegisterTable;
 import de.hso.rechenarchitektur.picsimulator.gui.components.JQuarzComboBox;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
 import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 
 import javax.swing.*;
@@ -106,6 +106,7 @@ public class SimulatorGUI {
     private JBitCheckBox checkBoxTIF;
     private JBitCheckBox checkBoxIF;
     private JBitCheckBox checkBoxRIF;
+    private JButton ignoreButton;
     private JPanel frPanel;
     private JLabel statusBitText;
     private JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
@@ -162,6 +163,13 @@ public class SimulatorGUI {
                 }
             }
         });
+
+        ignoreButton.addActionListener(e -> ignoreNextInstruction());
+    }
+
+    private void ignoreNextInstruction() {
+        pic.skipNextInstruction();
+        updateUIFromPIC();
     }
 
     private void resetPIC() {

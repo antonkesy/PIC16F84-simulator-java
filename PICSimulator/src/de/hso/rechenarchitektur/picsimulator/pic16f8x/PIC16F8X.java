@@ -37,8 +37,12 @@ public class PIC16F8X {
     }
 
     private void getNextInstruction() {
-        currentInstructionInRegister = programMemory.getInstructionAt(ram.getPCL());
-        ram.incrementPCL();
+        InstructionLine nextInstruction = programMemory.getInstructionAt(ram.getPCL());
+        //checks if there is a instruction left
+        if (nextInstruction != null) {
+            currentInstructionInRegister = programMemory.getInstructionAt(ram.getPCL());
+            ram.incrementPCL();
+        }
     }
 
     private void instructionHandler() {
@@ -285,7 +289,7 @@ public class PIC16F8X {
         }
     }
 
-    private void skipNextInstruction() {
+    public void skipNextInstruction() {
         getNextInstruction();
     }
 

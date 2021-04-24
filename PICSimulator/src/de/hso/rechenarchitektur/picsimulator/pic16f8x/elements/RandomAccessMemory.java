@@ -12,6 +12,8 @@ public class RandomAccessMemory {
      */
     private final int[][] memory;
 
+    float timer = 0;
+
     public RandomAccessMemory() {
         memory = new int[128][2];
         setStatus(0b0001_1000);
@@ -41,7 +43,7 @@ public class RandomAccessMemory {
                 setIND(data);
             case 1:
                 if (isRegisterBank0()) {
-                    setTMR0(data);
+                    manipulateTMR0(data);
                 } else {
                     setOption(data);
                 }
@@ -111,8 +113,12 @@ public class RandomAccessMemory {
         setTMR0(memory[1][0] + value);
     }*/
 
+    public void manipulateTMR0(int value) {
+        timer = value;
+        setTMR0(value);
+    }
+
     public void setTMR0(int value) {
-        //todo +2, weil es 2 Takte braucht?
         memory[1][0] = value;
         if (memory[1][0] > 0xFF) {
             memory[1][0] = 0;
@@ -695,6 +701,15 @@ public class RandomAccessMemory {
             flagValue += 0b1000_0000;
         }
         return flagValue;
+    }
+
+    public float getTimer() {
+        return timer;
+    }
+
+    public void addTimer(float value) {
+        timer += value;
+        setTMR0((int) timer);
     }
 
 }

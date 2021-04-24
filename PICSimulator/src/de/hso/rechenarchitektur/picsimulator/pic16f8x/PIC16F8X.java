@@ -25,8 +25,6 @@ public class PIC16F8X {
     //in micro sec
     private float watchDogTimer;
 
-    private float timer = 0;
-
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
         reset();
@@ -36,7 +34,6 @@ public class PIC16F8X {
         currentInstructionInRegister = new InstructionLine();
         ram = new RandomAccessMemory();
         stack = new Stack();
-        timer = 0;
     }
 
     private void getNextInstruction() {
@@ -226,11 +223,12 @@ public class PIC16F8X {
         }
 
         //TODO
-        System.out.println("t" + signal);
-        timer += signal;
-        ram.setTMR0((int) timer);
+        System.out.println("t" + signal + " PreSclale 1:" + PreScaler.getTimerPreScaler(ram.getOption()));
+
+        ram.addTimer(signal);
         if (ram.isTIF()) {
-            timer = 0;
+            //TODO huh?
+            ram.manipulateTMR0(0);
         }
 
         //TODO watchDogTimer

@@ -210,6 +210,7 @@ public class SimulatorGUI {
         quarzBox.setPIC(pic);
         lstList.setSelectedIndex(0);
         updateBitCheckBoxesRAM();
+        pic.setWDT(freigabeWatchdogCheckBox.isSelected());
         updateUIFromPIC();
     }
 

@@ -1,9 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.ArithmeticLogicUnit;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.ProgramMemory;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.Stack;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.*;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionType;
@@ -12,8 +9,8 @@ import java.util.List;
 
 public class PIC16F8X {
 
+    //in micro sec
     private float runTime = 0;
-
     //in kHz
     private long quarzSpeed = 32;
 
@@ -23,6 +20,10 @@ public class PIC16F8X {
     private InstructionLine currentInstructionInRegister;
 
     private int wRegister;
+
+    private boolean isWDT;
+    //in micro sec
+    private float watchDogTimer;
 
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
@@ -195,11 +196,49 @@ public class PIC16F8X {
                 wRegister = ArithmeticLogicUnit.xor(ram, wRegister, currentInstruction.getFK());
                 break;
         }
+
+        float timeForThisCycle = calculateRunTimePerCycle(cycles);
+        runTime += timeForThisCycle;
         //todo
-        //if(tmr0 watchdog was auch immer{
-        ram.incrementTMR0By(cycles);
-        //}
-        calculateRunTime(cycles);
+        //TODO prescaler
+        //Timer
+        int signal = 0;
+
+        if (!ram.isTCs()) {
+            //Timer
+            signal = cycles;
+            if (ram.isPSA()) {
+                //signal through prescaler
+                signal = cycles / PreScaler.getTimerPreScaler(ram.getOption());
+            }
+            //else raw
+        } else {
+            //RA4
+            //signal == RA4
+            //TODO
+            if (!ram.isPSA()) {
+                //signal through prescaler
+                signal = cycles / PreScaler.getTimerPreScaler(ram.getOption());
+            }
+            //else raw
+        }
+        //TODO
+        System.out.println("t" + signal);
+        ram.incrementTMR0By(signal);
+
+        //TODO watchDogTimer
+        //Watchdog
+        if (isWDT) {
+            float watchDogCycleTime = timeForThisCycle;
+            if (ram.isPSA()) {
+                watchDogCycleTime /= PreScaler.getWatchDogPreScaler(ram.getOption());
+            }
+            watchDogTimer += watchDogCycleTime;
+            if (watchDogTimer >= PreScaler.getWatchDogPreScaler(ram.getOption()) * 1000) {
+                reset();
+            }
+        }
+
         getNextInstruction();
     }
 
@@ -276,8 +315,8 @@ public class PIC16F8X {
         return (f >> (b) & 1) == 1;
     }
 
-    private void calculateRunTime(int cycles) {
-        runTime += (cycles * getTimePerCycle());
+    private float calculateRunTimePerCycle(int cycles) {
+        return (cycles * getTimePerCycle());
     }
 
     private float getTimePerCycle() {
@@ -327,5 +366,17 @@ public class PIC16F8X {
 
     public InstructionLine getCurrentInstructionInRegister() {
         return this.currentInstructionInRegister;
+    }
+
+    public void setWDT(boolean value) {
+        this.isWDT = value;
+    }
+
+    public void switchWDT() {
+        setWDT(!isWDT);
+    }
+
+    public String getWatchDogTimerString() {
+        return String.format("%.3f", watchDogTimer) + "\u00B5s";
     }
 }

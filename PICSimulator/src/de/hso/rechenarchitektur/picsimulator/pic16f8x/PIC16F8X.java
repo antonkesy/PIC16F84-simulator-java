@@ -25,6 +25,8 @@ public class PIC16F8X {
     //in micro sec
     private float watchDogTimer;
 
+    private float timer = 0;
+
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
         reset();
@@ -34,6 +36,7 @@ public class PIC16F8X {
         currentInstructionInRegister = new InstructionLine();
         ram = new RandomAccessMemory();
         stack = new Stack();
+        timer = 0;
     }
 
     private void getNextInstruction() {
@@ -89,6 +92,7 @@ public class PIC16F8X {
                 break;
             case MOVF:
                 int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());
+                ram.setZeroFlag(valueOfAddress == 0);
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), valueOfAddress);
                 break;
             case MOVWF:
@@ -202,29 +206,32 @@ public class PIC16F8X {
         //todo
         //TODO prescaler
         //Timer
-        int signal = 0;
+        float signal = 0;
 
-        if (!ram.isTCs()) {
-            //Timer
-            signal = cycles;
-            if (ram.isPSA()) {
-                //signal through prescaler
-                signal = cycles / PreScaler.getTimerPreScaler(ram.getOption());
-            }
-            //else raw
-        } else {
+        //signal through prescaler
+        if (ram.isTCs()) {
             //RA4
             //signal == RA4
             //TODO
-            if (!ram.isPSA()) {
-                //signal through prescaler
-                signal = cycles / PreScaler.getTimerPreScaler(ram.getOption());
-            }
+            //else raw
+        } else {
+            //Timer
+            signal = cycles;
             //else raw
         }
+
+        if (!ram.isPSA()) {
+            //signal through prescaler
+            signal = (float) cycles / PreScaler.getTimerPreScaler(ram.getOption());
+        }
+
         //TODO
         System.out.println("t" + signal);
-        ram.incrementTMR0By(signal);
+        timer += signal;
+        ram.setTMR0((int) timer);
+        if (ram.isTIF()) {
+            timer = 0;
+        }
 
         //TODO watchDogTimer
         //Watchdog

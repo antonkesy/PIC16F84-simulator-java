@@ -47,7 +47,7 @@ public class RandomAccessMemory {
                 }
                 break;
             case 2:
-                setPCL(data);
+                manipulatePCL(data);
                 break;
             case 3:
                 setStatus(data);
@@ -150,6 +150,11 @@ public class RandomAccessMemory {
     }
 
     public void setPCL(int value) {
+        memory[2][0] = value;
+        memory[2][1] = value;
+    }
+
+    public void manipulatePCL(int value) {
         int newPCLValue = 0;
         newPCLValue |= getPCLath();
         newPCLValue <<= 8;

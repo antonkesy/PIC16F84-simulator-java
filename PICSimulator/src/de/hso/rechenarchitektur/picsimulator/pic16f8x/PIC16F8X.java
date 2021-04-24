@@ -153,7 +153,7 @@ public class PIC16F8X {
             case CALL:
                 cycles = 2;
                 stack.push(getRam().getPCL());
-                getRam().setPCL(ram.getJumpAddress(currentInstruction.getFK()));
+                getRam().manipulatePCL(ram.getJumpAddress(currentInstruction.getFK()));
                 break;
             case SLEEP:
                 ram.setPowerDownFlag(false);

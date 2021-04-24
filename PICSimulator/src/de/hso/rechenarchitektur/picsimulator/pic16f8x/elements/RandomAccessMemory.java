@@ -712,4 +712,8 @@ public class RandomAccessMemory {
         setTMR0((int) timer);
     }
 
+    public boolean isRA4T0CKI() {
+        return (getPortA() >> 4 & 1) == 1;
+    }
+
 }

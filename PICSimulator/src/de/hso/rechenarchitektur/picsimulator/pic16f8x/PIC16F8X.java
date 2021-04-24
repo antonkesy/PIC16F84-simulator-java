@@ -208,17 +208,22 @@ public class PIC16F8X {
     }
 
     private int getRotateLeftThroughCarry(int f) {
+        boolean isCarryFlagAfter = isBitFActive(7, f);
         f <<= 1;
-        f = setValueTo8BitAndSetZeroFlag(f);
-        return f;
+        if (ram.isCarryFlag()) {
+            f ^= 1;
+        }
+        ram.setCarryFlag(isCarryFlagAfter);
+        return f & 0xFF;
     }
 
     private int getRotateRightTroughCarry(int f) {
+        boolean isCarryFlagAfter = isBitFActive(0, f);
         f >>= 1;
         if (ram.isCarryFlag()) {
             f |= 0b1000_0000;
         }
-        ram.setCarryFlag(false);
+        ram.setCarryFlag(isCarryFlagAfter);
         return f & 0xFF;
     }
 

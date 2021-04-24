@@ -25,6 +25,8 @@ public class PIC16F8X {
     //in micro sec
     private float watchDogTimer;
 
+    private boolean wasLastRA4_T0CKIFlankUp;
+
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
         reset();
@@ -202,40 +204,17 @@ public class PIC16F8X {
                 break;
         }
 
-        float timeForThisCycle = calculateRunTimePerCycle(cycles);
-        runTime += timeForThisCycle;
-        //todo
-        //TODO prescaler
-        //Timer
-        float signal = 0;
+        handleTimer(cycles);
 
-        //signal through prescaler
-        if (ram.isTCs()) {
-            //RA4
-            //signal == RA4
-            //TODO
-            //else raw
-        } else {
-            //Timer
-            signal = cycles;
-            //else raw
-        }
+        handleWatchDog(cycles);
 
-        if (!ram.isPSA()) {
-            //signal through prescaler
-            signal = (float) cycles / PreScaler.getTimerPreScaler(ram.getOption());
-        }
 
-        //TODO
-        System.out.println("t" + signal + " PreSclale 1:" + PreScaler.getTimerPreScaler(ram.getOption()));
+        getNextInstruction();
+    }
 
-        ram.addTimer(signal);
-        if (ram.isTIF()) {
-            //TODO huh?
-            ram.manipulateTMR0(0);
-        }
-
+    private void handleWatchDog(int cycles) {
         //TODO watchDogTimer
+        float timeForThisCycle = calculateRunTimePerCycle(cycles);
         //Watchdog
         if (isWDT) {
             float watchDogCycleTime = timeForThisCycle;
@@ -247,8 +226,24 @@ public class PIC16F8X {
                 reset();
             }
         }
+    }
 
-        getNextInstruction();
+    private void handleTimer(int cycles) {
+        float timeForThisCycle = calculateRunTimePerCycle(cycles);
+        runTime += timeForThisCycle;
+
+        //Timer
+        float signal = 0;
+
+        //Timer from cycles
+        if (!ram.isTCs()) {
+            signal = cycles;
+            if (!ram.isPSA()) {
+                //signal through prescaler
+                signal = (float) cycles / PreScaler.getTimerPreScaler(ram.getOption());
+            }
+        }
+        addTimer(signal);
     }
 
     private int getSwapNibbles(int f) {
@@ -387,5 +382,37 @@ public class PIC16F8X {
 
     public String getWatchDogTimerString() {
         return String.format("%.3f", watchDogTimer) + "\u00B5s";
+    }
+
+    private void addTimer(float signal) {
+        ram.addTimer(signal);
+        if (ram.isTIF()) {
+            //TODO huh?
+            ram.manipulateTMR0(0);
+        }
+    }
+
+    public void switchRA4T0CKI(boolean selected) {
+        //Timer gets signals from RA4
+        float signal = 0;
+        if (ram.isTCs()) {
+            //high or low flank
+            if (ram.isTSe()) {
+                //high to low
+                if (wasLastRA4_T0CKIFlankUp && !selected) {
+                    signal = 1;
+                }
+            } else {
+                //low to high
+                if (!wasLastRA4_T0CKIFlankUp && selected) {
+                    signal = 1;
+                }
+            }
+        }
+        if (!ram.isPSA()) {
+            signal = signal / PreScaler.getTimerPreScaler(ram.getOption());
+        }
+        addTimer(signal);
+        wasLastRA4_T0CKIFlankUp = selected;
     }
 }

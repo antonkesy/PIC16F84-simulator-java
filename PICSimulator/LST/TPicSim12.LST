@@ -3,7 +3,7 @@
                     00003           ;Funktion: Beschreiben und Lesen des EEPROMs
                     00004           ;(c) St. Lehmann   Ersterstellung: 11.05.2011
                     00005           ;Definition einiger Symbole
-                    00006           ;19.05.2020
+                    00006           ;19.05.2020 Korrektur WR-Bit (muss nach Ablauf der State Machine stehen)
                     00007           ;18.10.2018 mod. für HSO
                     00008           
                     00009           list c=132          ;Zeilenlänge im LST auf 132 Zeichen setzen
@@ -41,7 +41,7 @@
 000A 0089           00041           movwf     eecon2
 000B 30AA           00042           movlw     0AAh
 000C 0089           00043           movwf     eecon2              ;wenn State-Maschine ok und WR-Bit gesetzt wird, 
-                    00044           ;dann beginnt der Schreibvorgang 
+                    00044           				  ;dann beginnt der Schreibvorgang 
 000D 1488           00045           bsf       eecon1,1            ;jetzt WR-Bit setzen, Schreibvorgang startet jetzt!
                     00046             
                     00047  warte    

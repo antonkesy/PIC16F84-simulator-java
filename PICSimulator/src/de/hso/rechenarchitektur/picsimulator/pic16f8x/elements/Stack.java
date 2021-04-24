@@ -15,14 +15,14 @@ public class Stack {
      * @param newAddress
      */
     public void push(int newAddress) {
+        stackArray[index] = newAddress;
         if (++index > stackArray.length - 1) {
             index = 0;
         }
-        stackArray[index] = newAddress;
     }
 
     public int pop() {
-        return stackArray[index--];
+        return stackArray[--index];
     }
 
     /**

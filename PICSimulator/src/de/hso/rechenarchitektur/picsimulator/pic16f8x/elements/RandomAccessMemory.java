@@ -166,7 +166,7 @@ public class RandomAccessMemory {
 
     public void incrementPCL() {
         memory[2][0] = memory[2][0] + 1;
-        memory[2][1] = memory[2][0] + 1;
+        memory[2][1] = memory[2][1] + 1;
     }
 
 

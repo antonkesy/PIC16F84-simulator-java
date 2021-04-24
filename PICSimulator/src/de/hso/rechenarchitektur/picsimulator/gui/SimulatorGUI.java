@@ -1,8 +1,8 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
-import de.hso.rechenarchitektur.picsimulator.gui.elements.JBitCheckBox;
-import de.hso.rechenarchitektur.picsimulator.gui.elements.JFileRegisterTable;
-import de.hso.rechenarchitektur.picsimulator.gui.elements.JQuarzComboBox;
+import de.hso.rechenarchitektur.picsimulator.gui.components.JBitCheckBox;
+import de.hso.rechenarchitektur.picsimulator.gui.components.JFileRegisterTable;
+import de.hso.rechenarchitektur.picsimulator.gui.components.JQuarzComboBox;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;

@@ -63,22 +63,20 @@ public class PIC16F8X {
                 break;
             case COMF:
                 result = ArithmeticLogicUnit.getCompliment(ram.getDataFromAddress(currentInstruction.getFK()));
-                //TODO decrement 0 -> 255?
-                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result & 0xFF);
-                ram.setZeroFlag(result == 0);
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case DECF: //Fallthroug
             case INCF:
                 result = ram.getDataFromAddress(currentInstruction.getFK());
                 result += currentInstruction.getType() == InstructionType.INCF ? 1 : -1;
-                //TODO decrement 0 -> 255?
-                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result & 0xFF);
-                ram.setZeroFlag(result == 0);
+                result = setValueTo8BitAndSetZeroFlag(result);
+                setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case DECFSZ:
             case INCFSZ:
                 result = ram.getDataFromAddress(currentInstruction.getFK());
                 result += currentInstruction.getType() == InstructionType.INCFSZ ? 1 : -1;
+                result = setValueTo8BitAndSetZeroFlag(result);
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 if (result == 0) {
                     skipNextInstruction();
@@ -91,7 +89,6 @@ public class PIC16F8X {
             case MOVF:
                 int valueOfAddress = ram.getDataFromAddress(currentInstruction.getFK());
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), valueOfAddress);
-                ram.setZeroFlag(valueOfAddress == 0);
                 break;
             case MOVWF:
                 ram.setDataToAddress(currentInstruction.getFK(), wRegister);
@@ -212,8 +209,8 @@ public class PIC16F8X {
 
     private int getRotateLeftThroughCarry(int f) {
         f <<= 1;
-        ram.setCarryFlag(f > 0xFF);
-        return f & 0xFF;
+        f = setValueTo8BitAndSetZeroFlag(f);
+        return f;
     }
 
     private int getRotateRightTroughCarry(int f) {
@@ -223,6 +220,12 @@ public class PIC16F8X {
         }
         ram.setCarryFlag(false);
         return f & 0xFF;
+    }
+
+    private int setValueTo8BitAndSetZeroFlag(int value) {
+        value &= 0xFF;
+        ram.setZeroFlag(value == 0);
+        return value;
     }
 
     private void setResultInDestination(int d, int f, int value) {

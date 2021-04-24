@@ -191,8 +191,12 @@ public class SimulatorGUI {
         } catch (Exception e) {
             System.out.println("Exception");
         }
-        for (int i = 0; i < steps; ++i) {
-            stepWithBreakpoints();
+        if (steps > 1) {
+            //fist step is normal to skip breakpoint
+            step();
+            for (int i = 0; i < steps - 1; ++i) {
+                stepWithBreakpoints();
+            }
         }
     }
 

@@ -21,11 +21,6 @@ public class FileReader {
         lines = new ArrayList<>();
         programMemoryMap = new ArrayList<>();
         readFile();
-
-        System.out.println("\nInstructions:");
-        for (InstructionLine entry : programMemoryMap) {
-            System.out.println(entry);
-        }
     }
 
     private void readFile() {

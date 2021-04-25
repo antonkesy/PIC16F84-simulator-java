@@ -142,7 +142,7 @@ public class SimulatorGUI {
         //AutoRun Switch Button
         autorunButton.addActionListener(e -> switchAutoRunSimulator());
 
-        freigabeWatchdogCheckBox.addActionListener(e -> pic.switchWDT());
+        freigabeWatchdogCheckBox.addActionListener(e -> pic.getWatchDog().switchActive());
         //PortAPin Listener
         Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> portAPinsClickUpdate()));
         Arrays.stream(portBPins).forEach(p -> p.addActionListener(a -> portBPinsClickUpdate()));
@@ -228,8 +228,8 @@ public class SimulatorGUI {
     }
 
     private void updateWatchDogTimer() {
-        watchdogValueLabel.setText(pic.getWatchDogTimerString());
-        watchDogEndeLabel.setText(pic.getWatchDogTimerEndString());
+        watchdogValueLabel.setText(pic.getWatchDog().getWatchDogTimerString());
+        watchDogEndeLabel.setText(pic.getWatchDog().getWatchDogTimerEndString());
     }
 
     private void updatePortPins() {

@@ -372,12 +372,10 @@ public class SimulatorGUI {
         wValue.setText("0x" + Integer.toHexString(pic.getWRegister()));
         pclValue.setText("" + ram.getPCL());
         pclathValue.setText("0x" + Integer.toHexString(ram.getPCLath()));
-        pcIntern.setText("?");
         statusValue.setText("0x" + Integer.toHexString(ram.getStatus()));
         fsrValue.setText("0x" + Integer.toHexString(ram.getFSR()));
         optionValue.setText("0x" + Integer.toHexString(ram.getOption()));
-        vorteilerValue.setText("?");
-        timer0Value.setText("?");
+        timer0Value.setText("0x" + Integer.toHexString(ram.getTMRO()));
     }
 
 

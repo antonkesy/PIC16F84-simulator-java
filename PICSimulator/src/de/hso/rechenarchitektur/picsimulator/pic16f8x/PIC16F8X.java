@@ -16,24 +16,43 @@ public class PIC16F8X {
 
     private Stack stack;
     private final ProgramMemory programMemory;
-    private RandomAccessMemory ram;
+    private final RandomAccessMemory ram;
     private InstructionLine currentInstructionInRegister;
 
     private int wRegister;
 
-    private boolean isWDT;
-    //in micro sec
-    private float watchDogTimer;
+    private final WatchDog watchDog;
 
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
+        ram = new RandomAccessMemory();
+        watchDog = new WatchDog();
         reset();
+
     }
 
     private void reset() {
-        currentInstructionInRegister = new InstructionLine();
-        ram = new RandomAccessMemory();
-        stack = new Stack();
+        watchDog.resetWatchDogTimer();
+        currentInstructionInRegister = new InstructionLine(0, 0, new Instruction(InstructionType.NOP));
+        ram.setPCL(0);
+        //TODO
+        //was sleeping
+        if (ram.isTimeOutFlag() && !ram.isPowerDownFlag()) {
+            if (ram.isGIE()) {
+                // the device executes the instruction
+                //after the SLEEP instruction and then branches to the
+                //interrupt address (0004h).
+            } else {
+                //no interrupt -> go to normal
+                ram.setPowerDownFlag(true);
+            }
+        } else {
+            //normal reset
+            currentInstructionInRegister = new InstructionLine();
+            //Todo no ram reset?
+            //ram = new RandomAccessMemory();
+            stack = new Stack();
+        }
     }
 
     private void getNextInstruction() {
@@ -164,12 +183,14 @@ public class PIC16F8X {
             case SLEEP:
                 ram.setPowerDownFlag(false);
                 ram.setTimeOutFlag(true);
-                //todo clear watchdog timer & its prescaler
+                watchDog.resetWatchDogTimer();
+                //todo clear watchdog timer  prescaler
                 break;
             case CLRWDT:
-                //todo clear watchdog timer & its prescaler
+                watchDog.resetWatchDogTimer();
                 ram.setPowerDownFlag(true);
                 ram.setTimeOutFlag(true);
+                //todo clear watchdog timer  prescaler
                 break;
             case GOTO:
                 cycles = 2;
@@ -211,16 +232,11 @@ public class PIC16F8X {
     }
 
     private void handleWatchDog(int cycles) {
-        //TODO watchDogTimer
-        float timeForThisCycle = calculateRunTimePerCycle(cycles);
         //Watchdog
-        if (isWDT) {
-            float watchDogCycleTime = timeForThisCycle;
-            if (ram.isPSA()) {
-                watchDogCycleTime /= PreScaler.getWatchDogPreScaler(ram.getOption());
-            }
-            watchDogTimer += watchDogCycleTime;
-            if (watchDogTimer >= PreScaler.getWatchDogPreScaler(ram.getOption()) * 1000) {
+        if (watchDog.isWDT()) {
+            watchDog.addWatchDogTimer(calculateRunTimePerCycle(cycles));
+            watchDog.setWatchDogTimerEnd(18 * PreScaler.getWatchDogPreScaler(ram.getOption()) * 1000);
+            if (watchDog.isWatchDogOver()) {
                 reset();
             }
         }
@@ -357,9 +373,14 @@ public class PIC16F8X {
     /**
      * Debug Test fuer Instruktionen lesen und makieren in der GUI
      */
-    public int step() {
-        instructionHandler();
-        return currentInstructionInRegister.getPositionLineInFile();
+    public void step() {
+        if (ram.isTimeOutFlag() && !ram.isPowerDownFlag()) {
+            //Sleep
+            handleWatchDog(1);
+        } else {
+            //normal instruction handling
+            instructionHandler();
+        }
     }
 
     public String runTimeToString() {
@@ -371,15 +392,7 @@ public class PIC16F8X {
     }
 
     public void setWDT(boolean value) {
-        this.isWDT = value;
-    }
-
-    public void switchWDT() {
-        setWDT(!isWDT);
-    }
-
-    public String getWatchDogTimerString() {
-        return String.format("%.3f", watchDogTimer) + "\u00B5s";
+        watchDog.setWDT(value);
     }
 
     private void addTimer(float signal) {
@@ -412,5 +425,10 @@ public class PIC16F8X {
         }
         addTimer(signal);
         ram.getTimer().setWasLastRA4_T0CKIFlankUp(selected);
+    }
+
+
+    public WatchDog getWatchDog() {
+        return this.watchDog;
     }
 }

@@ -389,10 +389,7 @@ public class PIC16F8X {
     public int getWRegister() {
         return wRegister;
     }
-
-    public long getQuarzSpeed() {
-        return quarzSpeed;
-    }
+    
 
     public void setQuarzSpeed(int quarzSpeed) {
         this.quarzSpeed = quarzSpeed;

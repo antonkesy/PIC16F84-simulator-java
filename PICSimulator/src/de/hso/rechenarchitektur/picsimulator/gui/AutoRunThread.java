@@ -16,7 +16,7 @@ public class AutoRunThread extends Thread {
     public void run() {
         while (true) try {
             simulatorGUI.stepWithBreakpoints();
-            Thread.sleep(500);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

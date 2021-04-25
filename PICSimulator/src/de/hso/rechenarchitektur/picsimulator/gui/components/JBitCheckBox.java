@@ -91,25 +91,25 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
             case INTCON:
                 switch (index) {
                     case 0:
-                        setSelected(ram.isRIF());
+                        setSelected(ram.isRBIF());
                         break;
                     case 1:
-                        setSelected(ram.isIF());
+                        setSelected(ram.isINTF());
                         break;
                     case 2:
-                        setSelected(ram.isTIF());
+                        setSelected(ram.isT0IF());
                         break;
                     case 3:
-                        setSelected(ram.isRIE());
+                        setSelected(ram.isRBIE());
                         break;
                     case 4:
-                        setSelected(ram.isIE());
+                        setSelected(ram.isINTE());
                         break;
                     case 5:
-                        setSelected(ram.isTIE());
+                        setSelected(ram.isT0IE());
                         break;
                     case 6:
-                        setSelected(ram.isEIE());
+                        setSelected(ram.isEEIE());
                         break;
                     case 7:
                         setSelected(ram.isGIE());

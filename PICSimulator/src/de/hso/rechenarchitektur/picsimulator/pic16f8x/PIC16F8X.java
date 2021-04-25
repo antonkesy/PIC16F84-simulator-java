@@ -22,6 +22,8 @@ public class PIC16F8X {
     private int wRegister;
 
     private final WatchDog watchDog;
+    //RB0 Interrupt PortB0
+    private boolean wasRB0 = false;
 
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
@@ -53,9 +55,32 @@ public class PIC16F8X {
             //ram = new RandomAccessMemory();
             stack = new Stack();
         }
+        //Reset Intcon GIE by Reset
+        ram.setGIE(false);
+    }
+
+    private void checkForInterrupts() {
+        //Timer Interrupt
+        if (ram.isGIE() && ram.isT0IE() && ram.isT0IF()) {
+            //Timer Interrupt
+            System.out.println("Timer Interrupt");
+            stack.push(ram.getPCL());
+            ram.setGIE(false);
+            ram.setPCL(4);
+        }
+        //RB0 Interrupt
+        //TODO correct flags?
+        if (ram.isGIE() && ram.isINTF() && ram.isINTE()) {
+            //Timer Interrupt
+            System.out.println("RB0 Interrupt");
+            stack.push(ram.getPCL());
+            ram.setGIE(false);
+            ram.setPCL(4);
+        }
     }
 
     private void getNextInstruction() {
+        checkForInterrupts();
         InstructionLine nextInstruction = programMemory.getInstructionAt(ram.getPCL());
         //checks if there is a instruction left
         if (nextInstruction != null) {
@@ -397,7 +422,7 @@ public class PIC16F8X {
 
     private void addTimer(float signal) {
         ram.addTimer(signal);
-        if (ram.isTIF()) {
+        if (ram.isT0IF()) {
             //TODO huh?
             ram.manipulateTMR0(0);
         }
@@ -430,5 +455,24 @@ public class PIC16F8X {
 
     public WatchDog getWatchDog() {
         return this.watchDog;
+    }
+
+    public void switchRB0(boolean selected) {
+        if (ram.isGIE() && ram.isINTE()) {
+            if (ram.isIEg()) {
+                //rising
+                if (!wasRB0 && selected) {
+                    ram.setINTF(true);
+                }
+            } else {
+                //falling
+                if (wasRB0 && !selected) {
+                    ram.setINTF(true);
+                }
+            }
+
+        }
+
+        wasRB0 = selected;
     }
 }

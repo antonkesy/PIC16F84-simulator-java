@@ -234,8 +234,7 @@ public class PIC16F8X {
             case RETFIE:
                 cycles = 2;
                 ram.setPCL(stack.pop());
-                //TODO INTCON Bit setzen
-                ram.setIntcon(0b100_0000);
+                ram.setGIE(true);
                 break;
             case RETLW: //Fallthroug
                 wRegister = currentInstruction.getFK();
@@ -389,7 +388,7 @@ public class PIC16F8X {
     public int getWRegister() {
         return wRegister;
     }
-    
+
 
     public void setQuarzSpeed(int quarzSpeed) {
         this.quarzSpeed = quarzSpeed;

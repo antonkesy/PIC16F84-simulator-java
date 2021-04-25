@@ -172,10 +172,10 @@ public class SimulatorGUI {
 
         //Set PortB 4-7 change listener
         //no iteration because lambda needs final values
-        portBPins[4].addActionListener(e -> pic.switchRB4_7(portBPins[4].isSelected(), 4));
-        portBPins[4].addActionListener(e -> pic.switchRB4_7(portBPins[5].isSelected(), 5));
-        portBPins[4].addActionListener(e -> pic.switchRB4_7(portBPins[6].isSelected(), 6));
-        portBPins[4].addActionListener(e -> pic.switchRB4_7(portBPins[7].isSelected(), 7));
+        portBPins[4].addActionListener(e -> pic.switchRB4_7(4));
+        portBPins[5].addActionListener(e -> pic.switchRB4_7(5));
+        portBPins[6].addActionListener(e -> pic.switchRB4_7(6));
+        portBPins[7].addActionListener(e -> pic.switchRB4_7(7));
     }
 
 

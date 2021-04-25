@@ -63,16 +63,20 @@ public class PIC16F8X {
         //Timer Interrupt
         if (ram.isGIE() && ram.isT0IE() && ram.isT0IF()) {
             //Timer Interrupt
-            System.out.println("Timer Interrupt");
             stack.push(ram.getPCL());
             ram.setGIE(false);
             ram.setPCL(4);
         }
         //RB0 Interrupt
-        //TODO correct flags?
         if (ram.isGIE() && ram.isINTF() && ram.isINTE()) {
             //Timer Interrupt
-            System.out.println("RB0 Interrupt");
+            stack.push(ram.getPCL());
+            ram.setGIE(false);
+            ram.setPCL(4);
+        }
+        //RB Interrupt
+        if (ram.isGIE() && ram.isRBIE() && ram.isRBIF()) {
+            //Timer Interrupt
             stack.push(ram.getPCL());
             ram.setGIE(false);
             ram.setPCL(4);
@@ -470,9 +474,14 @@ public class PIC16F8X {
                     ram.setINTF(true);
                 }
             }
-
         }
-
         wasRB0 = selected;
+    }
+
+    public void switchRB4_7(int index) {
+        //checks if interrupt is on & is RBIE & Port at Index is not output set by tris
+        if (ram.isGIE() && ram.isRBIE() && (ram.getTrisB() >> index & 1) == 1) {
+            ram.setRBIF(true);
+        }
     }
 }

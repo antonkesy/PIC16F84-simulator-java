@@ -107,6 +107,7 @@ public class SimulatorGUI {
     private JBitCheckBox checkBoxIF;
     private JBitCheckBox checkBoxRIF;
     private JButton ignoreButton;
+    private JLabel watchDogEndeLabel;
     private JPanel frPanel;
     private JLabel statusBitText;
     private JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
@@ -198,6 +199,7 @@ public class SimulatorGUI {
     }
 
     private void DoNSteps() {
+        //TODO stop by reset (and dont reset yet)
         int steps = 0;
         try {
             steps = (int) (stepsSpinner.getValue());
@@ -227,6 +229,7 @@ public class SimulatorGUI {
 
     private void updateWatchDogTimer() {
         watchdogValueLabel.setText(pic.getWatchDogTimerString());
+        watchDogEndeLabel.setText(pic.getWatchDogTimerEndString());
     }
 
     private void updatePortPins() {

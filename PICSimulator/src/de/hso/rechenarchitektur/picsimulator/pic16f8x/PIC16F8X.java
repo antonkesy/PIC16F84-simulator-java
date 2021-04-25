@@ -25,8 +25,6 @@ public class PIC16F8X {
     //in micro sec
     private float watchDogTimer;
 
-    private boolean wasLastRA4_T0CKIFlankUp;
-
     public PIC16F8X(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
         reset();
@@ -399,12 +397,12 @@ public class PIC16F8X {
             //high or low flank
             if (ram.isTSe()) {
                 //high to low
-                if (wasLastRA4_T0CKIFlankUp && !selected) {
+                if (ram.getTimer().wasLastRA4_T0CKIFlankUp() && !selected) {
                     signal = 1;
                 }
             } else {
                 //low to high
-                if (!wasLastRA4_T0CKIFlankUp && selected) {
+                if (!ram.getTimer().wasLastRA4_T0CKIFlankUp() && selected) {
                     signal = 1;
                 }
             }
@@ -413,6 +411,6 @@ public class PIC16F8X {
             signal = signal / PreScaler.getTimerPreScaler(ram.getOption());
         }
         addTimer(signal);
-        wasLastRA4_T0CKIFlankUp = selected;
+        ram.getTimer().setWasLastRA4_T0CKIFlankUp(selected);
     }
 }

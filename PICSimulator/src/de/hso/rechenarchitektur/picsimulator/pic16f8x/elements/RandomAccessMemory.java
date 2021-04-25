@@ -11,10 +11,10 @@ public class RandomAccessMemory {
      * Bank0 = [0-127][0] --- Bank1 = [0-127][1]
      */
     private final int[][] memory;
-
-    float timer = 0;
+    private final Timer timer;
 
     public RandomAccessMemory() {
+        this.timer = new Timer();
         memory = new int[128][2];
         setStatus(0b0001_1000);
         setTrisA(0b11_1111);
@@ -114,7 +114,7 @@ public class RandomAccessMemory {
     }*/
 
     public void manipulateTMR0(int value) {
-        timer = value;
+        timer.setTimer(value);
         setTMR0(value);
     }
 
@@ -703,17 +703,16 @@ public class RandomAccessMemory {
         return flagValue;
     }
 
-    public float getTimer() {
-        return timer;
-    }
-
     public void addTimer(float value) {
-        timer += value;
-        setTMR0((int) timer);
+        timer.addTimer(value);
+        setTMR0((int) timer.getTimer());
     }
 
     public boolean isRA4T0CKI() {
         return (getPortA() >> 4 & 1) == 1;
     }
 
+    public Timer getTimer() {
+        return timer;
+    }
 }

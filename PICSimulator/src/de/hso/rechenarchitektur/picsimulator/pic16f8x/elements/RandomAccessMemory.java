@@ -97,10 +97,6 @@ public class RandomAccessMemory {
         }
     }
 
-    public int getTMR0() {
-        return memory[0][1];
-    }
-
     public void setIndirect(int value) {
         setDataToAddress(0, value);
     }
@@ -109,9 +105,6 @@ public class RandomAccessMemory {
         return getDataFromAddress(0);
     }
 
-   /* public void incrementTMR0By(int value) {
-        setTMR0(memory[1][0] + value);
-    }*/
 
     public void manipulateTMR0(int value) {
         timer.setTimer(value);
@@ -498,73 +491,72 @@ public class RandomAccessMemory {
         return (getIntcon() & 0b1000_0000) == 0b1000_0000;
     }
 
-    public boolean isEIE() {
+    public boolean isEEIE() {
         return (getIntcon() & 0b100_0000) == 0b100_0000;
     }
 
-    public boolean isTIE() {
+    public boolean isT0IE() {
         return (getIntcon() & 0b10_0000) == 0b10_0000;
     }
 
-    public boolean isIE() {
+    public boolean isINTE() {
         return (getIntcon() & 0b1_0000) == 0b1_0000;
     }
 
-    public boolean isRIE() {
+    public boolean isRBIE() {
         return (getIntcon() & 0b1000) == 0b1000;
     }
 
-    public boolean isTIF() {
+    public boolean isT0IF() {
         return (getIntcon() & 0b100) == 0b100;
     }
 
 
-    public boolean isIF() {
+    public boolean isINTF() {
         return (getIntcon() & 0b10) == 0b10;
     }
 
-    //TODO wad?
     public void setT0IF() {
-        if ((getIntcon() & 0b10) != 0b10) {
-            setIntcon(getIntcon() + 0b10);
+        if ((getIntcon() & 0b100) != 0b100) {
+            setIntcon(getIntcon() + 0b100);
         }
     }
 
-    public boolean isRIF() {
-        return (getIntcon() & 0b1) == 0b1;
+    public boolean isRBIF() {
+        return (getIntcon() & 1) == 1;
     }
 
     public void setGIE(boolean isGIE) {
-        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE(), isTIE(), isEIE(), isGIE);
+        setIntconBits(isRBIF(), isINTF(), isT0IF(), isRBIE(), isINTE(), isT0IE(), isEEIE(), isGIE);
     }
 
-    public void setEIE(boolean isEIE) {
-        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE(), isTIE(), isEIE, isGIE());
+    public void setEEIE(boolean isEIE) {
+        setIntconBits(isRBIF(), isINTF(), isT0IF(), isRBIE(), isINTE(), isT0IE(), isEIE, isGIE());
     }
 
-    public void setTIE(boolean isTIE) {
-        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE(), isTIE, isEIE(), isGIE());
+    public void setT0IE(boolean isTIE) {
+        setIntconBits(isRBIF(), isINTF(), isT0IF(), isRBIE(), isINTE(), isTIE, isEEIE(), isGIE());
     }
 
-    public void setIE(boolean isIE) {
-        setIntconBits(isRIF(), isIF(), isTIF(), isRIE(), isIE, isTIE(), isEIE(), isGIE());
+    public void setINTE(boolean isIE) {
+        setIntconBits(isRBIF(), isINTF(), isT0IF(), isRBIE(), isIE, isT0IE(), isEEIE(), isGIE());
     }
 
-    public void setRIE(boolean isRIE) {
-        setIntconBits(isRIF(), isIF(), isTIF(), isRIE, isIE(), isTIE(), isEIE(), isGIE());
+    public void setRBIE(boolean isRIE) {
+        setIntconBits(isRBIF(), isINTF(), isT0IF(), isRIE, isINTE(), isT0IE(), isEEIE(), isGIE());
     }
 
-    public void setTIF(boolean isTIF) {
-        setIntconBits(isRIF(), isIF(), isTIF, isRIE(), isIE(), isTIE(), isEIE(), isGIE());
+    public void setT0IF(boolean isTIF) {
+        setIntconBits(isRBIF(), isINTF(), isTIF, isRBIE(), isINTE(), isT0IE(), isEEIE(), isGIE());
     }
 
 
-    public void setIF(boolean isIF) {
-        setIntconBits(isRIF(), isIF, isTIF(), isRIE(), isIE(), isTIE(), isEIE(), isGIE());
+    public void setINTF(boolean isIF) {
+        setIntconBits(isRBIF(), isIF, isT0IF(), isRBIE(), isINTE(), isT0IE(), isEEIE(), isGIE());
     }
 
-    public void setRIF(boolean isRIF) {
-        setIntconBits(isRIF, isIF(), isTIF(), isRIE(), isIE(), isTIE(), isEIE(), isGIE());
+    public void setRBIF(boolean isRIF) {
+        setIntconBits(isRIF, isINTF(), isT0IF(), isRBIE(), isINTE(), isT0IE(), isEEIE(), isGIE());
     }
 
     public void setIntconBits(boolean isRIF, boolean isIF, boolean isTIF, boolean isRIE, boolean isIE, boolean isTIE, boolean isEIE, boolean isGIE) {
@@ -636,31 +628,31 @@ public class RandomAccessMemory {
     }
 
     public void switchRIF() {
-        setRIF(!isRIF());
+        setRBIF(!isRBIF());
     }
 
     public void switchIF() {
-        setIF(!isIF());
+        setINTF(!isINTF());
     }
 
     public void switchTIF() {
-        setTIF(!isTIF());
+        setT0IF(!isT0IF());
     }
 
     public void switchRIE() {
-        setRIE(!isRIE());
+        setRBIE(!isRBIE());
     }
 
     public void switchIE() {
-        setIE(!isIE());
+        setINTE(!isINTE());
     }
 
     public void switchTIE() {
-        setTIE(!isTIE());
+        setT0IE(!isT0IE());
     }
 
     public void switchEIE() {
-        setEIE(!isEIE());
+        setEEIE(!isEEIE());
     }
 
     public void switchGIE() {

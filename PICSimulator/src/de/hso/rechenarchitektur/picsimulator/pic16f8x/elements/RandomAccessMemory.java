@@ -119,6 +119,10 @@ public class RandomAccessMemory {
         }
     }
 
+    public int getTMRO() {
+        return memory[1][0];
+    }
+
     public int getOption() {
         return memory[1][1];
     }
@@ -700,9 +704,6 @@ public class RandomAccessMemory {
         setTMR0((int) timer.getTimer());
     }
 
-    public boolean isRA4T0CKI() {
-        return (getPortA() >> 4 & 1) == 1;
-    }
 
     public Timer getTimer() {
         return timer;

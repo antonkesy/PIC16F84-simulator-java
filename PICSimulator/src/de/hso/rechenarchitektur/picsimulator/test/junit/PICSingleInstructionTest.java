@@ -30,12 +30,12 @@ public class PICSingleInstructionTest {
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
         pic = new PIC16F8X(instructions);
         Assert.assertEquals(0, pic.getRam().getDataFromAddress(0x20));
-        pic.step(); //NOP
-        pic.step(); //MOVLW
+        pic.cycle(); //NOP
+        pic.cycle(); //MOVLW
         Assert.assertEquals(testValue, pic.getWRegister());
-        pic.step(); //MOVWF
+        pic.cycle(); //MOVWF
         Assert.assertEquals(testValue, pic.getRam().getDataFromAddress(0x20));
-        pic.step(); //BSF
+        pic.cycle(); //BSF
         Assert.assertEquals(expectedValue, pic.getRam().getDataFromAddress(0x20));
         ////NOP
     }
@@ -54,12 +54,12 @@ public class PICSingleInstructionTest {
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
         pic = new PIC16F8X(instructions);
         Assert.assertEquals(0, pic.getRam().getDataFromAddress(0x20));
-        pic.step(); //NOP
-        pic.step(); //MOVLW
+        pic.cycle(); //NOP
+        pic.cycle(); //MOVLW
         Assert.assertEquals(testValue, pic.getWRegister());
-        pic.step(); //MOVWF
+        pic.cycle(); //MOVWF
         Assert.assertEquals(testValue, pic.getRam().getDataFromAddress(0x20));
-        pic.step(); //BSF
+        pic.cycle(); //BSF
         Assert.assertEquals(expectedValue, pic.getRam().getDataFromAddress(0x20));
         ////NOP
     }
@@ -78,10 +78,10 @@ public class PICSingleInstructionTest {
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.ADDLW, addValue)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
         pic = new PIC16F8X(instructions);
-        pic.step(); //NOP
-        pic.step(); //MOVLW
+        pic.cycle(); //NOP
+        pic.cycle(); //MOVLW
         Assert.assertEquals(testValue, pic.getWRegister());
-        pic.step(); //ADDLW
+        pic.cycle(); //ADDLW
         Assert.assertEquals(expectedValue, pic.getWRegister());
         ////NOP
     }
@@ -102,11 +102,11 @@ public class PICSingleInstructionTest {
         instructions.add(new InstructionLine(1, 0, new Instruction(InstructionType.NOP)));
         instructions.add(new InstructionLine(2, 0, new Instruction(InstructionType.NOP)));
         pic = new PIC16F8X(instructions);
-        pic.step(); //NOP
-        pic.step(); //MOVLW
-        pic.step(); //MOVWF
+        pic.cycle(); //NOP
+        pic.cycle(); //MOVLW
+        pic.cycle(); //MOVWF
         Assert.assertEquals(testValue, pic.getRam().getDataFromAddress(0x20));
-        pic.step(); //DECFSZ
+        pic.cycle(); //DECFSZ
         Assert.assertEquals(expectedValue, pic.getRam().getDataFromAddress(0x20));
         //skip if 0
         if (expectedValue == 0) {

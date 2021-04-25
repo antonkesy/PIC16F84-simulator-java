@@ -16,7 +16,7 @@ public class PIC16F8XTest {
 
     public void assertEqualsCheckReset() {
         Assert.assertEquals(new InstructionLine(), testPIC.getCurrentInstructionInRegister());
-        testPIC.step();
+        testPIC.cycle();
     }
 
     /**
@@ -43,7 +43,7 @@ public class PIC16F8XTest {
      */
     public void assertEqualsInstructionLine(int posInLine, int posInMemory, InstructionType instructionType, int fK, int bD) {
         Assert.assertEquals(new InstructionLine(posInLine, posInMemory, new Instruction(instructionType, fK, bD)), testPIC.getCurrentInstructionInRegister());
-        testPIC.step();
+        testPIC.cycle();
     }
 
     /**

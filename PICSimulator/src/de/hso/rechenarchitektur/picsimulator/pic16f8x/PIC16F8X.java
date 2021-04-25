@@ -40,6 +40,7 @@ public class PIC16F8X {
         //TODO
         //was sleeping
         if (ram.isTimeOutFlag() && !ram.isPowerDownFlag()) {
+            System.out.println("Was sleeping");
             if (ram.isGIE()) {
                 // the device executes the instruction
                 //after the SLEEP instruction and then branches to the
@@ -59,13 +60,15 @@ public class PIC16F8X {
         ram.setGIE(false);
     }
 
-    private void checkForInterrupts() {
+    private boolean checkForInterrupts() {
+        boolean wasInterrupt = false;
         //Timer Interrupt
         if (ram.isGIE() && ram.isT0IE() && ram.isT0IF()) {
             //Timer Interrupt
             stack.push(ram.getPCL());
             ram.setGIE(false);
             ram.setPCL(4);
+            wasInterrupt = true;
         }
         //RB0 Interrupt
         if (ram.isGIE() && ram.isINTF() && ram.isINTE()) {
@@ -73,6 +76,7 @@ public class PIC16F8X {
             stack.push(ram.getPCL());
             ram.setGIE(false);
             ram.setPCL(4);
+            wasInterrupt = true;
         }
         //RB Interrupt
         if (ram.isGIE() && ram.isRBIE() && ram.isRBIF()) {
@@ -80,7 +84,9 @@ public class PIC16F8X {
             stack.push(ram.getPCL());
             ram.setGIE(false);
             ram.setPCL(4);
+            wasInterrupt = true;
         }
+        return wasInterrupt;
     }
 
     private void getNextInstruction() {
@@ -212,14 +218,17 @@ public class PIC16F8X {
             case SLEEP:
                 ram.setPowerDownFlag(false);
                 ram.setTimeOutFlag(true);
-                watchDog.resetWatchDogTimer();
-                //todo clear watchdog timer  prescaler
+                //is watchDog enabled
+                if (watchDog.isWDT()) {
+                    watchDog.resetWatchDogTimer();
+                } else {
+                    reset();
+                }
                 break;
             case CLRWDT:
                 watchDog.resetWatchDogTimer();
                 ram.setPowerDownFlag(true);
                 ram.setTimeOutFlag(true);
-                //todo clear watchdog timer  prescaler
                 break;
             case GOTO:
                 cycles = 2;
@@ -398,10 +407,11 @@ public class PIC16F8X {
     /**
      * Debug Test fuer Instruktionen lesen und makieren in der GUI
      */
-    public void step() {
+    public void cycle() {
         if (ram.isTimeOutFlag() && !ram.isPowerDownFlag()) {
             //Sleep
             handleWatchDog(1);
+            ram.setPowerDownFlag(checkForInterrupts());
         } else {
             //normal instruction handling
             instructionHandler();
@@ -422,8 +432,8 @@ public class PIC16F8X {
 
     private void addTimer(float signal) {
         ram.addTimer(signal);
+        //reset timer value if timer overflowed
         if (ram.isT0IF()) {
-            //TODO huh?
             ram.manipulateTMR0(0);
         }
     }

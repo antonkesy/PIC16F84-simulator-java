@@ -466,7 +466,7 @@ public class SimulatorGUI {
 
     public void step() {
         if (pic != null) {
-            pic.step();
+            pic.cycle();
             updateUIFromPIC();
         }
     }
@@ -475,7 +475,7 @@ public class SimulatorGUI {
         if (pic != null) {
             //Ueberprueft ob naechste Instruktion breakpoint ist
             if (isNextInstructionNoBreakpoint()) {
-                pic.step();
+                pic.cycle();
                 updateUIFromPIC();
             }
         }

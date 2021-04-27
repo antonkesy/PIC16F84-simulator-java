@@ -1,11 +1,11 @@
 package de.hso.rechenarchitektur.picsimulator.gui;
 
-import de.hso.rechenarchitektur.picsimulator.gui.components.bit.intcon.*;
-import de.hso.rechenarchitektur.picsimulator.gui.components.bit.option.*;
-import de.hso.rechenarchitektur.picsimulator.gui.components.bit.status.*;
 import de.hso.rechenarchitektur.picsimulator.gui.components.JBitCheckBox;
 import de.hso.rechenarchitektur.picsimulator.gui.components.JFileRegisterTable;
 import de.hso.rechenarchitektur.picsimulator.gui.components.JQuarzComboBox;
+import de.hso.rechenarchitektur.picsimulator.gui.components.bit.intcon.*;
+import de.hso.rechenarchitektur.picsimulator.gui.components.bit.option.*;
+import de.hso.rechenarchitektur.picsimulator.gui.components.bit.status.*;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
@@ -66,17 +66,14 @@ public class SimulatorGUI {
     private JLabel stackField5;
     private JLabel stackField6;
     private JLabel stackField7;
-    private JTable statusBitTable;
     private JCheckBox freigabeWatchdogCheckBox;
     private JLabel watchdogValueLabel;
     private JLabel wValue;
     private JLabel pclValue;
     private JLabel pclathValue;
-    private JLabel pcIntern;
     private JLabel statusValue;
     private JLabel fsrValue;
     private JLabel optionValue;
-    private JLabel vorteilerValue;
     private JLabel timer0Value;
     private JLabel runTimeLabel;
     private JSpinner stepsSpinner;
@@ -111,17 +108,15 @@ public class SimulatorGUI {
     private JBitCheckBox checkBoxRBIF;
     private JButton ignoreButton;
     private JLabel watchDogEndeLabel;
-    private JPanel frPanel;
-    private JLabel statusBitText;
     private JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
     private JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
     private JCheckBox[] trisA = {pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
     private JCheckBox[] portBPins = {pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
     private JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
     //
-    private JBitCheckBox[] statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
-    private JBitCheckBox[] optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
-    private JBitCheckBox[] intconBitCheckBoxes = new JBitCheckBox[]{checkBoxRBIF, checkBoxINTF, checkBoxT0IF, checkBoxRBIE, checkBoxINTE, checkBoxT0IE, checkBoxEEIE, checkBoxGIE};
+    private final JBitCheckBox[] statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
+    private final JBitCheckBox[] optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
+    private final JBitCheckBox[] intconBitCheckBoxes = new JBitCheckBox[]{checkBoxRBIF, checkBoxINTF, checkBoxT0IF, checkBoxRBIE, checkBoxINTE, checkBoxT0IE, checkBoxEEIE, checkBoxGIE};
     private PIC16F8X pic;
 
     private boolean isAutoRun;
@@ -133,6 +128,24 @@ public class SimulatorGUI {
 
     private int currentLine;
 
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception ignored) {
+        }
+
+        JFrame frame = new JFrame("PIC Simulator");
+        frame.setContentPane(new SimulatorGUI().panelMain);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setMaximumSize(DimMax);
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+    }
 
     //TODO disable whole UI while non file is selected
     public SimulatorGUI() {
@@ -144,7 +157,7 @@ public class SimulatorGUI {
         resetButton.addActionListener(e -> resetPIC());
         //AutoRun Switch Button
         autorunButton.addActionListener(e -> switchAutoRunSimulator());
-
+        //de/activate watchdog
         freigabeWatchdogCheckBox.addActionListener(e -> pic.getWatchDog().switchActive());
         //PortAPin Listener
         Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> portAPinsClickUpdate()));
@@ -181,12 +194,18 @@ public class SimulatorGUI {
         portBPins[7].addActionListener(e -> pic.switchRB4_7(7));
     }
 
-
+    /**
+     * skips next instruction in PIC
+     */
     private void ignoreNextInstruction() {
+        if (pic == null) return;
         pic.skipNextInstruction();
         updateUIFromPIC();
     }
 
+    /**
+     * Resets PIC completely
+     */
     private void resetPIC() {
         if (pic != null) {
             if (isAutoRun)
@@ -195,6 +214,9 @@ public class SimulatorGUI {
         }
     }
 
+    /**
+     * Opens FileChooser and if file selected opens new PIC with instructions
+     */
     private void openNewFile() {
         JFileChooser chooser = new JFileChooser(System.getProperty("user.dir") + "/LST");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
@@ -209,8 +231,10 @@ public class SimulatorGUI {
         }
     }
 
+    /**
+     * Steps n from stepsSpinner
+     */
     private void DoNSteps() {
-        //TODO stop by reset (and dont reset yet)
         int steps = 0;
         try {
             steps = (int) (stepsSpinner.getValue());
@@ -226,6 +250,9 @@ public class SimulatorGUI {
         }
     }
 
+    /**
+     * Sets new PIC and updates all pic references
+     */
     private void setPIC() {
         stepsSpinner.setValue(1000);
         pic = new PIC16F8X(lastReadInstructionsLines);
@@ -274,25 +301,9 @@ public class SimulatorGUI {
         updateUIFromPIC();
     }
 
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception ignored) {
-        }
-
-        JFrame frame = new JFrame("PIC Simulator");
-        frame.setContentPane(new SimulatorGUI().panelMain);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setMaximumSize(DimMax);
-
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-    }
-
+    /**
+     * Updates all GUI values from pic
+     */
     public void updateUIFromPIC() {
         if (pic == null) return;
         currentLine = pic.getCurrentLine();
@@ -383,13 +394,6 @@ public class SimulatorGUI {
 
 
     private void createUIComponents() {
-        stackFields = new JLabel[]{stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
-        portAPins = new JCheckBox[]{pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
-        trisA = new JCheckBox[]{pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
-        portBPins = new JCheckBox[]{pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
-        trisB = new JCheckBox[]{pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
-
-
         //JTable + Model for FLR
         frScrollPanel = new JScrollPane();
         frB1ScrollPanel = new JScrollPane();

@@ -15,7 +15,6 @@ public class PICSingleInstructionTest {
     PIC16F8X pic;
     List<InstructionLine> instructions;
 
-    //TODO
 
     public void loadInstructionsWithValueInRegister(int value, int position) {
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, value)));

@@ -9,6 +9,11 @@ import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * Reads, interpret LST Files to Instructions
+ * <p>
+ * One FileReader per File to read
+ */
 public class FileReader {
     private final File file;
 
@@ -16,6 +21,11 @@ public class FileReader {
 
     private final ArrayList<LSTLine> lines;
 
+    /**
+     * Constructor starts reading file
+     *
+     * @param file
+     */
     public FileReader(File file) {
         this.file = file;
         lines = new ArrayList<>();
@@ -23,6 +33,9 @@ public class FileReader {
         readFile();
     }
 
+    /**
+     * Reads file per line and calls interpreter
+     */
     private void readFile() {
         try {
             Scanner myReader = new Scanner(file, String.valueOf(StandardCharsets.ISO_8859_1));
@@ -38,6 +51,11 @@ public class FileReader {
         }
     }
 
+    /**
+     * Interprets line
+     *
+     * @param line
+     */
     private void interpretLine(String line) {
         //Wenn nicht mit einer Adresse
         if (line.startsWith(" ")) return;

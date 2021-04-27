@@ -37,14 +37,13 @@ public class PIC16F8X {
         watchDog.resetWatchDogTimer();
         currentInstructionInRegister = new InstructionLine(0, 0, new Instruction(InstructionType.NOP));
         ram.setPCL(0);
-        //TODO
         //was sleeping
         if (ram.isTimeOutFlag() && !ram.isPowerDownFlag()) {
-            System.out.println("Was sleeping");
             if (ram.isGIE()) {
                 // the device executes the instruction
                 //after the SLEEP instruction and then branches to the
                 //interrupt address (0004h).
+                checkForInterrupts();
             } else {
                 //no interrupt -> go to normal
                 ram.setPowerDownFlag(true);
@@ -52,7 +51,6 @@ public class PIC16F8X {
         } else {
             //normal reset
             currentInstructionInRegister = new InstructionLine();
-            //Todo no ram reset?
             //ram = new RandomAccessMemory();
             stack = new Stack();
         }

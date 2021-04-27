@@ -12,6 +12,9 @@ import java.awt.event.FocusListener;
 
 import static de.hso.rechenarchitektur.picsimulator.gui.GUIUtilities.fillModelRowWithData;
 
+/**
+ * Table with horizontal and vertical headers for file register
+ */
 public class JFileRegisterTable extends JTable implements FocusListener {
     DefaultTableModel modelFileRegisterBank;
     private PIC16F8X pic;
@@ -40,6 +43,9 @@ public class JFileRegisterTable extends JTable implements FocusListener {
 
     }
 
+    /**
+     * Updates table values without data model
+     */
     public void updateTable() {
         if (pic == null) return;
         String[][] dataArray = pic.getRam().getDataString(isBank0);
@@ -49,6 +55,9 @@ public class JFileRegisterTable extends JTable implements FocusListener {
     }
 
     @Override
+    /**
+     * Input new value in table
+     */
     public void focusGained(FocusEvent e) {
         if (pic == null) return;
         int inputNumber = 0;
@@ -57,6 +66,7 @@ public class JFileRegisterTable extends JTable implements FocusListener {
             inputNumber &= 0xFF; //Max 8 Bit
         } catch (Exception ignored) {
         }
+        //Set new value in ram
         pic.getRam().setDataToAddress((getSelectedColumn()) + (getSelectedRow() * 16), inputNumber);
         gui.updateUIFromPIC();
     }
@@ -67,6 +77,9 @@ public class JFileRegisterTable extends JTable implements FocusListener {
     }
 
 
+    /**
+     * ListModel for  Vertical header
+     */
     static class RowHeaderListModel extends AbstractListModel<String> {
         String[] strRowHeaders;
 
@@ -86,6 +99,9 @@ public class JFileRegisterTable extends JTable implements FocusListener {
         }
     }
 
+    /**
+     * Vertical header
+     */
     static class RowHeaderRenderer extends JLabel implements ListCellRenderer {
         RowHeaderRenderer(JTable table) {
             JTableHeader tableHeader = table.getTableHeader();

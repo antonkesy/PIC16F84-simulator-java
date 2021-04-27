@@ -7,8 +7,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * JBitCheckBox for Status, Option and Intcon register
+ */
 public class JBitCheckBox extends JCheckBox implements ActionListener {
 
+    /**
+     * Categories of BitCheckBoxes
+     */
     public enum BitCheckBoxCategories {STATUS, OPTION, INTCON}
 
     private final BitCheckBoxCategories category;
@@ -18,6 +24,13 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
 
     private final SimulatorGUI gui;
 
+    /**
+     * Constructor for JBitCheckBox
+     *
+     * @param category
+     * @param index
+     * @param gui
+     */
     public JBitCheckBox(BitCheckBoxCategories category, int index, SimulatorGUI gui) {
         this.index = index;
         this.category = category;
@@ -25,10 +38,18 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
         addActionListener(this);
     }
 
+    /**
+     * Sets RAM for CheckBox
+     *
+     * @param ram
+     */
     public void setRam(RandomAccessMemory ram) {
         this.ram = ram;
     }
 
+    /**
+     * Updates if checkBox is selected based on ram value
+     */
     public void updateValue() {
         if (ram == null) return;
         switch (category) {
@@ -119,7 +140,9 @@ public class JBitCheckBox extends JCheckBox implements ActionListener {
         }
     }
 
-
+    /**
+     * Updates ram bit value of checkBox
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (ram == null) return;

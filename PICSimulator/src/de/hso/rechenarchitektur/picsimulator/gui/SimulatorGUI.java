@@ -119,9 +119,9 @@ public class SimulatorGUI {
     private JCheckBox[] portBPins = {pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
     private JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
     //
-    private JBitCheckBox[] statusBitCheckBoxes;
-    private JBitCheckBox[] optionBitCheckBoxes;
-    private JBitCheckBox[] intconBitCheckBoxes;
+    private JBitCheckBox[] statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
+    private JBitCheckBox[] optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
+    private JBitCheckBox[] intconBitCheckBoxes = new JBitCheckBox[]{checkBoxRBIF, checkBoxINTF, checkBoxT0IF, checkBoxRBIE, checkBoxINTE, checkBoxT0IE, checkBoxEEIE, checkBoxGIE};
     private PIC16F8X pic;
 
     private boolean isAutoRun;
@@ -413,8 +413,6 @@ public class SimulatorGUI {
         checkBoxRP0 = new JBitCheckBox(new RP0FlagBit(), this);
         checkBoxRP1 = new JBitCheckBox(new RP1FlagBit(), this);
         checkBoxIRP = new JBitCheckBox(new IRPFlagBit(), this);
-
-        statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
     }
 
 
@@ -427,11 +425,9 @@ public class SimulatorGUI {
         checkBoxTCs = new JBitCheckBox(new TCsFlagBit(), this);
         checkBoxIEG = new JBitCheckBox(new EgFlagBit(), this);
         checkBoxRPu = new JBitCheckBox(new RPuFlagBit(), this);
-        optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
     }
 
     private void createIntconCheckBoxes() {
-
         checkBoxRBIF = new JBitCheckBox(new RBIFFlagBit(), this);
         checkBoxINTF = new JBitCheckBox(new INTFFlagBit(), this);
         checkBoxT0IF = new JBitCheckBox(new T0IFFlagBit(), this);
@@ -440,7 +436,6 @@ public class SimulatorGUI {
         checkBoxT0IE = new JBitCheckBox(new T0IEFlagBit(), this);
         checkBoxEEIE = new JBitCheckBox(new EEIEFlagBit(), this);
         checkBoxGIE = new JBitCheckBox(new GIEFlagBit(), this);
-        intconBitCheckBoxes = new JBitCheckBox[]{checkBoxRBIF, checkBoxINTF, checkBoxT0IF, checkBoxRBIE, checkBoxINTE, checkBoxT0IE, checkBoxEEIE, checkBoxGIE};
     }
 
     private void setRAMCheckBoxesArray(JBitCheckBox[] checkBoxes) {

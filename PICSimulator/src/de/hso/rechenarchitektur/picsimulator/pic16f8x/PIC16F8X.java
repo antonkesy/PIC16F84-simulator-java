@@ -122,7 +122,7 @@ public class PIC16F8X {
                 result = ArithmeticLogicUnit.getCompliment(ram.getDataFromAddress(currentInstruction.getFK()));
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
-            case DECF: //Fallthroug
+            case DECF: //Fallthrough
             case INCF:
                 result = ram.getDataFromAddress(currentInstruction.getFK());
                 result += currentInstruction.getType() == InstructionType.INCF ? 1 : -1;
@@ -243,7 +243,7 @@ public class PIC16F8X {
                 ram.setPCL(stack.pop());
                 ram.setGIE(true);
                 break;
-            case RETLW: //Fallthroug
+            case RETLW: //Fallthrough
                 wRegister = currentInstruction.getFK();
             case RETURN:
                 cycles = 2;
@@ -377,6 +377,7 @@ public class PIC16F8X {
         //runtime = runtimeCount * 1/(currFrequency * 1000) * 4;
         //runtime in MS
         //freq in kHz
+        //TODO check if correct
         return (float) quarzSpeed / 4000;
     }
 

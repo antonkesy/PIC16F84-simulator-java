@@ -4,10 +4,10 @@ public class WatchDog {
 
     private boolean isWDT;
     //in micro sec
-    private float watchDogTimer;
-    private float watchDogTimerEnd;
+    private double watchDogTimer;
+    private double watchDogTimerEnd;
 
-    public void addWatchDogTimer(float value) {
+    public void addWatchDogTimer(double value) {
         watchDogTimer += value;
     }
 
@@ -15,11 +15,11 @@ public class WatchDog {
         this.watchDogTimer = 0;
     }
 
-    public float getWatchDogTimer() {
+    public double getWatchDogTimer() {
         return watchDogTimer;
     }
 
-    public float getWatchDogTimerEnd() {
+    public double getWatchDogTimerEnd() {
         return watchDogTimerEnd;
     }
 

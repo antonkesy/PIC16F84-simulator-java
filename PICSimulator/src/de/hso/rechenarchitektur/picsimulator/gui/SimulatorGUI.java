@@ -169,13 +169,7 @@ public class SimulatorGUI {
         lstList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JList<String> list = (JList) e.getSource();
-                if (e.getClickCount() == 2) {
-                    // Double-click detected
-                    int index = list.locationToIndex(e.getPoint());
-                    lstLines.get(index).switchBreakpoint();
-                    updateLST();
-                }
+                checkForDoubleClick(e);
             }
         });
 
@@ -188,6 +182,16 @@ public class SimulatorGUI {
         for (int i = 4; i < 8; ++i) {
             final int index = i;
             portBPins[index].addActionListener(e -> pic.switchRB4_7(index));
+        }
+    }
+
+    private void checkForDoubleClick(MouseEvent e) {
+        JList<String> list = (JList) e.getSource();
+        if (e.getClickCount() == 2) {
+            // Double-click detected
+            int index = list.locationToIndex(e.getPoint());
+            lstLines.get(index).switchBreakpoint();
+            updateLST();
         }
     }
 

@@ -7,7 +7,10 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Reads, interpret LST Files to Instructions

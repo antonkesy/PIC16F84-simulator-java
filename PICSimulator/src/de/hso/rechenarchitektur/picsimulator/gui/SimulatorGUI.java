@@ -185,11 +185,10 @@ public class SimulatorGUI {
         pBp0CheckBox.addActionListener(e -> pic.switchRB0(pBp0CheckBox.isSelected()));
 
         //Set PortB 4-7 change listener
-        //no iteration because lambda needs final values
-        portBPins[4].addActionListener(e -> pic.switchRB4_7(4));
-        portBPins[5].addActionListener(e -> pic.switchRB4_7(5));
-        portBPins[6].addActionListener(e -> pic.switchRB4_7(6));
-        portBPins[7].addActionListener(e -> pic.switchRB4_7(7));
+        for (int i = 4; i < 8; ++i) {
+            final int index = i;
+            portBPins[index].addActionListener(e -> pic.switchRB4_7(index));
+        }
     }
 
     /**

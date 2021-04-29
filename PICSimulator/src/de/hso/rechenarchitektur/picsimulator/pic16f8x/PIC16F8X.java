@@ -476,7 +476,7 @@ public class PIC16F8X {
     }
 
     public void switchRB4_7(int index) {
-        //checks if interrupt is on & is RBIE & Port at Index is not output set by tris
+        //checks if RBIE & Port at Index is not output set by tris
         if (ram.isRBIE() && (ram.getTrisB() >> index & 1) == 1) {
             ram.setRBIF(true);
         }

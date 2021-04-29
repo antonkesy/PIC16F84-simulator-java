@@ -24,6 +24,7 @@ public class JQuarzComboBox extends JComboBox<JQuarzComboBox.ComboBoxItem> imple
         addItem(new ComboBoxItem("16 MHz", 16000));
         addItem(new ComboBoxItem("20 MHz", 20000));
 
+
         addActionListener(this);
     }
 
@@ -36,19 +37,19 @@ public class JQuarzComboBox extends JComboBox<JQuarzComboBox.ComboBoxItem> imple
 
     public static class ComboBoxItem {
         private final String name;
-        private final int value;
+        private final double speed;
 
-        public ComboBoxItem(String name, int value) {
+        public ComboBoxItem(String name, double value) {
             this.name = name;
-            this.value = value;
+            this.speed = value;
         }
 
         public String getName() {
             return name;
         }
 
-        public int getValue() {
-            return value;
+        public double getSpeed() {
+            return speed;
         }
 
         @Override
@@ -59,7 +60,7 @@ public class JQuarzComboBox extends JComboBox<JQuarzComboBox.ComboBoxItem> imple
 
     private void setPICQuarzSpeed() {
         if (pic == null) return;
-        pic.setQuarzSpeed(((ComboBoxItem) Objects.requireNonNull(getSelectedItem())).getValue());
+        pic.setQuarzSpeed(((ComboBoxItem) Objects.requireNonNull(getSelectedItem())).getSpeed());
     }
 
     public void setPIC(PIC16F8X pic) {

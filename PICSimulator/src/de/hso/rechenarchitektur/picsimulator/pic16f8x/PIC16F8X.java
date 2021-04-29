@@ -12,7 +12,7 @@ public class PIC16F8X {
     //in micro sec
     private float runTime = 0;
     //in kHz
-    private long quarzSpeed = 32;
+    private double quarzSpeed = 1.0;
 
     private Stack stack;
     private final ProgramMemory programMemory;
@@ -280,12 +280,10 @@ public class PIC16F8X {
     }
 
     private void handleTimer(int cycles) {
-        float timeForThisCycle = calculateRunTimePerCycle(cycles);
+        double timeForThisCycle = calculateRunTimePerCycle(cycles);
         runTime += timeForThisCycle;
-
         //Timer
         float signal = 0;
-
         //Timer from cycles
         if (!ram.isTCs()) {
             signal = cycles;
@@ -370,17 +368,9 @@ public class PIC16F8X {
         return (f >> (b) & 1) == 1;
     }
 
-    private float calculateRunTimePerCycle(int cycles) {
-        return (cycles * getTimePerCycle());
-    }
-
-    private float getTimePerCycle() {
-        //bei 1MHz => 4micoSecs
-        //runtime = runtimeCount * 1/(currFrequency * 1000) * 4;
-        //runtime in MS
-        //freq in kHz
-        //TODO check if correct
-        return (float) quarzSpeed / 4000;
+    private double calculateRunTimePerCycle(int cycles) {
+        //4Mhz-> 1 microSec pro cycle
+        return (4000 * cycles / quarzSpeed);
     }
 
     public int getCurrentLine() {
@@ -400,7 +390,7 @@ public class PIC16F8X {
     }
 
 
-    public void setQuarzSpeed(int quarzSpeed) {
+    public void setQuarzSpeed(double quarzSpeed) {
         this.quarzSpeed = quarzSpeed;
     }
 
@@ -469,7 +459,7 @@ public class PIC16F8X {
     }
 
     public void switchRB0(boolean selected) {
-        if (ram.isGIE() && ram.isINTE()) {
+        if (ram.isINTE()) {
             if (ram.isIEg()) {
                 //rising
                 if (!wasRB0 && selected) {
@@ -487,7 +477,7 @@ public class PIC16F8X {
 
     public void switchRB4_7(int index) {
         //checks if interrupt is on & is RBIE & Port at Index is not output set by tris
-        if (ram.isGIE() && ram.isRBIE() && (ram.getTrisB() >> index & 1) == 1) {
+        if (ram.isRBIE() && (ram.getTrisB() >> index & 1) == 1) {
             ram.setRBIF(true);
         }
     }

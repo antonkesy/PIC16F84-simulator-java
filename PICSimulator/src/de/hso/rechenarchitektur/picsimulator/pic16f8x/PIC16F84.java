@@ -7,7 +7,7 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionTy
 
 import java.util.List;
 
-public class PIC16F8X {
+public class PIC16F84 {
 
     //in micro sec
     private float runTime = 0;
@@ -25,7 +25,7 @@ public class PIC16F8X {
     //RB0 Interrupt PortB0
     private boolean wasRB0 = false;
 
-    public PIC16F8X(List<InstructionLine> instructionLineList) {
+    public PIC16F84(List<InstructionLine> instructionLineList) {
         programMemory = new ProgramMemory(instructionLineList);
         ram = new RandomAccessMemory();
         watchDog = new WatchDog();

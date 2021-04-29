@@ -1,6 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.gui.components;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F84;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class JQuarzComboBox extends JComboBox<JQuarzComboBox.ComboBoxItem> implements ActionListener {
 
-    private PIC16F8X pic;
+    private PIC16F84 pic;
 
     public JQuarzComboBox() {
         //Value in Kilohertz
@@ -63,7 +63,7 @@ public class JQuarzComboBox extends JComboBox<JQuarzComboBox.ComboBoxItem> imple
         pic.setQuarzSpeed(((ComboBoxItem) Objects.requireNonNull(getSelectedItem())).getSpeed());
     }
 
-    public void setPIC(PIC16F8X pic) {
+    public void setPIC(PIC16F84 pic) {
         this.pic = pic;
         setSelectedIndex(5);//4Mhz
         setPICQuarzSpeed();

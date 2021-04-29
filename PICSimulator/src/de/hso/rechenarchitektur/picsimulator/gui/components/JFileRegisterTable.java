@@ -1,7 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.gui.components;
 
 import de.hso.rechenarchitektur.picsimulator.gui.SimulatorGUI;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F84;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +17,7 @@ import static de.hso.rechenarchitektur.picsimulator.gui.GUIUtilities.fillModelRo
  */
 public class JFileRegisterTable extends JTable implements FocusListener {
     DefaultTableModel modelFileRegisterBank;
-    private PIC16F8X pic;
+    private PIC16F84 pic;
     private final boolean isBank0;
     private final SimulatorGUI gui;
 
@@ -119,7 +119,7 @@ public class JFileRegisterTable extends JTable implements FocusListener {
         }
     }
 
-    public void setPIC(PIC16F8X pic) {
+    public void setPIC(PIC16F84 pic) {
         this.pic = pic;
     }
 }

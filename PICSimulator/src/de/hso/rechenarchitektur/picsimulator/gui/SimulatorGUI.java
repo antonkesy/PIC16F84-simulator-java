@@ -6,7 +6,7 @@ import de.hso.rechenarchitektur.picsimulator.gui.components.JQuarzComboBox;
 import de.hso.rechenarchitektur.picsimulator.gui.components.bit.intcon.*;
 import de.hso.rechenarchitektur.picsimulator.gui.components.bit.option.*;
 import de.hso.rechenarchitektur.picsimulator.gui.components.bit.status.*;
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F84;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemory;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.LSTLine;
@@ -116,7 +116,7 @@ public class SimulatorGUI {
     private final JBitCheckBox[] statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
     private final JBitCheckBox[] optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
     private final JBitCheckBox[] intconBitCheckBoxes = new JBitCheckBox[]{checkBoxRBIF, checkBoxINTF, checkBoxT0IF, checkBoxRBIE, checkBoxINTE, checkBoxT0IE, checkBoxEEIE, checkBoxGIE};
-    private PIC16F8X pic;
+    private PIC16F84 pic;
 
     private boolean isAutoRun;
     private AutoRunThread autoRunThread;
@@ -256,7 +256,7 @@ public class SimulatorGUI {
      */
     private void setPIC() {
         stepsSpinner.setValue(1000);
-        pic = new PIC16F8X(lastReadInstructionsLines);
+        pic = new PIC16F84(lastReadInstructionsLines);
         fileRegisterBank0Table.setPIC(pic);
         fileRegisterBank1Table.setPIC(pic);
         quarzBox.setPIC(pic);

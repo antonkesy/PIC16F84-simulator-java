@@ -1,6 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.test.junit;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F84;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionType;
@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class PIC16F8XTest {
+public class PIC16F84Test {
 
-    public PIC16F8X testPIC;
+    public PIC16F84 testPIC;
 
     public void assertEqualsCheckReset() {
         Assert.assertEquals(new InstructionLine(), testPIC.getCurrentInstructionInRegister());
@@ -62,7 +62,7 @@ public class PIC16F8XTest {
      */
     public void setupPIC(String filePath) {
         FileReader fileReader = new FileReader(new File(filePath));
-        testPIC = new PIC16F8X(fileReader.getInstructionLineList());
+        testPIC = new PIC16F84(fileReader.getInstructionLineList());
     }
 
     @Test

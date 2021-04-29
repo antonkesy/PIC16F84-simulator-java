@@ -1,6 +1,6 @@
 package de.hso.rechenarchitektur.picsimulator.test.junit;
 
-import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F8X;
+import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F84;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionLine;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.InstructionType;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PICSingleInstructionTest {
 
-    PIC16F8X pic;
+    PIC16F84 pic;
     List<InstructionLine> instructions;
 
 
@@ -27,7 +27,7 @@ public class PICSingleInstructionTest {
         loadInstructionsWithValueInRegister(testValue, 0x20);
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.BSF, 0x20, bitPosition)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
-        pic = new PIC16F8X(instructions);
+        pic = new PIC16F84(instructions);
         Assert.assertEquals(0, pic.getRam().getDataFromAddress(0x20));
         pic.cycle(); //NOP
         pic.cycle(); //MOVLW
@@ -51,7 +51,7 @@ public class PICSingleInstructionTest {
         loadInstructionsWithValueInRegister(testValue, 0x20);
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.BCF, 0x20, bitPosition)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
-        pic = new PIC16F8X(instructions);
+        pic = new PIC16F84(instructions);
         Assert.assertEquals(0, pic.getRam().getDataFromAddress(0x20));
         pic.cycle(); //NOP
         pic.cycle(); //MOVLW
@@ -76,7 +76,7 @@ public class PICSingleInstructionTest {
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.MOVLW, testValue)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.ADDLW, addValue)));
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.NOP)));
-        pic = new PIC16F8X(instructions);
+        pic = new PIC16F84(instructions);
         pic.cycle(); //NOP
         pic.cycle(); //MOVLW
         Assert.assertEquals(testValue, pic.getWRegister());
@@ -100,7 +100,7 @@ public class PICSingleInstructionTest {
         instructions.add(new InstructionLine(0, 0, new Instruction(InstructionType.DECFSZ, 0x20, 1)));
         instructions.add(new InstructionLine(1, 0, new Instruction(InstructionType.NOP)));
         instructions.add(new InstructionLine(2, 0, new Instruction(InstructionType.NOP)));
-        pic = new PIC16F8X(instructions);
+        pic = new PIC16F84(instructions);
         pic.cycle(); //NOP
         pic.cycle(); //MOVLW
         pic.cycle(); //MOVWF

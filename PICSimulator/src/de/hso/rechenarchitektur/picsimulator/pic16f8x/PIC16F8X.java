@@ -60,29 +60,31 @@ public class PIC16F8X {
 
     private boolean checkForInterrupts() {
         boolean wasInterrupt = false;
-        //Timer Interrupt
-        if (ram.isGIE() && ram.isT0IE() && ram.isT0IF()) {
+        if (ram.isGIE()) {
             //Timer Interrupt
-            stack.push(ram.getPCL());
-            ram.setGIE(false);
-            ram.setPCL(4);
-            wasInterrupt = true;
-        }
-        //RB0 Interrupt
-        if (ram.isGIE() && ram.isINTF() && ram.isINTE()) {
-            //Timer Interrupt
-            stack.push(ram.getPCL());
-            ram.setGIE(false);
-            ram.setPCL(4);
-            wasInterrupt = true;
-        }
-        //RB Interrupt
-        if (ram.isGIE() && ram.isRBIE() && ram.isRBIF()) {
-            //Timer Interrupt
-            stack.push(ram.getPCL());
-            ram.setGIE(false);
-            ram.setPCL(4);
-            wasInterrupt = true;
+            if (ram.isT0IE() && ram.isT0IF()) {
+                //Timer Interrupt
+                stack.push(ram.getPCL());
+                ram.setGIE(false);
+                ram.setPCL(4);
+                wasInterrupt = true;
+            }
+            //RB0 Interrupt
+            if (ram.isINTF() && ram.isINTE()) {
+                //Timer Interrupt
+                stack.push(ram.getPCL());
+                ram.setGIE(false);
+                ram.setPCL(4);
+                wasInterrupt = true;
+            }
+            //RB Interrupt
+            if (ram.isRBIE() && ram.isRBIF()) {
+                //Timer Interrupt
+                stack.push(ram.getPCL());
+                ram.setGIE(false);
+                ram.setPCL(4);
+                wasInterrupt = true;
+            }
         }
         return wasInterrupt;
     }

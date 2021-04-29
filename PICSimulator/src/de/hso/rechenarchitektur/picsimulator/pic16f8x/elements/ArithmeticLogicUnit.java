@@ -58,6 +58,9 @@ public final class ArithmeticLogicUnit {
             case XOR:
                 result ^= secondValue;
                 break;
+            case NOT:
+                //never used
+                break;
         }
 
         result &= 0xFF;

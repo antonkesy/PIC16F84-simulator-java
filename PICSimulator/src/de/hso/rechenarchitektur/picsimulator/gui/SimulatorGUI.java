@@ -186,7 +186,7 @@ public class SimulatorGUI {
     }
 
     private void checkForDoubleClick(MouseEvent e) {
-        JList<String> list = (JList) e.getSource();
+        JList list = (JList) e.getSource();
         if (e.getClickCount() == 2) {
             // Double-click detected
             int index = list.locationToIndex(e.getPoint());
@@ -458,7 +458,7 @@ public class SimulatorGUI {
 
     private void switchAutoRunSimulator() {
         if (isAutoRun) {
-            autoRunThread.stop();
+            autoRunThread.stopThread();
             autoRunThread = null;
         } else {
             autoRunThread = new AutoRunThread(this);

@@ -5,6 +5,8 @@ package de.hso.rechenarchitektur.picsimulator.gui;
  */
 public class AutoRunThread extends Thread {
 
+    private boolean isRunning = true;
+
     private final SimulatorGUI simulatorGUI;
 
     public AutoRunThread(SimulatorGUI simulatorGUI) {
@@ -14,11 +16,15 @@ public class AutoRunThread extends Thread {
 
     @Override
     public void run() {
-        while (true) try {
+        while (isRunning) try {
             simulatorGUI.stepWithBreakpoints();
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void stopThread() {
+        isRunning = false;
     }
 }

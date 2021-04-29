@@ -1,10 +1,7 @@
 package de.hso.rechenarchitektur.picsimulator.pic16f8x.elements;
 
 /**
- * Der Datenspeicher ist in zwei Bänke aufgeteilt. Die SFR
- * sind Register die die Funktionsweise des µCs
- * beeinflussen. In den GPR legt der Programmierer seine
- * Variablen ab.
+ * RAM us split into 2 banks
  */
 public class RandomAccessMemory {
     /**
@@ -146,7 +143,7 @@ public class RandomAccessMemory {
     /**
      * PC Low -> unteren 8 Bits
      *
-     * @return
+     * @return pcl
      */
     public int getPCL() {
         return getDataFromAddress(2);

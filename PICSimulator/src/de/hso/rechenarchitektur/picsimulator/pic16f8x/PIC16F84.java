@@ -260,6 +260,9 @@ public class PIC16F84 {
                 break;
         }
 
+        //RunTime
+        runTime += calculateRunTimePerCycle(cycles);
+
         handleTimer(cycles);
 
         handleWatchDog(cycles);
@@ -280,8 +283,6 @@ public class PIC16F84 {
     }
 
     private void handleTimer(int cycles) {
-        double timeForThisCycle = calculateRunTimePerCycle(cycles);
-        runTime += timeForThisCycle;
         //Timer
         float signal = 0;
         //Timer from cycles

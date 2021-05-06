@@ -122,6 +122,7 @@ public class PIC16F84 {
                 break;
             case COMF:
                 result = ArithmeticLogicUnit.getCompliment(ram.getDataFromAddress(currentInstruction.getFK()));
+                ram.setZeroFlag(result == 0);
                 setResultInDestination(currentInstruction.getBD(), currentInstruction.getFK(), result);
                 break;
             case DECF: //Fallthrough

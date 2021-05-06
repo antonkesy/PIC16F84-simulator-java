@@ -47,7 +47,6 @@ public final class ArithmeticLogicUnit {
                 ram.setCarryFlag(isCarry(firstValue, secondValue));
                 //DigitCarryFlag
                 ram.setDigitCarryFlag(isDigitCarry(firstValue, secondValue));
-                //Result auf 8Bit maskieren
                 break;
             case AND:
                 result &= secondValue;
@@ -62,7 +61,7 @@ public final class ArithmeticLogicUnit {
                 //never used
                 break;
         }
-
+        //Result auf 8Bit maskieren
         result &= 0xFF;
         //Zero Flag
         ram.setZeroFlag(result == 0);
@@ -71,15 +70,13 @@ public final class ArithmeticLogicUnit {
     }
 
     public static boolean isDigitCarry(int firstStart, int secondStart) {
-        int carryCheck = (firstStart & 0b01111) + (secondStart & 0b01111);
-        carryCheck >>= 4;
-        return carryCheck != 0;
+        int carryCheck = (firstStart & 0xF) + (secondStart & 0xF);
+        return carryCheck > 0xF;
     }
 
     public static boolean isCarry(int firstStart, int secondStart) {
-        int carryCheck = (firstStart & 0xFF) + (secondStart & 0xFF);
-        carryCheck >>= 8;
-        return carryCheck != 0;
+        int carryCheck = (firstStart & 0xF0) + (secondStart & 0xF0);
+        return carryCheck > 0xF0;
     }
 
     /**

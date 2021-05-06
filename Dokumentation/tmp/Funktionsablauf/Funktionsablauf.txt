@@ -1,0 +1,2 @@
+Beschreibung des Funktionsablaufes:
+Nach dem Öffnen des Programmes muss zunächst ein Programm im LST Format ausgewählt werden. Der File-Reader interpretiert das ausgewählte Programm und der Simulator erstellt einen neuen PIC mit dem Programm im Speicher geladen. Jetzt können die Einstellungen, wie zum Beispiel die Quarzfrequenz, angepasst werden. Der PIC steht noch auf Reset und wartet diesen und das zugehörige NOP durchzuführen. Danach kann mit Einzel-, N-Schritten oder automatisch der Simulator gesteuert werden.

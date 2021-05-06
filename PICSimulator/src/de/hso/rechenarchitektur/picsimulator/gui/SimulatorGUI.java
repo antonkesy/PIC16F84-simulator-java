@@ -128,6 +128,14 @@ public class SimulatorGUI {
     private int currentLine;
 
     public static void main(String[] args) {
+        /*
+        Das Window wurde mit IntelliJ und dem Windowbuilder erstellt.
+        Compilieren/Interpretieren ohne IntelliJ kann zu Fehlern kommen, da die .from nicht
+        benutzt wird
+
+        Eine nutzbare jar befindet sich in PICSimulator\out\artifacts\PIC16F84_Simulator_Java_jar
+        öffnen mit "java -jar PIC16F84-Simulator-Java"
+         */
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {

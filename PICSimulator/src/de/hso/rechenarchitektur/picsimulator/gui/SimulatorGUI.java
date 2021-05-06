@@ -133,7 +133,7 @@ public class SimulatorGUI {
         Compilieren/Interpretieren ohne IntelliJ kann zu Fehlern kommen, da die .from nicht
         benutzt wird
 
-        Eine nutzbare jar befindet sich in PICSimulator\out\artifacts\PIC16F84_Simulator_Java_jar
+        Eine nutzbare jar befindet sich im Abgabeordner
         öffnen mit "java -jar PIC16F84-Simulator-Java"
          */
         try {

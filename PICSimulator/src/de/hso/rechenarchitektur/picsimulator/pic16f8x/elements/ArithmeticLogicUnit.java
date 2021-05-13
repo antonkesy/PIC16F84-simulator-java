@@ -32,7 +32,6 @@ public final class ArithmeticLogicUnit {
 
     public static int operation(AluOperations operation, RandomAccessMemory ram, int firstValue, int secondValue) {
         int result = firstValue;
-
         switch (operation) {
             case SUB:
                 //Zweierkompliment und dann fallthrough zu ADD

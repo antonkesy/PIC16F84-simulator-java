@@ -60,17 +60,15 @@ public class FileReader {
      * @param line
      */
     private void interpretLine(String line) {
-        //Wenn nicht mit einer Adresse
+        //Direkt abbrechen, wenn nicht mit einer Adresse beginnt
         if (line.startsWith(" ")) return;
-
         //Line splitten und Leerzeichen entfernen
         String[] lineSplit = Arrays.stream(line.split(" ")).filter(t -> t.length() > 0).toArray(String[]::new);
-
         //Fuegt neue Instruktion mit allen noetigen Informationen in die Liste
         programMemoryMap.add(new InstructionLine(
-                lines.size(),
-                Integer.decode("0x" + lineSplit[0]),
-                InstructionDecoder.decodeInstruction(Integer.decode("0x" + lineSplit[1])))
+                lines.size(), //aktuelle Line des Befehls im LST
+                Integer.decode("0x" + lineSplit[0]), //Position im ProgramMemory
+                InstructionDecoder.decodeInstruction(Integer.decode("0x" + lineSplit[1]))) //Opcode
         );
     }
 

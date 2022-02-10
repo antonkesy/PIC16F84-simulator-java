@@ -193,12 +193,14 @@ public class SimulatorGUI {
     }
 
     private void checkForDoubleClick(MouseEvent e) {
-        JList list = (JList) e.getSource();
+        JList<?> list = (JList<?>) e.getSource();
         if (e.getClickCount() == 2) {
             // Double-click detected
             int index = list.locationToIndex(e.getPoint());
-            lstLines.get(index).switchBreakpoint();
-            updateLST();
+            if (lstLines != null) {
+                lstLines.get(index).switchBreakpoint();
+                updateLST();
+            }
         }
     }
 

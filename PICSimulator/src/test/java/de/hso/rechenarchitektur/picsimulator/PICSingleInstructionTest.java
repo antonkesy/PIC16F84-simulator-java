@@ -1,4 +1,4 @@
-package de.hso.rechenarchitektur.picsimulator.test.junit;
+package de.hso.rechenarchitektur.picsimulator;
 
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.PIC16F84;
 import de.hso.rechenarchitektur.picsimulator.pic16f8x.instructions.Instruction;

@@ -74,8 +74,7 @@ public final class ArithmeticLogicUnit {
     }
 
     public static boolean isCarry(int firstStart, int secondStart) {
-        int carryCheck = (firstStart & 0xF0) + (secondStart & 0xF0);
-        return carryCheck > 0xF0;
+        return firstStart+ secondStart > 0xFF;
     }
 
     /**

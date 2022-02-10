@@ -26,6 +26,8 @@ import java.util.List;
 
 public class SimulatorGUI {
 
+    private final JCheckBox[] portAPins;
+    private final JCheckBox[] portBPins;
     private JPanel panelMain;
     private JButton resetButton;
     private JButton autorunButton;
@@ -113,9 +115,7 @@ public class SimulatorGUI {
     private JButton ignoreButton;
     private JLabel watchDogEndeLabel;
     private final JLabel[] stackFields = {stackField0, stackField1, stackField2, stackField3, stackField4, stackField5, stackField6, stackField7};
-    private final JCheckBox[] portAPins = {pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
     private final JCheckBox[] trisA = {pAt0CheckBox, pAt1CheckBox, pAt2CheckBox, pAt3CheckBox, pAt4CheckBox, pAt5CheckBox, pAt6CheckBox, pAt7CheckBox};
-    private final JCheckBox[] portBPins = {pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
     private final JCheckBox[] trisB = {pBt0CheckBox, pBt1CheckBox, pBt2CheckBox, pBt3CheckBox, pBt4CheckBox, pBt5CheckBox, pBt6CheckBox, pBt7CheckBox};
     private final JBitCheckBox[] statusBitCheckBoxes = new JBitCheckBox[]{checkBoxC, checkBoxDC, checkBoxZ, checkBoxPD, checkBoxTO, checkBoxRP0, checkBoxRP1, checkBoxIRP};
     private final JBitCheckBox[] optionBitCheckBoxes = new JBitCheckBox[]{checkBoxPS0, checkBoxPS1, checkBoxPS2, checkBoxPSA, checkBoxTSe, checkBoxTCs, checkBoxIEG, checkBoxRPu};
@@ -163,7 +163,9 @@ public class SimulatorGUI {
         //de/activate watchdog
         freigabeWatchdogCheckBox.addActionListener(e -> pic.getWatchDog().switchActive());
         //PortAPin Listener
+        portAPins = new JCheckBox[]{pAp0CheckBox, pAp1CheckBox, pAp2CheckBox, pAp3CheckBox, pAp4CheckBox};
         Arrays.stream(portAPins).forEach(p -> p.addActionListener(a -> portAPinsClickUpdate()));
+        portBPins = new JCheckBox[]{pBp0CheckBox, pBp1CheckBox, pBp2CheckBox, pBp3CheckBox, pBp4CheckBox, pBp5CheckBox, pBp6CheckBox, pBp7CheckBox};
         Arrays.stream(portBPins).forEach(p -> p.addActionListener(a -> portBPinsClickUpdate()));
 
         updateFileRegister();

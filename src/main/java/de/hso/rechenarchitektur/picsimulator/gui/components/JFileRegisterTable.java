@@ -38,7 +38,7 @@ public class JFileRegisterTable extends JTable implements FocusListener {
 
     // Creates empty rows for FLR Table
     for (int i = 0; i < 7; ++i) {
-      modelFileRegisterBank.addRow(new String[][] {{"e", "m", "p", "t", "y", "", "", "", ""}});
+      modelFileRegisterBank.addRow(new String[] {"", "", "", "", "", "", "", "", ""});
     }
   }
 

@@ -481,7 +481,7 @@ public class RandomAccessMemory {
     int indexY = 0;
     // Value
     for (int[] bank : memory) {
-      result[indexY][indexX] = Integer.toHexString(bank[isFirstBank ? 0 : 1]);
+      result[indexY][indexX] = Integer.toHexString(bank[isFirstBank ? 0 : 1]).toString();
       if (++indexX >= result[indexY].length) {
         indexX = 0;
         ++indexY;

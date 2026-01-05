@@ -114,16 +114,7 @@ public class SimulatorGUI {
   private JBitCheckBox checkBoxRBIF;
   private JButton ignoreButton;
   private JLabel watchDogEndeLabel;
-  private final JLabel[] stackFields = {
-    stackField0,
-    stackField1,
-    stackField2,
-    stackField3,
-    stackField4,
-    stackField5,
-    stackField6,
-    stackField7
-  };
+  private JLabel[] stackFields;
   private final JCheckBox[] trisA = {
     pAt0CheckBox,
     pAt1CheckBox,
@@ -144,39 +135,9 @@ public class SimulatorGUI {
     pBt6CheckBox,
     pBt7CheckBox
   };
-  private final JBitCheckBox[] statusBitCheckBoxes =
-      new JBitCheckBox[] {
-        checkBoxC,
-        checkBoxDC,
-        checkBoxZ,
-        checkBoxPD,
-        checkBoxTO,
-        checkBoxRP0,
-        checkBoxRP1,
-        checkBoxIRP
-      };
-  private final JBitCheckBox[] optionBitCheckBoxes =
-      new JBitCheckBox[] {
-        checkBoxPS0,
-        checkBoxPS1,
-        checkBoxPS2,
-        checkBoxPSA,
-        checkBoxTSe,
-        checkBoxTCs,
-        checkBoxIEG,
-        checkBoxRPu
-      };
-  private final JBitCheckBox[] intconBitCheckBoxes =
-      new JBitCheckBox[] {
-        checkBoxRBIF,
-        checkBoxINTF,
-        checkBoxT0IF,
-        checkBoxRBIE,
-        checkBoxINTE,
-        checkBoxT0IE,
-        checkBoxEEIE,
-        checkBoxGIE
-      };
+  private JBitCheckBox[] statusBitCheckBoxes;
+  private JBitCheckBox[] optionBitCheckBoxes;
+  private JBitCheckBox[] intconBitCheckBoxes;
   private PIC16F84 pic;
 
   private boolean isAutoRun;
@@ -210,6 +171,9 @@ public class SimulatorGUI {
     pic = new PIC16F84(new ArrayList<InstructionLine>());
     // Oeffne neue Datei OnClickListener
     $$$setupUI$$$();
+
+    // Initialize arrays after UI components are created
+    initializeComponentArrays();
     oeffneNeueDateiButton.addActionListener(e -> openNewFile());
     // Step OnClickListener
     stepButton.addActionListener(e -> step());
@@ -395,6 +359,9 @@ public class SimulatorGUI {
 
   /** Updated Stack Labels */
   private void updateStack() {
+    if (stackFields == null) {
+      return;
+    }
     String[] stackStringArray = pic.getStack().getStackStringArray();
     for (int i = 0; i < stackStringArray.length; ++i) {
       stackFields[i].setText(stackStringArray[i]);
@@ -471,6 +438,58 @@ public class SimulatorGUI {
     createIntconCheckBoxes();
   }
 
+  private void initializeComponentArrays() {
+    // Initialize stack fields array
+    stackFields =
+        new JLabel[] {
+          stackField0,
+          stackField1,
+          stackField2,
+          stackField3,
+          stackField4,
+          stackField5,
+          stackField6,
+          stackField7
+        };
+
+    // Initialize bit checkbox arrays
+    statusBitCheckBoxes =
+        new JBitCheckBox[] {
+          checkBoxC,
+          checkBoxDC,
+          checkBoxZ,
+          checkBoxPD,
+          checkBoxTO,
+          checkBoxRP0,
+          checkBoxRP1,
+          checkBoxIRP
+        };
+
+    optionBitCheckBoxes =
+        new JBitCheckBox[] {
+          checkBoxPS0,
+          checkBoxPS1,
+          checkBoxPS2,
+          checkBoxPSA,
+          checkBoxTSe,
+          checkBoxTCs,
+          checkBoxIEG,
+          checkBoxRPu
+        };
+
+    intconBitCheckBoxes =
+        new JBitCheckBox[] {
+          checkBoxRBIF,
+          checkBoxINTF,
+          checkBoxT0IF,
+          checkBoxRBIE,
+          checkBoxINTE,
+          checkBoxT0IE,
+          checkBoxEEIE,
+          checkBoxGIE
+        };
+  }
+
   private void createStatusCheckBoxes() {
     checkBoxC = new JBitCheckBox(new CarryFlagBit(), this);
     checkBoxDC = new JBitCheckBox(new DigitCarryFlagBit(), this);
@@ -505,6 +524,9 @@ public class SimulatorGUI {
   }
 
   private void setRAMCheckBoxesArray(JBitCheckBox[] checkBoxes) {
+    if (checkBoxes == null) {
+      return;
+    }
     for (JBitCheckBox checkBox : checkBoxes) {
       checkBox.setRam(pic.getRam());
     }

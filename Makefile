@@ -1,30 +1,12 @@
-.PHONY: all build compile run test clean package help
+.PHONY: all build run test
 
 all: build run
 
-build: compile
-
-compile:
+build:
 	mvn compile
 
-run:
+run: build
 	mvn exec:java -Dexec.mainClass="de.hso.rechenarchitektur.picsimulator.gui.SimulatorGUI"
 
-test:
+test: build
 	mvn test
-
-test-verbose:
-	mvn test -X
-
-clean:
-	mvn clean
-
-package:
-	mvn package
-
-install:
-	mvn install
-
-compile-run: compile run
-
-compile-test: compile test

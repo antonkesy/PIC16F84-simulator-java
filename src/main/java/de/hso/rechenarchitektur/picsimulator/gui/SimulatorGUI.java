@@ -17,6 +17,7 @@ import de.hso.rechenarchitektur.picsimulator.reader.FileReader;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
@@ -206,6 +207,7 @@ public class SimulatorGUI {
   }
 
   public SimulatorGUI() {
+    pic = new PIC16F84(new ArrayList<InstructionLine>());
     // Oeffne neue Datei OnClickListener
     $$$setupUI$$$();
     oeffneNeueDateiButton.addActionListener(e -> openNewFile());

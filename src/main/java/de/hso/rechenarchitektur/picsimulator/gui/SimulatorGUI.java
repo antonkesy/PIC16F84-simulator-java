@@ -288,7 +288,7 @@ public class SimulatorGUI {
 
   /** Opens FileChooser and if file selected opens new PIC with instructions */
   private void openNewFile() {
-    JFileChooser chooser = new JFileChooser(System.getProperty("user.dir") + "/LST");
+    JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
     FileNameExtensionFilter filter = new FileNameExtensionFilter("LST-Files", "LST");
     chooser.setFileFilter(filter);
     chooser.showOpenDialog(null);

@@ -5,13 +5,13 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemor
 
 public class TimeOutFlagBit implements IBitStateChange {
 
-    @Override
-    public boolean isFlag(RandomAccessMemory ram) {
-        return ram.isTimeOutFlag();
-    }
+  @Override
+  public boolean isFlag(RandomAccessMemory ram) {
+    return ram.isTimeOutFlag();
+  }
 
-    @Override
-    public void setFlag(RandomAccessMemory ram, boolean isActive) {
-        ram.setTimeOutFlag(isActive);
-    }
+  @Override
+  public void setFlag(RandomAccessMemory ram, boolean isActive) {
+    ram.setTimeOutFlag(isActive);
+  }
 }

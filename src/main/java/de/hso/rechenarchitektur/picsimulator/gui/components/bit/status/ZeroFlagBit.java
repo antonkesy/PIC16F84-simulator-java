@@ -5,14 +5,13 @@ import de.hso.rechenarchitektur.picsimulator.pic16f8x.elements.RandomAccessMemor
 
 public class ZeroFlagBit implements IBitStateChange {
 
-    @Override
-    public boolean isFlag(RandomAccessMemory ram) {
-        return ram.isZeroFlag();
-    }
+  @Override
+  public boolean isFlag(RandomAccessMemory ram) {
+    return ram.isZeroFlag();
+  }
 
-    @Override
-    public void setFlag(RandomAccessMemory ram, boolean isActive) {
-        ram.setZeroFlag(isActive);
-    }
-
+  @Override
+  public void setFlag(RandomAccessMemory ram, boolean isActive) {
+    ram.setZeroFlag(isActive);
+  }
 }
